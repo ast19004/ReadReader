@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const readingSessionSchema = mongoose.Schema({
-    child_id : {
+    reader_id : {
         type: Number,
         required: true
     },
@@ -13,11 +13,11 @@ const readingSessionSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    date: {
+    session_date: {
         type: DateTime,
         required: true
     }
 });
 
-module.exports = mongoose.model('ReadingSession', readingSessionSchema);
+module.exports = mongoose.model('ReaderSession', readerSessionSchema);
  

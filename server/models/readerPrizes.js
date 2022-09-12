@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 
-const prizesSchema = mongoose.Schema({
+const prizeSchema = mongoose.Schema({
     creator_id: {
-        type: Number,
-        required: true
-    },
-    reading_requirement: {
         type: Number,
         required: true
     },
@@ -15,4 +11,4 @@ const prizesSchema = mongoose.Schema({
     }
 });
 
-module.export = mongoose.model('ReadinPrizes', prizesSchema);
+module.export = mongoose.model('ReaderPrize', prizeSchema);

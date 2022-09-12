@@ -11,4 +11,4 @@ const imageSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Image', imageSchema);
+module.exports = mongoose.model('PrizeImage', imageSchema);
