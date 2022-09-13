@@ -18,7 +18,16 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    readers: [
+        {
+          readerId: {
+            type: Schema.Types.ObjectId,
+            ref: "Reader",
+            required: true,
+          },
+        }
+      ]
 });
 
 module.exports = mongoose.model('User', userSchema);

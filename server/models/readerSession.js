@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const readingSessionSchema = mongoose.Schema({
     reader_id : {
-        type: Number,
+        type: Schema.Types.ObjectId,
         required: true
     },
     book_title: {
@@ -14,7 +14,8 @@ const readingSessionSchema = mongoose.Schema({
         required: true
     },
     session_date: {
-        type: DateTime,
+        type: Date, 
+        default: Date.now,
         required: true
     }
 });

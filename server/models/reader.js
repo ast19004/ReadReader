@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const readerSchema = mongoose.Schema({
     parent_id : {
-        type: Number,
+        type: Schema.Types.ObjectId,
         required: true
     },
     reader_name: {
@@ -15,7 +15,25 @@ const readerSchema = mongoose.Schema({
     reading_coins: {
         type: Number,
         requied: true
-    }
+    },
+    reader_sessions: [
+        {
+          sessionId: {
+            type: Schema.Types.ObjectId,
+            ref: "Session",
+            required: true,
+          },
+        }
+      ],
+      reader_prizes : [
+        {
+            prizeId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "ReaderPrizes",
+                required: true
+            }
+        }
+      ]
 
 });
 

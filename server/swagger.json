@@ -5,7 +5,7 @@
       "version": "1.0.0",
       "title": "Read Reader"
     },
-    "host": "localhost:8080",
+    "host": "localhost:5000",
     "basePath": "/",
     "securityDefinitions": {
       "bearerAuth": {
@@ -623,7 +623,7 @@
         }
       },
       "User": {
-        "required": ["firstName", "lastName", "email", "password", "recipes"],
+        "required": ["firstName", "lastName", "email", "password", "readers"],
         "properties": {
           "firstName": {
             "type": "string"
@@ -637,8 +637,9 @@
           "password": {
             "type": "string"
           },
-          "recipes": {
-            "$ref": "#definitions/Recipes"
+          "readers": {
+            "type": "array",
+            "$ref": "#definitions/Readers"
           }
         }
       },
@@ -671,7 +672,7 @@
             "type": "number"
           },
           "reading_coins": {
-            "type": "string"
+            "type": "number"
           }
         }
       },
