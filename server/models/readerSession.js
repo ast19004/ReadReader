@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const readingSessionSchema = mongoose.Schema({
+const readerSessionSchema = mongoose.Schema({
     reader_id : {
         type: Schema.Types.ObjectId,
         required: true

@@ -2,6 +2,8 @@ const express = require('express');
 const {check, body} = require('express-validator');
 const userController = require('../controllers/user');
 
+const User = require('../models/user');
+
 const router = express.Router();
 
 const registerValidation = [check("firstName").isLength({ min: 1 }).trim(),
@@ -44,7 +46,7 @@ const loginValidation = [
     )
       .isLength({ min: 5 })
       .isAlphanumeric()
-      .trim(),
+      .trim()
 ];
 
 
