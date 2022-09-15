@@ -16,6 +16,6 @@ router.get('/readers', isAuth, readerController.getAllReaders);
 router.post('/reader', readerValidation, isAuth, readerController.postReader);
 router.get('/reader/:readerId', isAuth, readerController.getReader);
 //router.put('/reader/:readerId', readerValidation, isAuth, readerController.putReader);
-//router.delete('/reader/:readerId', isAuth, readerController.deleteReader);
+router.delete('/reader/:readerId', isAuth, readerController.deleteReader);
 
 module.exports = router;

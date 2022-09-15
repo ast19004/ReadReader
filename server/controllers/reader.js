@@ -98,5 +98,37 @@ exports.getReader = async (req, res, next) => {
 exports.putReader = (req, res, next) => {};
 
 /** Delete a reader from Reader database and from reader list of logged in user **/
-exports.deleteReader = (req, res, next) => {};
+exports.deleteReader = async (req, res, next) => {
+    const paramReaderId = req.params.readerId;
+
+    try{
+    
+    const user = await User.findById(req.userId);
+    if(!user){
+        console.log("User was not found");
+        const error = new Error("User not found.");
+        error.statusCode = 404;
+        }
+
+        const updatedUserReaders = user.readers.filter(reader => reader.readerId.toString() !== paramReaderId.toString());
+
+        user.readers = updatedUserReaders;
+        const updatedUser = user.save();
+
+        await Reader.findByIdAndRemove(paramReaderId).where('parent_id')
+        .equals(req.userId);
+
+        res.status(200).json({
+            message: "Reader deleted from Readers Database and logged-in User Data",
+            updatedUser: updatedUser
+        });
+
+    } catch(err){
+        if(!err.statusCode){
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+
+};
 
