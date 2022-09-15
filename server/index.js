@@ -16,6 +16,7 @@ const MONGODB_URL =
   process.env.MONGODB_URL || `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB}.zr23rly.mongodb.net/?retryWrites=true&w=majority`;
 
 const userRoutes = require('./routes/users');
+const readerRoutes = require('./routes/readers');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
     next();
   });
 app.use(userRoutes);
+app.use(readerRoutes);
 
 mongoose
     .connect(MONGODB_URL)

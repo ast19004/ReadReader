@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+
+const Schema = mongoose.Schema;
+
 const readerSchema = mongoose.Schema({
     parent_id : {
         type: Schema.Types.ObjectId,
@@ -37,4 +40,4 @@ const readerSchema = mongoose.Schema({
 
 });
 
-module.export = mongoose.model('Reader', readerSchema);
+module.exports = mongoose.model('Reader', readerSchema);

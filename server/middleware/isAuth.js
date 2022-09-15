@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const secret = process.env.JWT_TOKEN;
+const secret = process.env.JWT_SECRET;
 
 module.exports = (req, res, next) => {
     const authHeader = req.get("Authorization");
@@ -22,6 +22,6 @@ module.exports = (req, res, next) => {
         error.statusCode = 401;
         throw error;
     }
-    req.user = decodedToken.userId;
+    req.userId = decodedToken.userId;
     next();
 }

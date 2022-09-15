@@ -110,7 +110,7 @@
               "in": "body",
               "description": "Reader that we want to create",
               "schema": {
-                "$ref": "#definitions/Reader"
+                "$ref": "#definitions/NewReader"
               }
             }
           ],
@@ -654,12 +654,24 @@
           }
         }
       },
+      "NewReader": {
+        "required": [
+          "reader_name"
+        ],
+        "properties": {
+          "reader_name": {
+            "type": "string"
+          }
+        }
+      },
     "Reader": {
         "required": [
           "parent_id",
           "reader_name",
           "total_reading_duration",
-          "reading_coins"
+          "reading_coins",
+          "reader_sessions",
+          "reader_prizes"
         ],
         "properties": {
           "parent_id": {
@@ -673,6 +685,14 @@
           },
           "reading_coins": {
             "type": "number"
+          },
+          "reader_sessions": {
+            "type": "array",
+            "$ref": "#definitions/ReaderSession"
+          },
+          "reader_prizes": {
+            "type": "array",
+            "$ref": "#definitions/ReaderPrize"
           }
         }
       },
@@ -698,7 +718,7 @@
               "type": "number"
             },
             "session_date": {
-              "type": "DateTime"
+              "type": "string"
             }
           }
       },

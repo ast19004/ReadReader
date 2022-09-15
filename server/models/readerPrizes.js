@@ -10,4 +10,4 @@ const prizeSchema = mongoose.Schema({
     }
 });
 
-module.export = mongoose.model('ReaderPrize', prizeSchema);
+module.exports = mongoose.model('ReaderPrize', prizeSchema);

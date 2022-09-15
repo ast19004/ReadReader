@@ -14,7 +14,7 @@ const readerSessionSchema = mongoose.Schema({
         required: true
     },
     session_date: {
-        type: Date, 
+        type: mongoose.Schema.Date, 
         default: Date.now,
         required: true
     }

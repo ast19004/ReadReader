@@ -37,7 +37,7 @@ exports.postSignup = (req, res, next) => {
         })
         .catch(err => {
             const error = new Error(err);
-            error.httpStatusCode = 500;
+            error.statusCode = 500;
             return next(error);
         });
 }
@@ -85,7 +85,7 @@ exports.postLogin = (req, res, next) => {
     })
     .catch( (err) => {
         const error = new Error(err);
-        error.httpStatusCode = 500;
+        error.statusCode = 500;
         return next(err);
     });
 }
