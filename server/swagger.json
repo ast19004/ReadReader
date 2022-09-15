@@ -110,7 +110,7 @@
               "in": "body",
               "description": "Reader that we want to create",
               "schema": {
-                "$ref": "#definitions/NewReader"
+                "$ref": "#definitions/UpdateReader"
               }
             }
           ],
@@ -165,7 +165,7 @@
               "in": "body",
               "description": "Reader with new values",
               "schema": {
-                "$ref": "#definitions/Reader"
+                "$ref": "#definitions/UpdateReader"
               }
             }
           ],
@@ -654,7 +654,7 @@
           }
         }
       },
-      "NewReader": {
+      "UpdateReader": {
         "required": [
           "reader_name"
         ],

@@ -1,5 +1,6 @@
 const { json } = require('express');
 const { validationResult } = require('express-validator');
+const reader = require('../models/reader');
 
 const Reader = require('../models/reader');
 const User = require('../models/user');
@@ -95,7 +96,39 @@ exports.getReader = async (req, res, next) => {
     }
 };
 
-exports.putReader = (req, res, next) => {};
+/** Edit a reader name in Reader database **/
+exports.putReader = async (req, res, next) => {
+    const readerId = req.params.readerId;
+    const updatedName = req.body.reader_name;
+
+    try{
+        const reader = await Reader.findById(readerId).where('parent_id')
+        .equals(req.userId);
+
+        if(!reader){
+            const error = new Error("Reader not found.");
+            error.statusCode= 404;
+            throw error;
+        }
+
+        reader.reader_name = updatedName;
+        await reader.save();
+
+
+        res.status(200).json({
+            message: 'Reader name updated',
+            updatedReader : reader
+        });
+
+    }catch(err){
+        if(!err.statusCode){
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};
+
+
 
 /** Delete a reader from Reader database and from reader list of logged in user **/
 exports.deleteReader = async (req, res, next) => {
@@ -113,14 +146,14 @@ exports.deleteReader = async (req, res, next) => {
         const updatedUserReaders = user.readers.filter(reader => reader.readerId.toString() !== paramReaderId.toString());
 
         user.readers = updatedUserReaders;
-        const updatedUser = user.save();
+        await user.save();
 
         await Reader.findByIdAndRemove(paramReaderId).where('parent_id')
         .equals(req.userId);
 
         res.status(200).json({
             message: "Reader deleted from Readers Database and logged-in User Data",
-            updatedUser: updatedUser
+            updatedUser: user
         });
 
     } catch(err){
