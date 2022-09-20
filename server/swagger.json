@@ -206,7 +206,7 @@
           }
         }
       },
-      "/reader/sessions": {
+      "/reader/{readerId}/sessions": {
         "get": {
         "security": [
             {
@@ -214,6 +214,15 @@
             }],
           "tags": ["ReaderSessions"],
           "summary": "Gets all sessions associated with reader in session database",
+          "parameters": [
+            {
+              "name": "readerId",
+              "in": "path",
+              "required": true,
+              "description": "ID of targeted reader",
+              "type": "string"
+            }
+          ],
           "responses": {
             "200": {
               "description": "OK",
@@ -254,8 +263,15 @@
           }
         }
       },
-      "/reader/session/{sessionId}": {
+      "/reader/{readerId}/session/{sessionId}": {
         "parameters": [
+          {
+            "name": "readerId",
+            "in": "path",
+            "required": true,
+            "description": "ID of targeted reader",
+            "type": "string"
+          },
           {
             "name": "sessionId",
             "in": "path",
@@ -279,7 +295,18 @@
               }
             }
           }
-        },
+        }
+      },
+      "/reader/session/": {
+        "parameters": [
+          {
+            "name": "readerId",
+            "in": "path",
+            "required": true,
+            "description": "ID of targeted reader",
+            "type": "string"
+          }
+        ],
         "put": {
           "security": [
             {
@@ -294,7 +321,7 @@
               "in": "body",
               "description": "Reader prize with new values",
               "schema": {
-                "$ref": "#definitions/ReaderSession"
+                "$ref": "#definitions/UpdateReaderSession"
               }
             }
           ],
@@ -323,7 +350,7 @@
             "200": {
               "description": "Reader session is deleted",
               "schema": {
-                "$ref": "#definitions/ReaderSession"
+                "$ref": "#definitions/UpdateReaderSession"
               }
             },
             "400": {
@@ -654,16 +681,6 @@
           }
         }
       },
-      "UpdateReader": {
-        "required": [
-          "reader_name"
-        ],
-        "properties": {
-          "reader_name": {
-            "type": "string"
-          }
-        }
-      },
     "Reader": {
         "required": [
           "parent_id",
@@ -688,7 +705,7 @@
           },
           "reader_sessions": {
             "type": "array",
-            "$ref": "#definitions/ReaderSession"
+            "$ref": "#definitions/ReaderSessions"
           },
           "reader_prizes": {
             "type": "array",
@@ -699,6 +716,16 @@
       "Readers": {
         "type": "array",
         "$ref": "#definitions/Reader"
+      },
+      "UpdateReader": {
+        "required": [
+          "reader_name"
+        ],
+        "properties": {
+          "reader_name": {
+            "type": "string"
+          }
+        }
       },
       "ReaderSession":{
         "required": [
@@ -724,8 +751,34 @@
       },
       "ReaderSessions":{
         "type": "array",
-        "$ref" : "#defintitions/ReaderSession"
+        "$ref" : "#definitions/ReaderSessions"
      },
+     "UpdateReaderSession":{
+      "required": [
+          "session_id",
+          "reader_id",
+          "book_title",
+          "reading_duration",
+          "session_date"
+        ],
+        "properties": {
+          "session_id": {
+            "type": "string"
+          },
+          "reader_id": {
+            "type": "string"
+          },
+          "book_title": {
+            "type": "string"
+          },
+          "reading_duration": {
+            "type": "number"
+          },
+          "session_date": {
+            "type": "string"
+          }
+        }
+    },
       "ReaderPrize": {
         "required": [
           "creator_id",

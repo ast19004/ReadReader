@@ -23,8 +23,8 @@ const readerSchema = mongoose.Schema({
         {
           sessionId: {
             type: Schema.Types.ObjectId,
-            ref: "Session",
-            required: true,
+            ref: "ReaderSession",
+            required: true
           },
         }
       ],

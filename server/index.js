@@ -15,8 +15,9 @@ const PORT = process.env.PORT || 5000;
 const MONGODB_URL =
   process.env.MONGODB_URL || `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB}.zr23rly.mongodb.net/?retryWrites=true&w=majority`;
 
-const userRoutes = require('./routes/users');
-const readerRoutes = require('./routes/readers');
+const userRoutes = require('./routes/user');
+const readerRoutes = require('./routes/reader/reader');
+const readerSessionRoutes = require('./routes/reader/readerSession');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
   });
 app.use(userRoutes);
 app.use(readerRoutes);
+app.use(readerSessionRoutes);
 
 mongoose
     .connect(MONGODB_URL)

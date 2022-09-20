@@ -60,10 +60,11 @@ exports.postLogin = (req, res, next) => {
             bcrypt.compare(password, user.password)
             .then((result) => {
                 if(result){
+                    const readerIds = user.readers.map(reader => reader.readerId.toString());
                     const token = jwt.sign(
                         {
                             userId: user._id.toString(),
-                            email: user.email
+                            readerIds : readerIds
                         },
                         process.env.JWT_SECRET,
                         {expiresIn: "1h"}

@@ -1,9 +1,7 @@
-const { json } = require('express');
 const { validationResult } = require('express-validator');
-const reader = require('../models/reader');
 
-const Reader = require('../models/reader');
-const User = require('../models/user');
+const Reader = require('../../models/reader');
+const User = require('../../models/user');
 
 /** Return all readers associated with logged in user **/
 exports.getAllReaders = async (req, res, next) => {
@@ -22,7 +20,6 @@ exports.getAllReaders = async (req, res, next) => {
 /** Add a created Reader to the reader database 
  * & add reader_id to the logged-in user's readers list **/
 exports.postReader = async (req, res, next) => {
-    console.log("postReader controller");
     const reader_name = req.body.reader_name;
 
     const errors = validationResult(req);
@@ -36,9 +33,9 @@ exports.postReader = async (req, res, next) => {
     //Find User in User database so reader can be added by reader_id
     const user = await User.findById(req.userId);
     if(!user){
-        console.log("User was not found");
         const error = new Error("User not found.");
         error.statusCode = 404;
+        throw error;
     }
     //Create new Reader in Reader Database
     const reader = new Reader({
@@ -138,9 +135,9 @@ exports.deleteReader = async (req, res, next) => {
     
     const user = await User.findById(req.userId);
     if(!user){
-        console.log("User was not found");
         const error = new Error("User not found.");
         error.statusCode = 404;
+        throw error;
         }
 
         const updatedUserReaders = user.readers.filter(reader => reader.readerId.toString() !== paramReaderId.toString());
