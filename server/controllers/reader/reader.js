@@ -7,7 +7,7 @@ const User = require('../../models/user');
 exports.getAllReaders = async (req, res, next) => {
     const user = await User.findById(req.userId);
 
-    const readerIds = user.readers.map(recipe => recipe.readerId);
+    const readerIds = user.readers.map(reader => reader.readerId);
 
     const readers = await Reader.find({'_id' : {$in : readerIds}});
 

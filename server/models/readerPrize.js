@@ -7,6 +7,14 @@ const prizeSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
+    prize_name : {
+        type: String,
+        required: true
+    },
+    prize_reading_requirement: {
+        type: Number,
+        required: true
+    },
     image_id: {
         type: Schema.Types.ObjectId,
         required: true

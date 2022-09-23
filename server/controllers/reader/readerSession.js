@@ -6,7 +6,6 @@ const Reader = require('../../models/reader');
 
 /** Return all reader sessions associated with a specific reader **/
  exports.getAllReaderSessions = async (req, res, next) => {
-    //readerId gathered from hidden input in body
     const readerId = req.params.readerId;
 
     const userReaderIds = req.userReaderIds;
@@ -185,7 +184,7 @@ exports.putReaderSession = async (req, res, next) => {
 
 /** Delete a reader session from Reader Session database
  *  & from the reader session list of a specified reader **/
-exports.deleteReader = async (req, res, next) => {
+exports.deleteReaderSession = async (req, res, next) => {
     const readerId = req.body.readerId;
     const userReaderIds = req.userReaderIds;
 

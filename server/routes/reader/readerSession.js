@@ -13,15 +13,15 @@ const readerSessionPostValidation = [
 
 const readerSessionPutValidation = [
     body('book_title').isLength({min: 1}).trim(),
-    body('reading-duration').isNumeric()
+    body('reading_duration').isNumeric()
 ];
 
 
 router.get('/reader/:readerId/sessions', isAuth, readerSessionController.getAllReaderSessions);
 router.post('/reader/session', readerSessionPostValidation, isAuth, readerSessionController.postReaderSession);
 router.get('/reader/:readerId/session/:sessionId', isAuth, readerSessionController.getReaderSession)
-//router.put('/reader/:readerId/session/:sessionId', isAuth, readerSessionPutValidation, readerSessionController.putReaderSession );
-//router.delete('/reader/:readerId/session/:sessionId', isAuth, readerSessionController.deleteReaderSession);
+router.put('/reader/session/:sessionId', readerSessionPutValidation, isAuth, readerSessionController.putReaderSession );
+router.delete('/reader/:readerId/session/:sessionId', isAuth, readerSessionController.deleteReaderSession);
 
 
 module.exports = router;

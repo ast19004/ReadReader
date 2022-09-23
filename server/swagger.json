@@ -295,47 +295,6 @@
               }
             }
           }
-        }
-      },
-      "/reader/session/": {
-        "parameters": [
-          {
-            "name": "readerId",
-            "in": "path",
-            "required": true,
-            "description": "ID of targeted reader",
-            "type": "string"
-          }
-        ],
-        "put": {
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "summary": "Use reader session id to update it in User Session database",
-          "tags": ["ReaderSessions"],
-          "parameters": [
-            {
-              "name": "session",
-              "in": "body",
-              "description": "Reader prize with new values",
-              "schema": {
-                "$ref": "#definitions/UpdateReaderSession"
-              }
-            }
-          ],
-          "responses": {
-            "204": {
-              "description": "Reader session is updated"
-            },
-            "400": {
-              "description": "Invalid ID supplied"
-            },
-            "404": {
-              "description": "Reader session not found"
-            }
-          }
         },
         "delete": {
           "security": [
@@ -350,8 +309,47 @@
             "200": {
               "description": "Reader session is deleted",
               "schema": {
-                "$ref": "#definitions/UpdateReaderSession"
+                "$ref": "#definitions/ReaderSession"
               }
+            },
+            "400": {
+              "description": "Invalid ID supplied"
+            },
+            "404": {
+              "description": "Reader session not found"
+            }
+          }
+        }
+      },
+      "/reader/session/{sessionId}": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "summary": "Use reader session id to update it in User Session databatase",
+          "tags": ["ReaderSessions"],
+          "parameters": [
+            {
+              "name": "sessionId",
+              "in": "path",
+              "required": true,
+              "description": "ID of targeted reader session",
+              "type": "string"
+            },
+            {
+              "name": "session",
+              "in": "body",
+              "description": "Reader session with new values",
+              "schema": {
+                "$ref": "#definitions/ReaderSession"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Reader session is updated"
             },
             "400": {
               "description": "Invalid ID supplied"
