@@ -1,22 +1,31 @@
 import {useState} from 'react';
 
-import logo from './logo.svg';
+import { Route, Switch } from 'react-router-dom';
+
 import './App.css';
 import Header from './components/Layout/Header'
-import Auth from './components/AuthUser/Auth';
-import AuthRegister from './components/AuthUser/AuthRegister';
+import Auth from './pages/AuthUser/Auth';
+import AuthLogin from './pages/AuthUser/AuthLogin'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [registerUser, setRegisterUser] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
   return (
     <div className="App">
-      <Header>
-
-      </Header>
-      {!isLoggedIn && <Auth/>}
-      {registerUser && <AuthRegister/>}
+      <Header/>
+      <main>
+        <Switch>
+            <Route path={'/'} exact>
+              {!isLoggedIn && <Auth/>}
+            </Route>
+            <Route path={'/login'}>
+              <AuthLogin/>
+            </Route>
+            <Route path={'/reader'}> 
+              <div>Welcome Reader</div>
+            </Route>
+          </Switch>
+      </main>
     </div>
   );
 }
