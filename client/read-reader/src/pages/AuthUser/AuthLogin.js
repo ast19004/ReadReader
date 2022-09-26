@@ -1,10 +1,31 @@
 import Button from "@mui/material/Button";
-import { CardActionArea } from '@mui/material';
+import { TextField } from '@mui/material';
 
 function AuthLogin() {
-    const imagePath = '/images/fantasybookreading_410.jpg';
+    const loginUser = (event) => {
+        alert('User logged in!');
+    };
+
     return (
-        <div>Login</div>
+        <form onSubmit={loginUser} >
+            <TextField
+            style={{ width: "200px", margin: "5px" }}
+            type="email"
+            label="Email"
+            variant="outlined"
+            />
+            <br />
+            <TextField
+            style={{ width: "200px", margin: "5px" }}
+            type="password"
+            label="Password"
+            variant="outlined"
+            />
+            <br />
+            <Button type="submit" variant="contained" color="primary">
+            Login
+            </Button>
+        </form>
     );
   }
   

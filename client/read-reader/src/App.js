@@ -5,7 +5,8 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Header from './components/Layout/Header'
 import Auth from './pages/AuthUser/Auth';
-import AuthLogin from './pages/AuthUser/AuthLogin'
+import AuthLogin from './pages/AuthUser/AuthLogin';
+import AuthRegister from './pages/AuthUser/AuthRegister'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
@@ -20,6 +21,9 @@ function App() {
             </Route>
             <Route path={'/login'}>
               <AuthLogin/>
+            </Route>
+            <Route path={'/register'}>
+              <AuthRegister/>
             </Route>
             <Route path={'/reader'}> 
               <div>Welcome Reader</div>

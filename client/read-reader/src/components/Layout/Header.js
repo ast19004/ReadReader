@@ -1,6 +1,9 @@
 import classes from './Header.module.css';
 
 import Button from '@mui/material/Button'
+import PersonIcon from '@mui/icons-material/Person';
+import Link from '@mui/material/Link';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
 
 const Header = () => {
@@ -10,8 +13,8 @@ const Header = () => {
         <header>
             <nav>
                 <ul>
-                    <li>LOGO</li>
-                    <Button>UserSelector</Button>
+                    <AutoStoriesIcon/>
+                    <PersonIcon/>
                 </ul>
             </nav>
         </header>
