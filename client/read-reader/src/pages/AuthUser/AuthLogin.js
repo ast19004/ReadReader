@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import { TextField } from '@mui/material';
+import styled from "styled-components";
 
 function AuthLogin() {
     const loginUser = (event) => {
@@ -7,7 +8,7 @@ function AuthLogin() {
     };
 
     return (
-        <form onSubmit={loginUser} >
+        <LoginForm onSubmit={loginUser} >
             <TextField
             style={{ width: "200px", margin: "5px" }}
             type="email"
@@ -25,9 +26,16 @@ function AuthLogin() {
             <Button type="submit" variant="contained" color="primary">
             Login
             </Button>
-        </form>
+        </LoginForm>
     );
   }
   
   export default AuthLogin;
+
+  const LoginForm = styled.form`
+    display: grid;
+    grid-template-column: auto;
+    justify-content: center;
+    margin-top: 2rem;
+  `;
 

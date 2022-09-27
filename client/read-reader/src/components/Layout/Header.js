@@ -1,8 +1,11 @@
 import classes from './Header.module.css';
 
+import { Link } from 'react-router-dom';
+
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
+
 import styled from 'styled-components';
 
 
@@ -13,16 +16,16 @@ const Header = () => {
         <Wrapper>
             <nav>
                 <IconsWrapper>
-                    <HomeIconWrapper>
+                    <HomeIconLink to='/'>
                         <AutoStoriesIcon fontSize="medium"/>
-                    </HomeIconWrapper>
+                    </HomeIconLink>
                     <UserIconsWrapper>
-                        <Icon>
+                        <IconLink to='/'>
                             <SettingsIcon fontSize="medium"/>
-                        </Icon>
-                        <Icon>
+                        </IconLink>
+                        <IconLink to='/'>
                             <PersonIcon fontSize='medium'/>
-                        </Icon>
+                        </IconLink>
                     </UserIconsWrapper>
                 </IconsWrapper>
             </nav>
@@ -49,19 +52,17 @@ const UserIconsWrapper = styled.li`
     margin-left: auto;
 `;
 
-const HomeIconWrapper = styled.li`
-    display: block;
-    background: white;
-    border-radius: 50%;
-    padding: 4px;
-`;
 
-const Icon = styled.div`
+const IconLink = styled(Link)`
     display: block;
     background: white;
     border-radius: 50%;
     padding: 4px;
-    margin: 0 0.5rem;
+    margin: 0.5rem;
     `;
+
+const HomeIconLink = styled(IconLink)`
+    margin: auto;
+`;
 
 

@@ -1,4 +1,5 @@
 import { TextField, Button} from '@mui/material';
+import styled from 'styled-components';
 
 function RegisterUser() {
     const registerUser = (event) => {
@@ -7,7 +8,7 @@ function RegisterUser() {
     };
 
     return (
-        <form onSubmit={registerUser}>
+        <RegisterForm onSubmit={registerUser}>
         <TextField
         style={{ width: "200px", margin: "5px" }}
         type="text"
@@ -46,9 +47,16 @@ function RegisterUser() {
         <Button type="submit" variant="contained" color="primary">
         Register
         </Button>
-    </form>
+    </RegisterForm>
     );
   }
   
   export default RegisterUser;
+
+  const RegisterForm = styled.form`
+  display: grid;
+  grid-template-column: auto;
+  justify-content: center;
+  margin-top: 2rem;
+`;
 
