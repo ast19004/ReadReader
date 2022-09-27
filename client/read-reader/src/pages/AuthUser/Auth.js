@@ -5,7 +5,9 @@ function Auth() {
     const imagePath = '/images/fantasybookreading_410.jpg';
     return (
         <>
-            <img src={imagePath}></img>
+            <picture>
+                <img src={imagePath}></img>
+            </picture>
             <Button component={Link} to='/login' variant="contained">Login</Button>
             <Button component={Link} to='/register' variant="contained">Sign Up</Button>
         </>
@@ -13,4 +15,5 @@ function Auth() {
   }
   
   export default Auth;
+
 
