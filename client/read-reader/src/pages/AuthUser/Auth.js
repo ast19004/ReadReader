@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import styled from "styled-components";
 
 function Auth() {
-    const imagePath = '/images/fantasybookreading_410.jpg';
+    const smImagePath = '/images/fantasybookreading_410.jpg';
+    const mdImagePath = '/images/fantasybookreading_640.jpg';
+    const lgImagePath = '/images/fantasybookreading_1280.jpg';
     return (
         <>
-            <picture>
-                <img src={imagePath}></img>
-            </picture>
+            <img 
+                src={smImagePath} 
+                srcSet={`${mdImagePath} 410w, ${lgImagePath} 640w `} 
+                alt="Girl reading next to a tree with a small door in a fantasy forest."/>
             <AuthButtons>
                 <Button component={Link} to='/login' variant="contained">Login</Button>
                 <Button component={Link} to='/register' variant="contained">Sign Up</Button>

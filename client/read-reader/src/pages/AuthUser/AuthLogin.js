@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
+import AuthContext from "../../store/auth-contex";
 import Button from "@mui/material/Button";
 import { TextField } from '@mui/material';
 import styled from "styled-components";
 
 function AuthLogin() {
+    const authCtx = useContext(AuthContext);
+
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
 
@@ -28,6 +31,7 @@ function AuthLogin() {
         };
         alert(`Login Info: ${JSON.stringify(loggedInUserInfo)}`);
         resetForm();
+        authCtx.loginUser(loggedInUserInfo.email, loggedInUserInfo.password);
     };
 
     return (

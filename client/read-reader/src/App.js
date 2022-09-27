@@ -1,36 +1,36 @@
-import {useState} from 'react';
-
+import { useContext} from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import './App.css';
-import Header from './components/Layout/Header'
+import AuthProvider from './store/auth-contex'
+import Header from './components/Layout/Header';
 import Auth from './pages/AuthUser/Auth';
 import AuthLogin from './pages/AuthUser/AuthLogin';
 import AuthRegister from './pages/AuthUser/AuthRegister'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const authCtx = useContext(AuthProvider);
 
   return (
-    <div className="App">
-      <Header/>
-      <main>
-        <Switch>
-            <Route path={'/'} exact>
-              {!isLoggedIn && <Auth/>}
-            </Route>
-            <Route path={'/login'}>
-              <AuthLogin/>
-            </Route>
-            <Route path={'/register'}>
-              <AuthRegister/>
-            </Route>
-            <Route path={'/reader'}> 
-              <div>Welcome Reader</div>
-            </Route>
-          </Switch>
-      </main>
-    </div>
+      <>
+        <Header/>
+        <main>
+          <Switch>
+              <Route path={'/'} exact>
+                {!authCtx.isLoggedIn && <Auth/>}
+              </Route>
+              <Route path={'/login'}>
+                <AuthLogin/>
+              </Route>
+              <Route path={'/register'}>
+                <AuthRegister/>
+              </Route>
+              <Route path={'/reader'}> 
+                <div>Welcome Reader</div>
+              </Route>
+            </Switch>
+        </main>
+      </>
   );
 }
 

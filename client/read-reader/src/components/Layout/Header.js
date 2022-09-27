@@ -1,3 +1,7 @@
+import { useContext  } from 'react';
+
+import AuthContext from '../../store/auth-contex';
+
 import { Link } from 'react-router-dom';
 
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
@@ -10,6 +14,7 @@ import styled from 'styled-components';
 const Header = () => {
 /* User Selector Btn also includes Logot btn
     if logged in show logout and user selection btn*/
+    const authCtx = useContext(AuthContext);
     return (
         <Wrapper>
             <nav>
@@ -17,14 +22,16 @@ const Header = () => {
                     <HomeIconLink to='/'>
                         <AutoStoriesIcon fontSize="medium"/>
                     </HomeIconLink>
+                    {authCtx.isLoggedIn &&
                     <UserIconsWrapper>
                         <IconLink to='/'>
                             <SettingsIcon fontSize="medium"/>
                         </IconLink>
-                        <IconLink to='/'>
+                        <IconLink to='/' onClick={authCtx.onLogout}>
                             <PersonIcon fontSize='medium'/>
                         </IconLink>
                     </UserIconsWrapper>
+                    }
                 </IconsWrapper>
             </nav>
         </Wrapper>
