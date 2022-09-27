@@ -1,15 +1,40 @@
+import { useState } from "react";
+
 import Button from "@mui/material/Button";
 import { TextField } from '@mui/material';
 import styled from "styled-components";
 
 function AuthLogin() {
+    const [enteredEmail, setEnteredEmail] = useState('');
+    const [enteredPassword, setEnteredPassword] = useState('');
+
+    const resetForm = () => {
+        setEnteredEmail('');
+        setEnteredPassword('');
+    }
+
+    const emailChangeHandler = (event) => {
+        setEnteredEmail(event.target.value);
+    };
+
+    const passwordChangeHandler = (event) => {
+        setEnteredPassword(event.target.value);
+    };
+
     const loginUser = (event) => {
-        alert('User logged in!');
+        const loggedInUserInfo = {
+            email: enteredEmail,
+            password: enteredPassword
+        };
+        alert(`Login Info: ${JSON.stringify(loggedInUserInfo)}`);
+        resetForm();
     };
 
     return (
         <LoginForm onSubmit={loginUser} >
             <TextField
+            onChange={emailChangeHandler}
+            value={enteredEmail}
             style={{ width: "200px", margin: "5px" }}
             type="email"
             label="Email"
@@ -17,6 +42,8 @@ function AuthLogin() {
             />
             <br />
             <TextField
+            onChange={passwordChangeHandler}
+            value={enteredPassword}
             style={{ width: "200px", margin: "5px" }}
             type="password"
             label="Password"

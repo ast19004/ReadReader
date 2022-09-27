@@ -1,5 +1,3 @@
-import classes from './Header.module.css';
-
 import { Link } from 'react-router-dom';
 
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
@@ -38,6 +36,9 @@ export default Header;
 
 const Wrapper = styled.header`
     background-color : 	#888;
+`;
+
+const MainNav = styled.nav`
 `;
 
 const IconsWrapper = styled.ul`
