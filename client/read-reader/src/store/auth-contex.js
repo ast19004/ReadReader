@@ -23,6 +23,7 @@ export const AuthContextProvider = (props) => {
     const logoutHandler = () => {
       localStorage.removeItem('isLoggedIn');
       setIsLoggedIn(false);
+      <Redirect to="/" exact/>
     };
   
     const loginHandler = () => {
