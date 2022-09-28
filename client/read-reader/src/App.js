@@ -1,5 +1,5 @@
 import { useContext} from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css';
 import AuthProvider from './store/auth-contex'
@@ -7,9 +7,12 @@ import Header from './components/Layout/Header';
 import Auth from './pages/AuthUser/Auth';
 import AuthLogin from './pages/AuthUser/AuthLogin';
 import AuthRegister from './pages/AuthUser/AuthRegister'
+import AuthWelcome from './pages/AuthUser/AuthWelcome'
+import Settings from './pages/AuthUser/Settings'
 
 function App() {
   const authCtx = useContext(AuthProvider);
+
 
   return (
       <>
@@ -20,13 +23,19 @@ function App() {
                 {!authCtx.isLoggedIn && <Auth/>}
               </Route>
               <Route path={'/login'}>
-                <AuthLogin/>
+              {authCtx.isLoggedIn ? <Redirect to="/welcome"/> : <AuthLogin/>}
+              </Route>
+              <Route path={'/welcome'}>
+                <AuthWelcome/>
               </Route>
               <Route path={'/register'}>
                 <AuthRegister/>
               </Route>
               <Route path={'/reader'}> 
                 <div>Welcome Reader</div>
+              </Route>
+              <Route path={'/settings'}> 
+                <Settings/>
               </Route>
             </Switch>
         </main>
