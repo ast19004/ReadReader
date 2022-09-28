@@ -22,14 +22,14 @@ function App() {
               <Route path={'/'} exact>
                 {!authCtx.isLoggedIn && <Auth/>}
               </Route>
+              <Route path={'/register'}>
+                <AuthRegister/>
+              </Route>
               <Route path={'/login'}>
               {authCtx.isLoggedIn ? <Redirect to="/welcome"/> : <AuthLogin/>}
               </Route>
               <Route path={'/welcome'}>
                 <AuthWelcome/>
-              </Route>
-              <Route path={'/register'}>
-                <AuthRegister/>
               </Route>
               <Route path={'/reader'}> 
                 <div>Welcome Reader</div>
