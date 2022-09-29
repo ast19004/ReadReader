@@ -1,40 +1,30 @@
 import React ,{useEffect, useState } from 'react';
 
-import { Redirect } from "react-router-dom";
-
 const AuthContext = React.createContext({
+
     isLoggedIn: false,
+    token: '',
     onLogout : () => {},
-    onLogin: (email, password) => {}
+    onLogin: (token) => {}
 });
 
 export const AuthContextProvider = (props) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(true); 
-
-    useEffect(() => {
-        const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
-
-        if(storedUserLoggedInInformation === '1'){
-            setIsLoggedIn(true);
-        }
-    }
-,[]);
+    const [token, setToken] = useState(null);
+    const userIsLoggedIn = !!token;
 
     const logoutHandler = () => {
-      localStorage.removeItem('isLoggedIn');
-      setIsLoggedIn(false);
-      <Redirect to="/" exact/>
+      setToken(null);
     };
   
-    const loginHandler = () => {
-      localStorage.setItem('isLoggedIn', '1');
-      setIsLoggedIn(true);
+    const loginHandler = (token) => {
+      setToken(token);
     }
 
     return (
         <AuthContext.Provider 
             value={{
-                isLoggedIn: isLoggedIn,
+                token: token,
+                isLoggedIn: userIsLoggedIn,
                 onLogout: logoutHandler,
                 onLogin: loginHandler
         }}>

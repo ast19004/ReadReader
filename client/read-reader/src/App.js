@@ -1,5 +1,5 @@
-import { useContext} from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { useContext} from 'react';
 
 import './App.css';
 import AuthProvider from './store/auth-contex'
@@ -10,32 +10,37 @@ import AuthRegister from './pages/AuthUser/AuthRegister'
 import AuthWelcome from './pages/AuthUser/AuthWelcome'
 import Settings from './pages/AuthUser/Settings'
 
+import ProtectedRoute from './components/ProtectedRoute';
+
 function App() {
   const authCtx = useContext(AuthProvider);
 
-
+  //The final Route sends any undefined route to the initial Auth: login/signup page
   return (
       <>
         <Header/>
         <main>
           <Switch>
               <Route path={'/'} exact>
-                {!authCtx.isLoggedIn && <Auth/>}
+                {!authCtx.isLoggedIn ? <Auth/> : <AuthWelcome/>}
               </Route>
               <Route path={'/register'}>
                 <AuthRegister/>
               </Route>
               <Route path={'/login'}>
-              {authCtx.isLoggedIn ? <Redirect to="/welcome"/> : <AuthLogin/>}
+              <AuthLogin/>
               </Route>
-              <Route path={'/welcome'}>
-                <AuthWelcome/>
-              </Route>
-              <Route path={'/reader'}> 
+
+              <ProtectedRoute path={'/reader'} redirectPath={'/'}>
                 <div>Welcome Reader</div>
-              </Route>
-              <Route path={'/settings'}> 
+              </ProtectedRoute>
+
+              <ProtectedRoute path={'/reader'} redirectPath={'/'}>
                 <Settings/>
+              </ProtectedRoute>
+
+              <Route path={'*'}>
+                <Redirect to='/'/>
               </Route>
             </Switch>
         </main>
