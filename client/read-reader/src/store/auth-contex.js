@@ -24,7 +24,7 @@ export const AuthContextProvider = (props) => {
         <AuthContext.Provider 
             value={{
                 token: token,
-                isLoggedIn: userIsLoggedIn,
+                isLoggedIn: true,
                 onLogout: logoutHandler,
                 onLogin: loginHandler
         }}>
