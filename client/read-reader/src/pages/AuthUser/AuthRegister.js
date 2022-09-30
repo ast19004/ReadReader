@@ -39,15 +39,33 @@ function RegisterUser() {
 
     const registerUser = (event) => {
         event.preventDefault();
+        try{
+        const url = "http://localhost:5000/user/register";
+        const res = fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                firstName: enteredFirstName,
+                lastName: enteredLastName,
+                email: enteredEmail,
+                password: enteredEmail,
+                confirmPassword: enteredPasswordConfirm
+            })
+        });
 
-        const newUser = {
-            firstName: enteredFirstName,
-            lastName: enteredLastName,
-            email: enteredEmail,
-            password: enteredPassword,
-            passwordConfirm: enteredPasswordConfirm
-        };
-        alert(`New User: ${JSON.stringify(newUser)}`);
+        if (res.status === 422){
+            throw new Error('Validation failed.');
+        }
+        if (res.status !== 200 & res.status !== 201){
+            throw new Error('Could not authenticate you!');
+        }
+
+    } catch(err){
+        console.log(err);
+    }
+
         resetForm();
     };
 

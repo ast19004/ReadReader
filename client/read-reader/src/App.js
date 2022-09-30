@@ -10,7 +10,7 @@ import AuthRegister from './pages/AuthUser/AuthRegister'
 import AuthWelcome from './pages/AuthUser/AuthWelcome'
 import Settings from './pages/AuthUser/Settings'
 
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './components/Auth/ProtectedRoute';
 
 function App() {
   const authCtx = useContext(AuthProvider);

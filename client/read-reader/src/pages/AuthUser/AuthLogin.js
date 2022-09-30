@@ -8,6 +8,8 @@ import styled from "styled-components";
 function AuthLogin() {
     const authCtx = useContext(AuthContext);
 
+    const url = "http://localhost:5000/user/login";
+
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
 
@@ -24,18 +26,38 @@ function AuthLogin() {
         setEnteredPassword(event.target.value);
     };
 
-    const loginUser = (event) => {
-        const loggedInUserInfo = {
-            email: enteredEmail,
-            password: enteredPassword
-        };
-        alert(`Login Info: ${JSON.stringify(loggedInUserInfo)}`);
-        resetForm();
-        authCtx.loginUser(loggedInUserInfo.email, loggedInUserInfo.password);
-    };
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        let token = null;
+        
+        try{
+        const res = fetch(url, {
+            method: 'POST',
+            header: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "email" : enteredEmail,
+                "password" : enteredPassword
+            })
+        });
+        if (res.status === 422){
+            throw new Error('Validation failed.');
+        }
+        if (res.status !== 200 & res.status !== 201){
+            throw new Error('Could not authenticate you!');
+        }
+        const resData = res.json();
+        token = resData.token;
+    } catch(err){console.log(err)};
+
+    authCtx.onLogin(token);
+    resetForm();
+   }
 
     return (
-        <LoginForm onSubmit={loginUser} >
+        <LoginForm onSubmit={handleLogin} >
             <TextField
             onChange={emailChangeHandler}
             value={enteredEmail}

@@ -10,10 +10,16 @@ exports.postSignup = (req, res, next) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
-    const password = req.body.password;
+    const password = req.body.password; 
+    const confirmPassword = req.body.confirmPassword;
+
+    if(password.equals(confirmPassword)){
+        const error = new Error('The password confirmation does not match.');
+        error.statusCode= 409;
+        throw error; 
+    };
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        console.log(errors.array());
         return res.status(422).json({
             errorMessage: errors.array()[0].errorMessage,
             validationErrors: errors.array()
@@ -32,12 +38,14 @@ exports.postSignup = (req, res, next) => {
             });
             return user.save();
         })
-        .then( result => {
-            res.status(201).json({message: "User Added Successfully."});
+        .then( savedUserData => {
+            res.status(201).json({message: "User Added Successfully.", user: savedUserData});
         })
         .catch(err => {
             const error = new Error(err);
-            error.statusCode = 500;
+            if(!err.statusCode){
+                error.statusCode = 500;
+            }
             return next(error);
         });
 }
