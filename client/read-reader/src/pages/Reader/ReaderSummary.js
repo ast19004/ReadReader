@@ -9,8 +9,8 @@ import { Switch, } from 'react-router-dom';
 
 import ProtectedRoute from "../../components/Auth/ProtectedRoute";
 import UpdateReader from "./UpdateReader";
-import UpdatePrizes from "../Prizes/UpdatePrizes";
-import RedeemPrizes from "../Prizes/RedeemPrizes";
+import UpdatePrizes from "../Prize/UpdatePrizes";
+import RedeemPrizes from "../Prize/RedeemPrizes";
 
 const ReaderSummary = () => {
     return (

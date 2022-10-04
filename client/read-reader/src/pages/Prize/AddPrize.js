@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { TextField, Button} from '@mui/material';
 import styled from 'styled-components';
 
-function AddReader() {
+function AddPrize() {
     const [enteredName, setEnteredName] = useState('');
+    const [enteredReadingRequirement, setEnteredReadingRequirement] = useState('');
 
     const resetForm = () => {
         setEnteredName('')
@@ -13,9 +14,13 @@ function AddReader() {
         setEnteredName(event.target.value);
     };
 
+    const readingRequirementChangeHandler = (event) => {
+        setEnteredName(event.target.value);
+    };
 
 
-    const addReader = async (event) => {
+
+    const addPrize = async (event) => {
         event.preventDefault();
 
         const requestOptions = {
@@ -24,11 +29,12 @@ function AddReader() {
                 'Content-Type' : 'application/json'
             },
             body: JSON.stringify({
-                reader_name: enteredName
+                prize_name: enteredName,
+                prize_reading_requirement: +enteredReadingRequirement
             })
         };
         try{
-        const url = "http://localhost:5000/reader";
+        const url = "http://localhost:5000/prize";
         const res = await fetch(url, requestOptions);
 
     } catch(err){
@@ -38,24 +44,33 @@ function AddReader() {
     };
 
     return (
-        <CustomForm onSubmit={addReader}>
+        <CustomForm onSubmit={addPrize}>
         <TextField
         onChange={nameChangeHandler}
         value={enteredName}
         style={{ width: "200px", margin: "5px" }}
         type="text"
-        label="Name"
+        label="Prize Name"
+        variant="outlined"
+        />
+        <br />
+        <TextField
+        onChange={readingRequirementChangeHandler}
+        value={enteredReadingRequirement}
+        style={{ width: "200px", margin: "5px" }}
+        type="text"
+        label="Reading Requirement (minutes)"
         variant="outlined"
         />
         <br />
         <Button type="submit" variant="contained" color="primary">
-        Add Reader
+        Add Prize
         </Button>
     </CustomForm>
     );
   }
   
-  export default AddReader;
+  export default AddPrize;
 
   const CustomForm = styled.form`
   display: grid;
