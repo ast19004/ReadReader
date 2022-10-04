@@ -11,13 +11,7 @@ exports.postSignup = (req, res, next) => {
     const lastName = req.body.lastName;
     const email = req.body.email;
     const password = req.body.password; 
-    const confirmPassword = req.body.confirmPassword;
 
-    if(password.equals(confirmPassword)){
-        const error = new Error('The password confirmation does not match.');
-        error.statusCode= 409;
-        throw error; 
-    };
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(422).json({

@@ -29,9 +29,13 @@ const ReaderBadgesContainer = styled.div`
     justify-content: center;
     align-content: center;
     margin-top: 5rem;
+    margin-bottom: 1rem;
 
     @media(min-width: 500px){
         grid-template-columns: auto auto;
+    }
+    @media(min-width: 850px){
+        grid-template-columns: auto auto auto;
     }
 
 `;

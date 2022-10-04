@@ -37,12 +37,11 @@ function RegisterUser() {
         setEnteredPasswordConfirm(event.target.value);
     };
 
-    const registerUser = (event) => {
+    const registerUser = async (event) => {
         event.preventDefault();
-        try{
-        const url = "http://localhost:5000/user/register";
-        const res = fetch(url, {
-            method: 'PUT',
+
+        const requestOptions = {
+            method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
             },
@@ -53,14 +52,12 @@ function RegisterUser() {
                 password: enteredEmail,
                 confirmPassword: enteredPasswordConfirm
             })
-        });
+        };
+        try{
+        const url = "http://localhost:5000/user/register";
+        const res = await fetch(url, requestOptions);
 
-        if (res.status === 422){
-            throw new Error('Validation failed.');
-        }
-        if (res.status !== 200 & res.status !== 201){
-            throw new Error('Could not authenticate you!');
-        }
+        console.log(JSON.stringify(res));
 
     } catch(err){
         console.log(err);

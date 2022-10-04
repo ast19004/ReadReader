@@ -9,6 +9,7 @@ import AuthLogin from './pages/AuthUser/AuthLogin';
 import AuthRegister from './pages/AuthUser/AuthRegister'
 import AuthWelcome from './pages/AuthUser/AuthWelcome'
 import Settings from './pages/AuthUser/Settings'
+import ReaderSummary from './pages/Reader/ReaderSummary';
 
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 
@@ -32,10 +33,10 @@ function App() {
               </Route>
 
               <ProtectedRoute path={'/reader'} redirectPath={'/'}>
-                <div>Welcome Reader</div>
+                <ReaderSummary/>
               </ProtectedRoute>
 
-              <ProtectedRoute path={'/reader'} redirectPath={'/'}>
+              <ProtectedRoute path={'/settings'} redirectPath={'/'}>
                 <Settings/>
               </ProtectedRoute>
 

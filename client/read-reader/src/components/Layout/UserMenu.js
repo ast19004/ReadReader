@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react';
 
 import AuthContext from '../../store/auth-contex';
 
+import { Link } from 'react-router-dom';
+
 import { Menu, MenuItem, IconButton, Avatar, Divider, ListItemIcon } from '@mui/material';
 import {Person, PersonAdd, Logout} from '@mui/icons-material';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -80,13 +82,13 @@ const UserMenu = () => {
                 <Divider />
                 <MenuItem>
                     <ListItemIcon>
-                        <Avatar/>
+                        <Avatar>RS</Avatar>
                     </ListItemIcon>
                         Reader1
                 </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
-                        <Avatar/>
+                        <Avatar>AS</Avatar>
                     </ListItemIcon>
                         Reader2
                 </MenuItem>
