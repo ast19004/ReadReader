@@ -11,6 +11,8 @@ import AuthWelcome from './pages/AuthUser/AuthWelcome'
 import Settings from './pages/AuthUser/Settings'
 import ReaderSummary from './pages/Reader/ReaderSummary';
 
+import AddReader from './pages/Reader/AddReader';
+
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 
 function App() {
@@ -32,8 +34,12 @@ function App() {
               <AuthLogin/>
               </Route>
 
-              <ProtectedRoute path={'/reader'} redirectPath={'/'}>
+              <ProtectedRoute path={'/reader'} exact redirectPath={'/'}>
                 <ReaderSummary/>
+              </ProtectedRoute>
+
+              <ProtectedRoute path={'/reader/add'} redirectPath={'/'}>
+                <AddReader/>
               </ProtectedRoute>
 
               <ProtectedRoute path={'/settings'} redirectPath={'/'}>
