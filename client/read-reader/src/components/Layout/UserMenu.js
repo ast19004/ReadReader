@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 
 import AuthContext from '../../store/auth-contex';
 
@@ -11,6 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import styled from 'styled-components';
 
 const UserMenu = () => {
+    const userMenu = useRef();
     const authCtx = useContext(AuthContext);
 
     const [anchorElement, setAnchorElement] = useState(null);
@@ -22,6 +23,7 @@ const UserMenu = () => {
     };
     const handleMenuClose = () => {
         setAnchorElement(null);
+        
         
     };
 
@@ -46,9 +48,10 @@ const UserMenu = () => {
             <Menu
                 anchorEl={anchorElement}
                 id="user-menu"
-                open={userMenuOpen}
+                open={ userMenuOpen }
                 onClose={handleMenuClose}
                 onClick={handleMenuClick}
+                ref= { userMenu }
                 PaperProps={{
                     elevation: 0,
                     sx: {
@@ -82,13 +85,13 @@ const UserMenu = () => {
                 <Divider />
                 <MenuItem>
                     <ListItemIcon>
-                        <Avatar>RS</Avatar>
+                        <Avatar>Ru</Avatar>
                     </ListItemIcon>
                         Reader1
                 </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
-                        <Avatar>AS</Avatar>
+                        <Avatar>An</Avatar>
                     </ListItemIcon>
                         Reader2
                 </MenuItem>

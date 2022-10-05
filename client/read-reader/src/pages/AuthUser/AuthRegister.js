@@ -4,6 +4,8 @@ import { TextField, Button} from '@mui/material';
 import styled from 'styled-components';
 
 function RegisterUser() {
+    const [error, setError] = useState('');
+
     const [enteredFirstName, setEnteredFirstName] = useState('');
     const [enteredLastName, setEnteredLastName] = useState('');
     const [enteredEmail, setEnteredEmail] = useState('');
@@ -40,27 +42,30 @@ function RegisterUser() {
     const registerUser = async (event) => {
         event.preventDefault();
 
+        const url = "http://localhost:5000/user/register";
         const requestOptions = {
             method: 'POST',
             headers: {
-                'Content-Type' : 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify({
                 firstName: enteredFirstName,
                 lastName: enteredLastName,
                 email: enteredEmail,
-                password: enteredEmail,
+                password: enteredPassword,
                 confirmPassword: enteredPasswordConfirm
             })
         };
         try{
-        const url = "http://localhost:5000/user/register";
         const res = await fetch(url, requestOptions);
-
-        console.log(JSON.stringify(res));
+        const resData = await res.json();
+        if(resData.errorMessage){
+            setError(resData.errorMessage);
+        }
 
     } catch(err){
-        console.log(err);
+        setError(err);
     }
 
         resetForm();
@@ -116,6 +121,7 @@ function RegisterUser() {
         <Button type="submit" variant="contained" color="primary">
         Register
         </Button>
+        {error && <p>{error}</p>}
     </RegisterForm>
     );
   }

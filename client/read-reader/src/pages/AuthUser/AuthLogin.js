@@ -10,6 +10,7 @@ function AuthLogin() {
 
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
+    const [error, setError] = useState(''); 
 
     const resetForm = () => {
         setEnteredEmail('');
@@ -26,14 +27,14 @@ function AuthLogin() {
 
     const handleLogin = async (event) => {
         event.preventDefault();
-        const url = "http://localhost:5000/user/login";
+        const url = "http://localhost:5000/user/login/";
         let token = null;
 
         const requestOptions = {
             method: 'POST',
-            header: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json'
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify({
                 email : enteredEmail,
@@ -43,15 +44,17 @@ function AuthLogin() {
         
         try{
         const res = await fetch(url, requestOptions);
+
+        const resData = await res.json();
+        
         if (res.status === 400){
             throw new Error('Validation failed.');
         }
         if (res.status !== 200 & res.status !== 201){
             throw new Error('Could not authenticate you!');
         }
-        const resData = await res.json();
         token = resData.token;
-    } catch(err){console.log(err)};
+    } catch(err){setError(err.message)};
 
     authCtx.onLogin(token);
     resetForm();
@@ -80,6 +83,7 @@ function AuthLogin() {
             <Button type="submit" variant="contained" color="primary">
             Login
             </Button>
+            {error && <p>{error}</p>}
         </LoginForm>
     );
   }

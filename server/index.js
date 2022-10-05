@@ -8,7 +8,6 @@ const swaggerUi = require("swagger-ui-express"),
 const express = require('express');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
-const { dirname } = require('path');
 
 const path = require('path');
 const PORT = process.env.PORT || 5000;
@@ -22,6 +21,8 @@ const readerSessionRoutes = require('./routes/reader/readerSession');
 const app = express();
 
 app.use(bodyParser.json());
+app.use(bodyParser.text({type: 'text/plain'}));
+
 app.use(express.static(path.join(__dirname + "/public")));
 
 app.use((req, res, next) => {

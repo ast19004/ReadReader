@@ -12,10 +12,14 @@ exports.postSignup = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password; 
 
+    console.log(`req.body  : ${JSON.stringify(req.body)}`);
+
     const errors = validationResult(req);
+
+
     if(!errors.isEmpty()){
-        return res.status(422).json({
-            errorMessage: errors.array()[0].errorMessage,
+        return res.status(400).json({
+            errorMessage: errors.array()[0].msg,
             validationErrors: errors.array()
         });
     }
@@ -45,12 +49,13 @@ exports.postSignup = (req, res, next) => {
 }
 
 exports.postLogin = (req, res, next) => {
+
     const email = req.body.email;
     const password = req.body.password;
 
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(422).json({
+        return res.status(400).json({
             errorMessage: errors.array()[0].errorMessage,
             validationErrors: errors.array(),
         });

@@ -28,12 +28,18 @@ function App() {
               <Route path={'/'} exact>
                 {!authCtx.isLoggedIn ? <Auth/> : <AuthWelcome/>}
               </Route>
+              
+              { !authCtx.isLoggedIn &&
               <Route path={'/register'}>
                 <AuthRegister/>
               </Route>
+              }
+
+              { !authCtx.isLoggedIn &&
               <Route path={'/login'}>
               <AuthLogin/>
               </Route>
+              }
 
               <ProtectedRoute path={'/reader'} exact redirectPath={'/'}>
                 <ReaderSummary/>
