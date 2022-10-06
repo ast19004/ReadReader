@@ -48,7 +48,7 @@ const ReaderSummary = () => {
 
         };
         fetchReader().catch(err=> setError(err.msg));
-    }, []);
+    }, [readerId]);
 
     return (
         <>  
@@ -59,9 +59,10 @@ const ReaderSummary = () => {
                 <ReaderWeeklyAchievement style={{alignSelf : 'center'}}/>
             </ReaderSummaryContent>
             <EditReaderActionButtons>
+                <Button variant="outlined">Session Log</Button>
                 <Button variant="outlined">Update Reader</Button>
-                <Button variant="outlined">Update Prizes</Button>
-                <Button variant="outlined">Redeem Prizes</Button>
+                 {/* Include Redeem Prizes in Prizes */}
+                <Button variant="outlined">Prizes</Button>
             </EditReaderActionButtons>
             <Switch>
                 <ProtectedRoute path={'/updateReader'} redirectPath={'/'}>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from "react-router-dom"
 
 import AuthContext from '../../store/auth-contex';
@@ -15,6 +15,10 @@ const UserMenu = () => {
     const history = useHistory();
 
     const [anchorEl, setAnchorEl] = useState(null);
+    const [readers, setReaders] = useState();
+
+    // if "" user == mainUser
+    const[currentReader, setCurrentReader] = useState("");
 
     const userMenuOpen = !!anchorEl;
 
@@ -28,6 +32,45 @@ const UserMenu = () => {
     const handleAddReader = () => {
         history.push('/reader');
     };
+
+    const handleSelectMainUser = () => {
+        setCurrentReader("")
+        history.push('/');
+    }
+
+    useEffect(()=> {
+        const url = "http://localhost:5000/readers";
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                Authorization: 'Bearer ' + authCtx.token
+            }
+        };
+        
+        const fetchReaderData = async() => {
+            const res = await fetch(url, requestOptions);
+
+            if(!res.ok){
+                throw new Error('Something went wrong!');
+            };
+            const resData = await res.json();
+            
+            const loadedReaders = resData.readers.map(reader => {
+                const initials = [...reader['reader_name']].splice(0, 2).join("");
+                return {
+                    id: reader['_id'],
+                    name: reader['reader_name'],
+                    initials: initials.charAt(0).toUpperCase() + initials.slice(1),
+            }
+        });
+            setReaders(loadedReaders);
+            };
+
+            fetchReaderData().catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     return (
         <div>
@@ -44,7 +87,12 @@ const UserMenu = () => {
             aria-haspopup="true"
             aria-expanded={userMenuOpen ? 'true' : undefined}
             >
-            <Person fontSize='medium'/>
+            { !currentReader && 
+                <Person fontSize='medium'/>
+            }
+            { currentReader && 
+                <Avatar sx={{ width: 23, height: 23, color: 'black', bgcolor: "white", padding: '1px'}}>{currentReader}</Avatar>
+            }
         </IconButton>
         <MenuWrapper>
             <Menu
@@ -82,25 +130,21 @@ const UserMenu = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem><Avatar/>USER</MenuItem>
+                <MenuItem onClick={handleSelectMainUser}><Avatar/>USER</MenuItem>
                 <Divider />
-                <MenuItem>
-                    <ListItemIcon>
-                        <Avatar>Ru</Avatar>
-                    </ListItemIcon>
-                        Reader1
-                </MenuItem>
-                <MenuItem>
-                    <ListItemIcon>
-                        <Avatar>An</Avatar>
-                    </ListItemIcon>
-                        Reader2
-                </MenuItem>
+                { readers && readers.map((reader)=>  
+                     <MenuItem key={reader.id} onClick={ () => {setCurrentReader(reader.initials); history.push(`/reader/${reader.id}`);}}>
+                        <ListItemIcon>
+                            <Avatar>{reader.initials}</Avatar>
+                        </ListItemIcon>
+                            {reader.name}
+                    </MenuItem>
+                )}
                 <MenuItem onClick={handleAddReader}>
                 <ListItemIcon>
                     <PersonAdd fontSize="small" />
                 </ListItemIcon>
-                    Add another reader
+                    Add reader
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={authCtx.onLogout}>
