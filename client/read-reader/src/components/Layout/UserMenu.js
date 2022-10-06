@@ -1,4 +1,5 @@
-import React, { useState, useContext, useHistory } from 'react';
+import React, { useState, useContext } from 'react';
+import { useHistory } from "react-router-dom"
 
 import AuthContext from '../../store/auth-contex';
 
@@ -16,7 +17,6 @@ const UserMenu = () => {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const userMenuOpen = !!anchorEl;
-    console.log(userMenuOpen);
 
     const handleMenuClick = (event) => {
         setAnchorEl(event.target);
