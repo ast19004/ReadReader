@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 const ReaderBadge = (props) => {
 
-    console.log(`props.readerName: ${props.readerName}`);
-
     const initials = [...props.readerName].slice(0,2).join("");
     const capitalizedInitials = initials.charAt(0).toUpperCase() + initials.slice(1)
     return (

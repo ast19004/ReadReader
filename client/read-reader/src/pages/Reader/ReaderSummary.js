@@ -23,7 +23,7 @@ const ReaderSummary = () => {
     const authCtx = useContext(AuthContext);
     const [error, setError] = useState('');
 
-    const [reader, setReader] = useState({});
+    const [reader, setReader] = useState();
 
     useEffect(()=>{
         const url = "http://localhost:5000/reader/" + readerId;
