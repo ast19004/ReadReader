@@ -2,15 +2,11 @@ import { useState, useContext, useEffect } from "react";
 
 import AuthContext from '../../store/auth-contex';
 
-import ReaderBadge from '../../components/Reader/ReaderBadge'
+import ReaderBadgeLink from '../../components/Reader/ReaderBadgeLink'
+
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
-
-const linkStyle = {
-    textDecoration: 'none',
-    color: 'black',
-};
 
 const AuthWelcome = () => {
     const authCtx = useContext(AuthContext);
@@ -58,16 +54,12 @@ const AuthWelcome = () => {
     return (
         <>
         { !error && readers && 
-        <Link to={'/reader/'} style={linkStyle}>
-            <ReaderBadgesContainer>
-                {readers.map(reader => {
-                    const initials = [...reader.name].slice(0,2).join("");
-                    const capitalizedInitials = initials.charAt(0).toUpperCase() + initials.slice(1)
-                    return <ReaderBadge key={reader.id} minutesRead={reader.minutesRead} coinsEarned={reader.coinsEarned} initials={capitalizedInitials}/>
-                })}
-            </ReaderBadgesContainer>
 
-        </Link>
+        <ReaderBadgesContainer>
+            {readers.map(reader => {
+                return <ReaderBadgeLink key={reader.id} id={reader.id} minutesRead={reader.minutesRead} coinsEarned={reader.coinsEarned} readerName={reader.name}/>
+            })}
+        </ReaderBadgesContainer>
         }
         {!readers && !error && <Link to={'/reader/add'}>Add Reader</Link>}
         {error && <p>{error}</p>}

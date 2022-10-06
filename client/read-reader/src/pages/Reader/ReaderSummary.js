@@ -5,7 +5,11 @@ import styled from 'styled-components';
 
 import { Button } from "@mui/material";
 
-import { Switch, } from 'react-router-dom';
+import { useEffect, useContext, useState } from "react";
+
+import AuthContext from '../../store/auth-contex';
+
+import { Switch, useParams} from 'react-router-dom';
 
 import ProtectedRoute from "../../components/Auth/ProtectedRoute";
 import UpdateReader from "./UpdateReader";
@@ -13,10 +17,45 @@ import UpdatePrizes from "../Prize/UpdatePrizes";
 import RedeemPrizes from "../Prize/RedeemPrizes";
 
 const ReaderSummary = () => {
+    const params = useParams();
+    const readerId = params.id;
+
+    const authCtx = useContext(AuthContext);
+    const [error, setError] = useState('');
+
+    const [reader, setReader] = useState({});
+
+    useEffect(()=>{
+        const url = "http://localhost:5000/reader/" + readerId;
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                Authorization: 'Bearer ' + authCtx.token
+            }
+        };
+        const fetchReader = async () => {
+            const res = await fetch(url, requestOptions);
+
+            if(!res.ok){
+                throw new Error('Something went wrong!');
+            };
+            const resData = await res.json();
+
+            const loadedReader = resData.reader;
+
+            setReader(loadedReader);
+
+        };
+        fetchReader().catch(err=> setError(err.msg));
+    }, []);
+
     return (
-        <>
+        <>  
+        { !error && reader && 
+            <>
             <ReaderSummaryContent>
-                <ReaderBadge minutesRead={120} coinsEarned={70} initials={"Ru"}/>
+                <ReaderBadge minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
                 <ReaderWeeklyAchievement style={{alignSelf : 'center'}}/>
             </ReaderSummaryContent>
             <EditReaderActionButtons>
@@ -35,6 +74,9 @@ const ReaderSummary = () => {
                     <RedeemPrizes/>
                 </ProtectedRoute>
             </Switch>
+            </>
+        }
+         {error && <p>{error}</p>}
         </>
     );
 };

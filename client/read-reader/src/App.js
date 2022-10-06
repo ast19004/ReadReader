@@ -41,7 +41,7 @@ function App() {
               </Route>
               }
 
-              <ProtectedRoute path={'/reader'} exact redirectPath={'/'}>
+              <ProtectedRoute path={'/reader/:id'} exact redirectPath={'/'}>
                 <ReaderSummary/>
               </ProtectedRoute>
             
