@@ -41,12 +41,12 @@ function App() {
               </Route>
               }
 
+              <ProtectedRoute path={'/reader'} exact redirectPath={'/'}>
+                <AddReader/>
+              </ProtectedRoute>
+
               <ProtectedRoute path={'/reader/:id'} exact redirectPath={'/'}>
                 <ReaderSummary/>
-              </ProtectedRoute>
-            
-              <ProtectedRoute path={'/reader/add'} redirectPath={'/'}>
-                <AddReader/>
               </ProtectedRoute>
 
               <ProtectedRoute path={'/prize/add'} redirectPath={'/'}>

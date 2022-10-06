@@ -1,30 +1,32 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useHistory } from 'react';
 
 import AuthContext from '../../store/auth-contex';
 
-import { Link } from 'react-router-dom';
-
 import { Menu, MenuItem, IconButton, Avatar, Divider, ListItemIcon } from '@mui/material';
-import {Person, PersonAdd, Logout} from '@mui/icons-material';
+import {Person, PersonAdd} from '@mui/icons-material';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import styled from 'styled-components';
 
 const UserMenu = () => {
-    const userMenu = useRef();
     const authCtx = useContext(AuthContext);
 
-    const [anchorElement, setAnchorElement] = useState(null);
+    const history = useHistory();
 
-    const userMenuOpen = Boolean(anchorElement);
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const userMenuOpen = !!anchorEl;
+    console.log(userMenuOpen);
 
     const handleMenuClick = (event) => {
-        setAnchorElement(event.target);
+        setAnchorEl(event.target);
     };
     const handleMenuClose = () => {
-        setAnchorElement(null);
-        
-        
+        setAnchorEl(null);
+    };
+
+    const handleAddReader = () => {
+        history.push('/reader');
     };
 
     return (
@@ -46,12 +48,11 @@ const UserMenu = () => {
         </IconButton>
         <MenuWrapper>
             <Menu
-                anchorEl={anchorElement}
+                anchorEl={anchorEl}
                 id="user-menu"
                 open={ userMenuOpen }
                 onClose={handleMenuClose}
-                onClick={handleMenuClick}
-                ref= { userMenu }
+                onClick={handleMenuClose}
                 PaperProps={{
                     elevation: 0,
                     sx: {
@@ -78,8 +79,8 @@ const UserMenu = () => {
                         },
                     },
             }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 <MenuItem><Avatar/>USER</MenuItem>
                 <Divider />
@@ -95,11 +96,11 @@ const UserMenu = () => {
                     </ListItemIcon>
                         Reader2
                 </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={handleAddReader}>
                 <ListItemIcon>
                     <PersonAdd fontSize="small" />
                 </ListItemIcon>
-                    Add another account
+                    Add another reader
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={authCtx.onLogout}>
