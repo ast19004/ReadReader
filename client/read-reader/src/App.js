@@ -49,7 +49,7 @@ function App() {
                 <ReaderSummary/>
               </ProtectedRoute>
 
-              <ProtectedRoute path={'/prize/add'} redirectPath={'/'}>
+              <ProtectedRoute path={'/prize/'} exact redirectPath={'/'}>
                 <AddPrize/>
               </ProtectedRoute>
 

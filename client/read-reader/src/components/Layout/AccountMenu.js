@@ -9,7 +9,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 import styled from 'styled-components';
 
-const UserMenu = () => {
+const AccountMenu = () => {
     const authCtx = useContext(AuthContext);
 
     const history = useHistory();
@@ -31,6 +31,10 @@ const UserMenu = () => {
 
     const handleAddReader = () => {
         history.push('/reader');
+    };
+
+    const handleAddPrize = () => {
+        history.push('/prize');
     };
 
     const handleSelectMainUser = () => {
@@ -140,11 +144,19 @@ const UserMenu = () => {
                             {reader.name}
                     </MenuItem>
                 )}
+                <Divider />
                 <MenuItem onClick={handleAddReader}>
                 <ListItemIcon>
                     <PersonAdd fontSize="small" />
                 </ListItemIcon>
                     Add reader
+                </MenuItem>
+
+                <MenuItem onClick={handleAddPrize}>
+                <ListItemIcon>
+                    <PersonAdd fontSize="small" />
+                </ListItemIcon>
+                    Add prize
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={authCtx.onLogout}>
@@ -159,7 +171,7 @@ const UserMenu = () => {
     );
 };
 
-export default UserMenu;
+export default AccountMenu;
 
 const MenuWrapper = styled.div`
 `;

@@ -5,10 +5,10 @@ import AuthContext from '../../store/auth-contex';
 import { Link } from 'react-router-dom';
 
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import SettingsIcon from '@mui/icons-material/Settings';
 
 import styled from 'styled-components';
-import UserMenu from './UserMenu';
+import UserMenu from './AccountMenu';
+import AccountMenu from './AccountMenu';
 
 
 const Header = () => {
@@ -16,14 +16,14 @@ const Header = () => {
     if logged in show logout and user selection btn*/
     const authCtx = useContext(AuthContext);
 
-    const [showUserMenu, setShowUserMenu] = useState(false);
+    const [showAccountsMenu, setShowAccountsMenu] = useState(false);
 
-    const openUserMenu = () => {
-        setShowUserMenu(true);
+    const openAccountsMenu = () => {
+        setShowAccountsMenu(true);
     }
 
-    const closeUserMenu = () => {
-        setShowUserMenu(false);
+    const closeAccountsMenu = () => {
+        setShowAccountsMenu(false);
     }
 
 
@@ -35,18 +35,14 @@ const Header = () => {
                         <AutoStoriesIcon fontSize="medium"/>
                     </HomeIconLink>
                     {authCtx.isLoggedIn &&
-                    <UserIconsWrapper>
-                            <IconLink to='/settings'>
-                                <SettingsIcon fontSize="medium"/>
-                            </IconLink>
-                            <UserMenu
-                                id="user-menu"
-                                open={openUserMenu}
-                                onClose={closeUserMenu}
-                                onClick={closeUserMenu}
-                            >
-                            </UserMenu>
-                    </UserIconsWrapper>
+                    <AccountIconsWrapper>
+                            <AccountMenu
+                                id="accounts-menu"
+                                open={openAccountsMenu}
+                                onClose={closeAccountsMenu}
+                                onClick={closeAccountsMenu}
+                            />
+                    </AccountIconsWrapper>
                     }
                 </IconsWrapper>
             </nav>
@@ -68,7 +64,7 @@ const IconsWrapper = styled.ul`
     grid-template-columns: 36px auto;
 `;
 
-const UserIconsWrapper = styled.li`
+const AccountIconsWrapper = styled.li`
     display: flex;
     margin-left: auto;
 `;
