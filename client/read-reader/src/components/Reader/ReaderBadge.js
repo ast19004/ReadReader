@@ -13,7 +13,7 @@ const ReaderBadge = (props) => {
 
 export default ReaderBadge;
 
-const ReaderBadgeContents = styled.div`
+const ReaderBadgeContents = styled.li`
     display: grid;
     align-items: center;
     width: 150px;

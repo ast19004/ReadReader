@@ -16,7 +16,7 @@ const ReaderSummary = () => {
     return (
         <>
             <ReaderSummaryContent>
-                <ReaderBadge minutesRead={120} coinsEarned={70} initials={"RS"}/>
+                <ReaderBadge minutesRead={120} coinsEarned={70} initials={"Ru"}/>
                 <ReaderWeeklyAchievement style={{alignSelf : 'center'}}/>
             </ReaderSummaryContent>
             <EditReaderActionButtons>

@@ -12,7 +12,6 @@ exports.postSignup = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password; 
 
-    console.log(`req.body  : ${JSON.stringify(req.body)}`);
 
     const errors = validationResult(req);
 
