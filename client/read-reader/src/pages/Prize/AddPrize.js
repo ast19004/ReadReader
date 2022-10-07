@@ -52,6 +52,7 @@ function AddPrize() {
         type="text"
         label="Prize Name"
         variant="outlined"
+        required
         />
         <br />
         <TextField
@@ -61,6 +62,7 @@ function AddPrize() {
         type="text"
         label="Reading Requirement (minutes)"
         variant="outlined"
+        required
         />
         <br />
         <Button type="submit" variant="contained" color="primary">

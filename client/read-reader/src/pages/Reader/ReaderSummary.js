@@ -1,3 +1,5 @@
+import { useHistory } from "react-router-dom";
+
 import ReaderBadge from "../../components/Reader/ReaderBadge";
 import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchievements";
 
@@ -17,6 +19,7 @@ import UpdatePrizes from "../Prize/UpdatePrizes";
 import RedeemPrizes from "../Prize/RedeemPrizes";
 
 const ReaderSummary = () => {
+    const history = useHistory();
     const params = useParams();
     const readerId = params.id;
 
@@ -50,6 +53,10 @@ const ReaderSummary = () => {
         fetchReader().catch(err=> setError(err.msg));
     }, [readerId]);
 
+    const handleUpdateUser = () => {
+        history.push(`/reader/${readerId}/edit`);
+    };
+
     return (
         <>  
         { !error && reader && 
@@ -64,21 +71,10 @@ const ReaderSummary = () => {
             </ReaderSummaryContainer>
             <EditReaderActionButtons>
                 <Button variant="outlined">Log History</Button>
-                <Button variant="outlined">Update Reader</Button>
+                <Button variant="outlined" onClick={handleUpdateUser}>Update Reader</Button>
                  {/* Include Redeem Prizes in Prizes */}
                 <Button variant="outlined">Prizes</Button>
             </EditReaderActionButtons>
-            <Switch>
-                <ProtectedRoute path={'/updateReader'} redirectPath={'/'}>
-                    <UpdateReader/>
-                </ProtectedRoute>
-                <ProtectedRoute path={'/updatePrizes'} redirectPath={'/'}>
-                    <UpdatePrizes/>
-                </ProtectedRoute>
-                <ProtectedRoute path={'/redeemPrizes'} redirectPath={'/'}>
-                    <RedeemPrizes/>
-                </ProtectedRoute>
-            </Switch>
             </div>
         }
          {error && <p>{error}</p>}

@@ -56,6 +56,7 @@ function AddReader() {
             type="text"
             label="Name"
             variant="outlined"
+            required
             />
             <br />
             <Button type="submit" variant="contained" color="primary">
