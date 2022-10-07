@@ -6,11 +6,12 @@ import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from 'react-router-dom';
 import {AuthContextProvider} from './store/auth-contex';
+import {ReaderContextProvider} from './store/reader-contex'; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthContextProvider><BrowserRouter><App /></BrowserRouter></AuthContextProvider>
+    <AuthContextProvider><ReaderContextProvider><BrowserRouter><App /></BrowserRouter></ReaderContextProvider></AuthContextProvider>
   </React.StrictMode>
 );
 

@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
 import styled from 'styled-components';
-import UserMenu from './AccountMenu';
 import AccountMenu from './AccountMenu';
 
 

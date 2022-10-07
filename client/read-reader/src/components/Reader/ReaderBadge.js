@@ -5,6 +5,7 @@ const ReaderBadge = (props) => {
 
     const initials = [...props.readerName].slice(0,2).join("");
     const capitalizedInitials = initials.charAt(0).toUpperCase() + initials.slice(1)
+    
     return (
     <ReaderBadgeContents>
         <Typography align="center">{props.minutesRead} Minutes</Typography>
