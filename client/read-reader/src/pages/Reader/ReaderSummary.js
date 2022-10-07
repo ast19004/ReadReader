@@ -3,7 +3,7 @@ import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchieve
 
 import styled from 'styled-components';
 
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 import { useEffect, useContext, useState } from "react";
 
@@ -53,13 +53,17 @@ const ReaderSummary = () => {
     return (
         <>  
         { !error && reader && 
-            <>
-            <ReaderSummaryContent>
-                <ReaderBadge minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
-                <ReaderWeeklyAchievement style={{alignSelf : 'center'}}/>
-            </ReaderSummaryContent>
+            <div>
+            <ReaderSummaryContainer>
+                {/* <ReaderBadge minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/> */}
+                <div>
+                    <Typography variant="h2" sx={{color: "gray", marginTop: '2rem'}}>{reader['reader_name']}</Typography>
+                    <ReaderWeeklyAchievement/>
+                </div>
+                <Button variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
+            </ReaderSummaryContainer>
             <EditReaderActionButtons>
-                <Button variant="outlined">Session Log</Button>
+                <Button variant="outlined">Log History</Button>
                 <Button variant="outlined">Update Reader</Button>
                  {/* Include Redeem Prizes in Prizes */}
                 <Button variant="outlined">Prizes</Button>
@@ -75,7 +79,7 @@ const ReaderSummary = () => {
                     <RedeemPrizes/>
                 </ProtectedRoute>
             </Switch>
-            </>
+            </div>
         }
          {error && <p>{error}</p>}
         </>
@@ -85,7 +89,7 @@ const ReaderSummary = () => {
 export default ReaderSummary;
 
 
-const ReaderSummaryContent = styled.div`
+const ReaderSummaryContainer = styled.div`
     display: grid;
     grid-template-columns: auto;
     grid-gap: 2rem;

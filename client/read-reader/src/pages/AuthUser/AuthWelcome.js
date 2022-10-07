@@ -7,6 +7,7 @@ import ReaderBadgeLink from '../../components/Reader/ReaderBadgeLink'
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
+import { Typography } from "@mui/material";
 
 const AuthWelcome = () => {
     const authCtx = useContext(AuthContext);
@@ -54,12 +55,14 @@ const AuthWelcome = () => {
     return (
         <>
         { !error && readers && 
-
+        <>
+        <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Readers</Typography>
         <ReaderBadgesContainer>
             {readers.map(reader => {
                 return <ReaderBadgeLink key={reader.id} id={reader.id} minutesRead={reader.minutesRead} coinsEarned={reader.coinsEarned} readerName={reader.name}/>
             })}
         </ReaderBadgesContainer>
+        </>
         }
         {!readers && !error && <Link to={'/reader/add'}>Add Reader</Link>}
         {error && <p>{error}</p>}

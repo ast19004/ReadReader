@@ -21,7 +21,7 @@ const ReaderBadgeContents = styled.li`
     align-items: center;
     width: 150px;
     height: 150px;
-    border: 1px solid #888;
+    // border: 1px solid #888;
     border-radius: 50%;
     padding: 2rem;
     box-shadow: 3px 3px 10px #666;
