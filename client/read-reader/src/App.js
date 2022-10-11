@@ -50,7 +50,7 @@ function App() {
                 <ReaderSummary/>
               </ProtectedRoute>
 
-              <ProtectedRoute path={`/reader/:id/edit`} exact redirectPath={'/'}>
+              <ProtectedRoute path={`/reader/:id/edit`} redirectPath={'/'}>
                     <UpdateReader/>
               </ProtectedRoute>
 
