@@ -1,11 +1,14 @@
 import { useState, useContext } from 'react'; 
 
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Route } from 'react-router-dom';
 
 import AuthContext from '../../store/auth-contex';
 
-import { TextField, Button} from '@mui/material';
+import { TextField, Button, Typography} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
+
+import ConfirmDelete from '../../components/Reader/ConfirmDelete';
 
 function UpdateReader() {
     const params = useParams();
@@ -14,6 +17,7 @@ function UpdateReader() {
 
     const [error, setError] = useState('');
     const [enteredName, setEnteredName] = useState('');
+    const [isConfirmDelete, setIsConfirmDelete] = useState(false);
 
 
     const resetForm = () => {
@@ -51,9 +55,15 @@ function UpdateReader() {
         resetForm();
     };
 
+    const deleteReader = (event) => {
+        setIsConfirmDelete(true);
+        history.push(`/reader/${params.id}/edit/confirmDelete`);
+    };
+
     return (
         <>
         <CustomForm onSubmit={updateReader}>
+            <Typography variant='h2' sx={{color: 'gray'}}>Update Reader</Typography>
             <TextField
             onChange={nameChangeHandler}
             value={enteredName}
@@ -64,10 +74,16 @@ function UpdateReader() {
             required
             />
             <br />
-            <Button type="submit" variant="contained" color="primary">
+            {!isConfirmDelete && <Button type="submit" variant="contained" color="primary">
             Update Reader
-            </Button>
+            </Button>}
         </CustomForm>
+        {!isConfirmDelete && <Button onClick={deleteReader} variant="contained" color="error" sx={{marginTop: '2rem'}}>
+            <DeleteIcon/>&nbsp;Delete Reader
+        </Button>}
+        <Route path={`/reader/:id/edit/confirmDelete`}>
+            <ConfirmDelete/>
+        </Route>
         {error && <p>error</p>}
         </>
     );

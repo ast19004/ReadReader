@@ -1,3 +1,4 @@
+import { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import ReaderBadge from "../../components/Reader/ReaderBadge";
@@ -6,17 +7,12 @@ import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchieve
 import styled from 'styled-components';
 
 import { Button, Typography } from "@mui/material";
-
-import { useEffect, useContext, useState } from "react";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import CloseIcon from '@mui/icons-material/Close';
 
 import AuthContext from '../../store/auth-contex';
 
-import { Switch, useParams} from 'react-router-dom';
-
-import ProtectedRoute from "../../components/Auth/ProtectedRoute";
-import UpdateReader from "./UpdateReader";
-import UpdatePrizes from "../Prize/UpdatePrizes";
-import RedeemPrizes from "../Prize/RedeemPrizes";
+import { useParams} from 'react-router-dom';
 
 const ReaderSummary = () => {
     const history = useHistory();
@@ -27,6 +23,7 @@ const ReaderSummary = () => {
     const [error, setError] = useState('');
 
     const [reader, setReader] = useState();
+    const [isReading, setIsReading] = useState(false);
 
     useEffect(()=>{
         const url = "http://localhost:5000/reader/" + readerId;
@@ -57,6 +54,15 @@ const ReaderSummary = () => {
         history.push(`/reader/${readerId}/edit`);
     };
 
+    const handleLogReading = () => {
+        setIsReading(true);
+    };
+
+    const handleLogReadingCancel = () => {
+        setIsReading(false);
+        history.push(`/reader/${readerId}`);
+    };
+
     return (
         <>  
         { !error && reader && 
@@ -67,14 +73,17 @@ const ReaderSummary = () => {
                     <Typography variant="h2" sx={{color: "gray", marginTop: '2rem'}}>{reader['reader_name']}</Typography>
                     <ReaderWeeklyAchievement/>
                 </div>
-                <Button variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
+                 {!isReading && <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>}
             </ReaderSummaryContainer>
-            <EditReaderActionButtons>
+            {!isReading && <EditReaderActionButtons>
                 <Button variant="outlined">Log History</Button>
                 <Button variant="outlined" onClick={handleUpdateUser}>Update Reader</Button>
                  {/* Include Redeem Prizes in Prizes */}
                 <Button variant="outlined">Prizes</Button>
-            </EditReaderActionButtons>
+            </EditReaderActionButtons>}
+            {isReading && <LogReadingActionButtons>
+                <Button onClick={handleLogReadingCancel} variant="outlined"><CloseIcon/></Button><Button variant="outlined"><PlayArrowIcon/></Button>
+            </LogReadingActionButtons>}
             </div>
         }
          {error && <p>{error}</p>}
@@ -107,4 +116,13 @@ const EditReaderActionButtons = styled.div`
         grid-template-columns: auto auto auto;
         margin-top: 6rem;
     }
+`;
+
+const LogReadingActionButtons = styled(EditReaderActionButtons)`
+@media(min-width: 500px){
+    grid-template-columns: 1fr 2fr;
+    justify-content: center;
+    margin-top: 6rem;
+    max-width: 300px;
+}
 `;
