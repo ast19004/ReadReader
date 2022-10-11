@@ -728,15 +728,11 @@
       "ReaderSession":{
         "required": [
             "reader_id",
-            "book_title",
             "reading_duration",
             "session_date"
           ],
           "properties": {
             "reader_id": {
-              "type": "string"
-            },
-            "book_title": {
               "type": "string"
             },
             "reading_duration": {
@@ -755,7 +751,6 @@
       "required": [
           "session_id",
           "reader_id",
-          "book_title",
           "reading_duration",
           "session_date"
         ],
@@ -764,9 +759,6 @@
             "type": "string"
           },
           "reader_id": {
-            "type": "string"
-          },
-          "book_title": {
             "type": "string"
           },
           "reading_duration": {

@@ -7,10 +7,6 @@ const readerSessionSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
-    book_title: {
-        type: String,
-        required: false
-    },
     reading_duration: {
         type: Number,
         required: true

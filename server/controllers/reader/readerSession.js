@@ -41,7 +41,6 @@ const Reader = require('../../models/reader');
  * & add readerSession_id to specified reader's session list **/
 exports.postReaderSession = async (req, res, next) => {
     const readerId = req.body.reader_id;
-    const bookTitle = req.body.book_title;
     const readingDuration = req.body.reading_duration;
 
     const loggedInUserId = req.userId;
@@ -60,7 +59,6 @@ exports.postReaderSession = async (req, res, next) => {
         //save reader session to reader session database
         const readerSession = new ReaderSession({
             reader_id: readerId,
-            book_title: bookTitle,
             reading_duration: readingDuration,
             session_date: new Date().toLocaleDateString(),
         });
@@ -129,7 +127,6 @@ exports.getReaderSession = async (req, res, next) => {
 /** Edit a reader session for a specific reader in Reader Session database **/
 exports.putReaderSession = async (req, res, next) => {
     const readerId = req.params.readerId;
-    const updatedBookTitle = req.body.book_title;
     const updatedReadingDuration = req.body.reading_duration;
 
     const userReaderIds = req.userReaderIds;
@@ -149,7 +146,6 @@ exports.putReaderSession = async (req, res, next) => {
         //save reader session to reader session database
         const readerSession = new ReaderSession({
             reader_id: readerId,
-            book_title: bookTitle,
             reading_duration: readingDuration,
             session_date: new Date().toLocaleDateString(),
         });
