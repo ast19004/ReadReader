@@ -181,10 +181,55 @@ exports.putReaderSession = async (req, res, next) => {
 /** Delete a reader session from Reader Session database
  *  & from the reader session list of a specified reader **/
 exports.deleteReaderSession = async (req, res, next) => {
-    const readerId = req.body.readerId;
+    const readerId = req.params.readerId;
+    const sessionId = req.params.sessionId;
     const userReaderIds = req.userReaderIds;
 
     throwErrIfNotAuthorized(userReaderIds, readerId);
+
+    try{
+    
+        const reader = await Reader.findById(readerId);
+        if(!reader){
+            const error = new Error("Reader not found.");
+            error.statusCode = 404;
+            throw error;
+            }
+            //Remove Session from Reader's session history
+            const updatedReaderSessions = reader['reader_sessions'].filter(session => session.sessionId.toString() !== sessionId.toString());
+            reader['reader_sessions'] = updatedReaderSessions;
+
+            /* Get duration read from session and 
+            remove quantity from Reader's total_duration_read & reading_coins */ 
+            const sessionToDelete = await ReaderSession.findById(sessionId).where('reader_id')
+            .equals(readerId);
+
+            const updatedReadingDuration = reader['total_reading_duration'] - sessionToDelete['reading_duration'];
+            
+            const updatedReaderCoins = reader['reading_coins'] - sessionToDelete['reading_duration'];
+            //If reader has already used coins associated with session: coins = 0 if coin update = -num 
+            if(updatedReaderCoins < 0){ updatedReaderCoins = 0};
+            
+            reader['total_reading_duration'] = updatedReadingDuration;
+            reader['reading_coins'] = updatedReaderCoins;
+
+            await reader.save();
+
+            //Remove session from ReaderSession database
+            await ReaderSession.findByIdAndRemove(sessionId).where('reader_id')
+            .equals(readerId);
+    
+            res.status(200).json({
+                message: "Reader session deleted from Session Database and readers session history.",
+                updatedReader: reader
+            });
+    
+        } catch(err){
+            if(!err.statusCode){
+                err.statusCode = 500;
+            }
+            next(err);
+        }
 };
 
 
