@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import { Button, Typography } from "@mui/material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
 import CloseIcon from '@mui/icons-material/Close';
 
 import AuthContext from '../../store/auth-contex';
@@ -24,6 +25,9 @@ const ReaderSummary = () => {
 
     const [reader, setReader] = useState();
     const [isReading, setIsReading] = useState(false);
+    const [isRecordingReading, setIsRecordingReading] = useState(false);
+
+    const [readingStart, setReadingStart] = useState(new Date());
 
     useEffect(()=>{
         const url = "http://localhost:5000/reader/" + readerId;
@@ -48,7 +52,7 @@ const ReaderSummary = () => {
 
         };
         fetchReader().catch(err=> setError(err.msg));
-    }, [readerId]);
+    }, [readerId, authCtx.token]);
 
     const handleUpdateUser = () => {
         history.push(`/reader/${readerId}/edit`);
@@ -61,6 +65,49 @@ const ReaderSummary = () => {
     const handleLogReadingCancel = () => {
         setIsReading(false);
         history.push(`/reader/${readerId}`);
+    };
+
+    const handleReadingStatus = async () => {
+
+        if(!isRecordingReading){
+            setIsRecordingReading(true);
+            setReadingStart(Date.now());
+        }else{
+            setIsRecordingReading(false);
+            //If reading recording finished, get total time and save session.
+            const durationReadMillis = Date.now() - readingStart;
+            const durationReadMinutes = Math.round((durationReadMillis/ 1000)/ 60);
+
+            //If reading less than a minute, assume accidental session.
+            // if(durationReadMinutes < 1){
+            //     return;
+            // }
+
+            const url = "http://localhost:5000/reader/session"; 
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    Authorization: 'Bearer ' + authCtx.token
+                },
+                body: JSON.stringify({
+                    reader_id: params.id,
+                    reading_duration: durationReadMinutes
+                })
+            };
+            try{
+                const res = await fetch(url, requestOptions);
+    
+                if(!res.ok){
+                    throw new Error('Something went wrong!');
+                };
+                const resData = await res.json();
+    
+            } catch(error){
+                setError(error);
+            }
+    
+            }
     };
 
     return (
@@ -77,12 +124,12 @@ const ReaderSummary = () => {
             </ReaderSummaryContainer>
             {!isReading && <EditReaderActionButtons>
                 <Button variant="outlined">Log History</Button>
-                <Button variant="outlined" onClick={handleUpdateUser}>Update Reader</Button>
                  {/* Include Redeem Prizes in Prizes */}
                 <Button variant="outlined">Prizes</Button>
+                <Button variant="outlined" onClick={handleUpdateUser}>Update Reader</Button>
             </EditReaderActionButtons>}
             {isReading && <LogReadingActionButtons>
-                <Button onClick={handleLogReadingCancel} variant="outlined"><CloseIcon/></Button><Button variant="outlined"><PlayArrowIcon/></Button>
+                {!isRecordingReading && <Button onClick={handleLogReadingCancel} variant="outlined"><CloseIcon/></Button>}<Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
             </LogReadingActionButtons>}
             </div>
         }
