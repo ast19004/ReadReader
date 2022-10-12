@@ -70,6 +70,10 @@ exports.postReaderSession = async (req, res, next) => {
         if(newReaderSession){
         reader['reader_sessions'].push({sessionId: newReaderSession._id});
 
+        /* Update reader total reading duration & coins */
+        reader['total_reading_duration'] += readingDuration ;
+        reader['reading_coins'] +=  readingDuration;
+
         const updatedReader = await reader.save();
 
 
