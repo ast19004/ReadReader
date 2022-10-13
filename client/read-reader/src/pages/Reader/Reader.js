@@ -17,7 +17,7 @@ import AuthContext from '../../store/auth-contex';
 
 import { useParams} from 'react-router-dom';
 
-const ReaderSummary = () => {
+const Reader = () => {
     const history = useHistory();
 
     const authCtx = useContext(AuthContext);
@@ -155,7 +155,7 @@ const ReaderSummary = () => {
     );
 };
 
-export default ReaderSummary;
+export default Reader;
 
 
 const ReaderSummaryContainer = styled.div`

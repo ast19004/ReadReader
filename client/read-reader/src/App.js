@@ -9,7 +9,7 @@ import AuthLogin from './pages/AuthUser/AuthLogin';
 import AuthRegister from './pages/AuthUser/AuthRegister'
 import AuthWelcome from './pages/AuthUser/AuthWelcome'
 import Settings from './pages/AuthUser/Settings'
-import ReaderSummary from './pages/Reader/ReaderSummary';
+import Reader from './pages/Reader/Reader';
 
 import AddReader from './pages/Reader/AddReader';
 import UpdateReader from './pages/Reader/UpdateReader';
@@ -52,7 +52,7 @@ function App() {
               </ProtectedRoute>
 
               <ProtectedRoute path={'/reader/:id'} redirectPath={'/'}>
-                <ReaderSummary/>
+                <Reader/>
               </ProtectedRoute>
 
               <ProtectedRoute path={'/prize/'} exact redirectPath={'/'}>
