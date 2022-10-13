@@ -3,7 +3,7 @@ import { useHistory, Route } from "react-router-dom";
 
 import ReaderBadge from "../../components/Reader/ReaderBadge";
 import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchievements";
-import ReaderLogHistory from "./Sessions/ReaderLogHistory";
+import SessionsHistory from "./Sessions/SessionsHistory";
 
 import styled from 'styled-components';
 
@@ -147,7 +147,7 @@ const ReaderSummary = () => {
             {error && <p>{error}</p>}
             
             {!isReading && <Route path={`/reader/:id/sessions/`}>
-                <ReaderLogHistory token={authCtx.token} readerId={readerId}/>
+                <SessionsHistory token={authCtx.token} readerId={readerId}/>
             </Route>}
             </div>
         }

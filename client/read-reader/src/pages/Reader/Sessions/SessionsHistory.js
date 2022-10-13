@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Session from './Session';
 
 
-function ReaderLogHistory(props) {
+function SessionsHistory(props) {
     const [readerSessions, setReaderSessions] = useState([]);
     const [error, setError] = useState('');
 
@@ -38,6 +38,6 @@ function ReaderLogHistory(props) {
   </ul>);
 }
   
-  export default ReaderLogHistory;
+  export default SessionsHistory;
 
 
