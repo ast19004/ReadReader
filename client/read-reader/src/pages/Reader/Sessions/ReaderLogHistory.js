@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import Session from './Session';
+
 
 function ReaderLogHistory(props) {
     const [readerSessions, setReaderSessions] = useState([]);
@@ -31,9 +33,9 @@ function ReaderLogHistory(props) {
         fetchReader().catch(err=> setError(err.msg));
     }, []);
 
-  return (<>
-    {readerSessions.map(session => <div key={session._id}>{JSON.stringify(session)}</div>)}
-  </>);
+  return (<ul>
+    {readerSessions.map(session => <Session key={session._id} date={session['session_date']} minutesRead={session['reading_duration']}/>)}
+  </ul>);
 }
   
   export default ReaderLogHistory;

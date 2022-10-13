@@ -3,7 +3,7 @@ import { useHistory, Route } from "react-router-dom";
 
 import ReaderBadge from "../../components/Reader/ReaderBadge";
 import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchievements";
-import ReaderLogHistory from "./ReaderLogHistory";
+import ReaderLogHistory from "./Sessions/ReaderLogHistory";
 
 import styled from 'styled-components';
 
