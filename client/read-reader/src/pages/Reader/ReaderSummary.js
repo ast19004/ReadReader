@@ -1,8 +1,9 @@
 import { useEffect, useContext, useState, useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Route } from "react-router-dom";
 
 import ReaderBadge from "../../components/Reader/ReaderBadge";
 import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchievements";
+import ReaderLogHistory from "./ReaderLogHistory";
 
 import styled from 'styled-components';
 
@@ -10,6 +11,7 @@ import { Button, Typography } from "@mui/material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
 
 import AuthContext from '../../store/auth-contex';
 
@@ -26,6 +28,7 @@ const ReaderSummary = () => {
     const [isRecordingReading, setIsRecordingReading] = useState(false);
 
     const [readingStart, setReadingStart] = useState(new Date());
+    const [reRenderBadge, setReRenderBadge] = useState(false);
 
     const params = useParams();
     const readerId = params.id;
@@ -77,7 +80,7 @@ const ReaderSummary = () => {
         };
         const resData = await res.json();
 
-        }, []);
+        }, [readerId, authCtx.token]);
 
     const handleUpdateUser = () => {
         history.push(`/reader/${readerId}/edit`);
@@ -90,6 +93,10 @@ const ReaderSummary = () => {
     const handleLogReadingCancel = () => {
         setIsReading(false);
         history.push(`/reader/${readerId}`);
+    };
+
+    const handleDisplayLogHistory = () => {
+        history.push(`/reader/${readerId}/sessions`);
     };
 
     const handleReadingStatus = async () => {
@@ -117,23 +124,31 @@ const ReaderSummary = () => {
         { !error && reader && 
             <div>
             <ReaderSummaryContainer>
-                {/* <ReaderBadge minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/> */}
+                {isReading && <ReaderBadge minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>}
+                {!isReading && <>
                 <div>
-                    <Typography variant="h2" sx={{color: "gray", marginTop: '2rem'}}>{reader['reader_name']}</Typography>
+                    <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}{!isReading && <EditIcon sx={{alignSelf: 'start', padding: '2px', border: '1px solid rgba(153, 153, 153, .5)', borderRadius: '50%'}}/>}</Typography>
                     <ReaderWeeklyAchievement/>
                 </div>
-                 {!isReading && <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>}
+                 <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button></>}
             </ReaderSummaryContainer>
-            {!isReading && <EditReaderActionButtons>
-                <Button variant="outlined">Log History</Button>
+
+            {!isReading && <ReaderInfoButtons>
+                <Button onClick={handleDisplayLogHistory} variant="outlined">Log History</Button>
                  {/* Include Redeem Prizes in Prizes */}
-                <Button variant="outlined">Prizes</Button>
-                <Button variant="outlined" onClick={handleUpdateUser}>Update Reader</Button>
-            </EditReaderActionButtons>}
+                <Button variant="outlined">Earned Prizes</Button>
+                {/* <Button variant="outlined" onClick={handleUpdateUser}>Update Reader</Button> */}
+            </ReaderInfoButtons>}
+
             {isReading && <LogReadingActionButtons>
                 {!isRecordingReading && <Button onClick={handleLogReadingCancel} variant="outlined"><CloseIcon/></Button>}<Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
             </LogReadingActionButtons>}
+
             {error && <p>{error}</p>}
+            
+            {!isReading && <Route path={`/reader/:id/sessions/`}>
+                <ReaderLogHistory token={authCtx.token} readerId={readerId}/>
+            </Route>}
             </div>
         }
         </>
@@ -155,7 +170,7 @@ const ReaderSummaryContainer = styled.div`
     }
 `;
 
-const EditReaderActionButtons = styled.div`
+const ReaderInfoButtons = styled.div`
     display: grid;
     grid-gap: 2rem;
     margin: 0 auto;
@@ -167,7 +182,7 @@ const EditReaderActionButtons = styled.div`
     }
 `;
 
-const LogReadingActionButtons = styled(EditReaderActionButtons)`
+const LogReadingActionButtons = styled(ReaderInfoButtons)`
 @media(min-width: 500px){
     grid-template-columns: 1fr 2fr;
     justify-content: center;
@@ -175,3 +190,5 @@ const LogReadingActionButtons = styled(EditReaderActionButtons)`
     max-width: 300px;
 }
 `;
+
+const editReaderContainer = styled.div``;
