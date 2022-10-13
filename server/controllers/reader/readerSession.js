@@ -46,7 +46,6 @@ exports.postReaderSession = async (req, res, next) => {
     const loggedInUserId = req.userId;
 
     try{
-
         const reader = await Reader.findById(readerId).where('parent_id')
         .equals(loggedInUserId);
 

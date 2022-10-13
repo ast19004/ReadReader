@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 
 import ReaderBadge from "../../components/Reader/ReaderBadge";
@@ -17,8 +17,6 @@ import { useParams} from 'react-router-dom';
 
 const ReaderSummary = () => {
     const history = useHistory();
-    const params = useParams();
-    const readerId = params.id;
 
     const authCtx = useContext(AuthContext);
     const [error, setError] = useState('');
@@ -29,6 +27,9 @@ const ReaderSummary = () => {
 
     const [readingStart, setReadingStart] = useState(new Date());
 
+    const params = useParams();
+    const readerId = params.id;
+    //Get reader by readerId using id from url params
     useEffect(()=>{
         const url = "http://localhost:5000/reader/" + readerId;
         const requestOptions = {
@@ -53,6 +54,30 @@ const ReaderSummary = () => {
         };
         fetchReader().catch(err=> setError(err.msg));
     }, [readerId, authCtx.token]);
+
+
+    const fetchAddReaderSession = useCallback(async(minutesRead)=> {
+        const url = "http://localhost:5000/reader/session"; 
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                Authorization: 'Bearer ' + authCtx.token
+            },
+            body: JSON.stringify({
+                reader_id: readerId,
+                reading_duration: minutesRead
+            })
+        };
+        const res = await fetch(url, requestOptions);
+
+        if(!res.ok){
+            throw new Error('Something went wrong!');
+        };
+        const resData = await res.json();
+
+        }, []);
 
     const handleUpdateUser = () => {
         history.push(`/reader/${readerId}/edit`);
@@ -79,35 +104,12 @@ const ReaderSummary = () => {
             const durationReadMinutes = Math.round((durationReadMillis/ 1000)/ 60);
 
             //If reading less than a minute, assume accidental session.
-            // if(durationReadMinutes < 1){
-            //     return;
-            // }
-
-            const url = "http://localhost:5000/reader/session"; 
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    Authorization: 'Bearer ' + authCtx.token
-                },
-                body: JSON.stringify({
-                    reader_id: params.id,
-                    reading_duration: durationReadMinutes
-                })
-            };
-            try{
-                const res = await fetch(url, requestOptions);
-    
-                if(!res.ok){
-                    throw new Error('Something went wrong!');
-                };
-                const resData = await res.json();
-    
-            } catch(error){
-                setError(error);
+            if(durationReadMinutes < 1){
+                return;
             }
-    
-            }
+            fetchAddReaderSession(durationReadMinutes).catch(error => setError(error));
+        }
+           
     };
 
     return (
@@ -131,9 +133,9 @@ const ReaderSummary = () => {
             {isReading && <LogReadingActionButtons>
                 {!isRecordingReading && <Button onClick={handleLogReadingCancel} variant="outlined"><CloseIcon/></Button>}<Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
             </LogReadingActionButtons>}
+            {error && <p>{error}</p>}
             </div>
         }
-         {error && <p>{error}</p>}
         </>
     );
 };

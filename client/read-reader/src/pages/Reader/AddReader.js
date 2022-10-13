@@ -63,7 +63,7 @@ function AddReader() {
             Add Reader
             </Button>
         </CustomForm>
-        {error && <p>error</p>}
+        {error && <p>{error}</p>}
         </>
     );
   }

@@ -84,7 +84,7 @@ function UpdateReader() {
         <Route path={`/reader/:id/edit/confirmDelete`}>
             <ConfirmDelete/>
         </Route>
-        {error && <p>error</p>}
+        {error && <p>{error}</p>}
         </>
     );
   }
