@@ -57,6 +57,7 @@ function AuthLogin() {
     } catch(err){setError(err.message)};
 
     authCtx.onLogin(token);
+
     resetForm();
    }
 
