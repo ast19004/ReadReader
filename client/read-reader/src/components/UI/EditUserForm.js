@@ -4,13 +4,14 @@ import { useParams, useHistory, Route } from 'react-router-dom';
 
 import AuthContext from '../../store/auth-contex';
 
-import { TextField, Button, Typography} from '@mui/material';
+import { TextField, Button, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 
-import ConfirmDelete from '../../components/Reader/ConfirmDelete';
+import ConfirmDelete from './ConfirmDelete';
+import { PropaneSharp } from '@mui/icons-material';
 
-function UpdateReader() {
+function EditUserForm(props) {
     const params = useParams();
     const history = useHistory();
     const authCtx = useContext(AuthContext);
@@ -62,8 +63,12 @@ function UpdateReader() {
 
     return (
         <>
+        {!isConfirmDelete && 
+        <>
+        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{textAlign: 'center'}}>
+            Update Reader
+        </Typography>
         <CustomForm onSubmit={updateReader}>
-            <Typography variant='h2' sx={{color: 'gray'}}>Update Reader</Typography>
             <TextField
             onChange={nameChangeHandler}
             value={enteredName}
@@ -74,22 +79,23 @@ function UpdateReader() {
             required
             />
             <br />
-            {!isConfirmDelete && <Button type="submit" variant="contained" color="primary">
-            Update Reader
-            </Button>}
+            <Button type="submit" variant="contained" color="primary">
+            Submit Changes
+            </Button>
         </CustomForm>
-        {!isConfirmDelete && <Button onClick={deleteReader} variant="contained" color="error" sx={{marginTop: '2rem'}}>
-            <DeleteIcon/>&nbsp;Delete Reader
-        </Button>}
-        <Route path={`/reader/:id/edit/confirmDelete`}>
-            <ConfirmDelete/>
+            <Button onClick={deleteReader} variant="contained" color="error" sx={{marginTop: '2rem', width: '24px', justifySelf: 'center'}}>
+                <DeleteIcon sx={{width: '20px'}}/>
+            </Button>
+         </>}
+        <Route path={`/reader/:id/edit/confirmDelete`} exact>
+            <ConfirmDelete onClose={props.onClose}/>
         </Route>
         {error && <p>{error}</p>}
         </>
     );
   }
   
-  export default UpdateReader;
+  export default EditUserForm;
 
   const CustomForm = styled.form`
   display: grid;

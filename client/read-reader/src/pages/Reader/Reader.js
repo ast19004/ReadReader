@@ -4,6 +4,7 @@ import { useHistory, Route } from "react-router-dom";
 import ReaderBadge from "../../components/Reader/ReaderBadge";
 import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchievements";
 import SessionsHistory from "./Sessions/SessionsHistory";
+import EditUserModal from "../../components/UI/EditUserModal";
 
 import styled from 'styled-components';
 
@@ -28,7 +29,7 @@ const Reader = () => {
     const [isRecordingReading, setIsRecordingReading] = useState(false);
 
     const [readingStart, setReadingStart] = useState(new Date());
-    const [reRenderBadge, setReRenderBadge] = useState(false);
+    const [editIsOpen, setEditIsOpen] = useState(false);
 
     const params = useParams();
     const readerId = params.id;
@@ -84,6 +85,7 @@ const Reader = () => {
 
     const handleUpdateUser = () => {
         history.push(`/reader/${readerId}/edit`);
+        setEditIsOpen(true);
     };
 
     const handleLogReading = () => {
@@ -124,31 +126,44 @@ const Reader = () => {
         { !error && reader && 
             <div>
             <ReaderSummaryContainer>
-                {isReading && <ReaderBadge minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>}
-                {!isReading && <>
+                {isReading && 
+                    <ReaderBadge minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
+                }
+                
+                {!isReading && 
+                <>
                 <div>
-                    <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}{!isReading && <EditIcon sx={{alignSelf: 'start', padding: '2px', border: '1px solid rgba(153, 153, 153, .5)', borderRadius: '50%'}}/>}</Typography>
+                    <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}
+                    {!isReading && 
+                    <EditIcon sx={{alignSelf: 'start', padding: '2px', border: '1px solid rgba(153, 153, 153, .5)', borderRadius: '50%'}}/>}</Typography>
                     <ReaderWeeklyAchievement/>
                 </div>
-                 <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button></>}
+                 <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
+                 </>}
             </ReaderSummaryContainer>
+            <Route path={`/reader/:id/edit`}>
+                <EditUserModal open={editIsOpen} onClose={() => setEditIsOpen(false)}/>
+            </Route>
 
-            {!isReading && <ReaderInfoButtons>
+            {!isReading && 
+            <ReaderInfoButtons>
                 <Button onClick={handleDisplayLogHistory} variant="outlined">Log History</Button>
-                 {/* Include Redeem Prizes in Prizes */}
+                {/* Include Redeem Prizes in Prizes */}
                 <Button variant="outlined">Earned Prizes</Button>
                 {/* <Button variant="outlined" onClick={handleUpdateUser}>Update Reader</Button> */}
             </ReaderInfoButtons>}
 
-            {isReading && <LogReadingActionButtons>
+            {isReading && 
+            <LogReadingActionButtons>
                 {!isRecordingReading && <Button onClick={handleLogReadingCancel} variant="outlined"><CloseIcon/></Button>}<Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
             </LogReadingActionButtons>}
 
             {error && <p>{error}</p>}
             
-            {!isReading && <Route path={`/reader/:id/sessions/`}>
-                <SessionsHistory token={authCtx.token} readerId={readerId}/>
-            </Route>}
+            {!isReading && 
+                <Route path={`/reader/:id/sessions/`}>
+                    <SessionsHistory token={authCtx.token} readerId={readerId}/>
+                </Route>}
             </div>
         }
         </>

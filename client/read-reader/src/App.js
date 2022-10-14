@@ -12,7 +12,6 @@ import Settings from './pages/AuthUser/Settings'
 import Reader from './pages/Reader/Reader';
 
 import AddReader from './pages/Reader/AddReader';
-import UpdateReader from './pages/Reader/UpdateReader';
 import AddPrize from './pages/Prize/AddPrize'
 
 import ProtectedRoute from './components/Auth/ProtectedRoute';
@@ -44,11 +43,6 @@ function App() {
 
               <ProtectedRoute path={'/reader'} exact redirectPath={'/'}>
                 <AddReader/>
-              </ProtectedRoute>
-
-
-              <ProtectedRoute path={`/reader/:id/edit`} redirectPath={'/'}>
-                <UpdateReader/>
               </ProtectedRoute>
 
               <ProtectedRoute path={'/reader/:id'} redirectPath={'/'}>
