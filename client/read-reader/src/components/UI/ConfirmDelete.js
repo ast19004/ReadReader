@@ -11,8 +11,6 @@ const ConfirmDelete = (props) => {
     const authCtx = useContext(AuthContext);
     const [error, setError] = useState('');
 
-    const id = params.id;
-
     const handleCancel = () => {
        props.onClose();
     };
@@ -27,12 +25,12 @@ const ConfirmDelete = (props) => {
             }
         };
         try{
-            const url = `http://localhost:5000/reader/${id}/`;
+            const url = `http://localhost:5000/reader/${params.id}/`;
             const res = await fetch(url, requestOptions);
             const resData = await res.json();
             const id = resData.updatedReader._id
 
-            history.push(`/reader/${id}`);
+            history.push(`/`);
 
         } catch(err){
             setError(err.msg);
@@ -46,7 +44,7 @@ const ConfirmDelete = (props) => {
             Delete Reader
         </Typography>
         <TextField
-            readonly
+            readOnly
             value='Bobby Boy'
             style={{ width: "200px", margin: "5px", margin: '2rem auto 0 auto'}}
             type="text"
