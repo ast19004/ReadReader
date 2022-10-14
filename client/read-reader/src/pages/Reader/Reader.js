@@ -17,6 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import AuthContext from '../../store/auth-contex';
 
 import { useParams} from 'react-router-dom';
+import { HistoryEdu } from "@mui/icons-material";
 
 const Reader = () => {
     const history = useHistory();
@@ -112,6 +113,7 @@ const Reader = () => {
 
     const handleLogReading = () => {
         setIsReading(true);
+        history.push(`/reader/${readerId}/logReading/`);
     };
 
     const handleLogReadingCancel = () => {
@@ -178,22 +180,21 @@ const Reader = () => {
                 {/* <Button variant="outlined" onClick={handleUpdateUser}>Update Reader</Button> */}
             </ReaderInfoButtons>}
 
-            {isReading && 
-            <LogReadingActionButtons>
-                {!isRecordingReading ?
-                <Button onClick={handleLogReadingCancel} variant="outlined" sx={{gridRow: '2/3'}}><CloseIcon/></Button> :
-                <div sx={{gridColumn: '1/-1'}}>{currentReadingTime}</div>
-                }
-                 <Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1', gridRow: '2/3'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
-            </LogReadingActionButtons>
-            }
+            <Route path={'/reader/:id/logReading/'} exact>
+                <LogReadingActionButtons>
+                    {!isRecordingReading ?
+                    <Button onClick={handleLogReadingCancel} variant="outlined" sx={{gridRow: '2/3'}}><CloseIcon/></Button> :
+                    <div sx={{gridColumn: '1/-1'}}>{currentReadingTime}</div>
+                    }
+                    <Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1', gridRow: '2/3'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
+                </LogReadingActionButtons>
+            </Route>
 
             {error && <p>{error}</p>}
-            
-            {!isReading && 
-                <Route path={`/reader/:id/sessions/`}>
-                    <SessionsHistory token={authCtx.token} readerId={readerId}/>
-                </Route>}
+        
+            <Route path={`/reader/:id/sessions/`} exact>
+                <SessionsHistory token={authCtx.token} readerId={readerId}/>
+            </Route>
             </div>
         }
         </>
