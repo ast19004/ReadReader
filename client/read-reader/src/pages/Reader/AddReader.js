@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react'; 
+import { useHistory } from 'react-router-dom';
 
 import AuthContext from '../../store/auth-contex';
 
@@ -7,6 +8,7 @@ import styled from 'styled-components';
 
 function AddReader() {
     const authCtx = useContext(AuthContext);
+    const history = useHistory();
 
     const [error, setError] = useState('');
     const [enteredName, setEnteredName] = useState('');
@@ -38,12 +40,14 @@ function AddReader() {
         const url = "http://localhost:5000/reader";
         const res = await fetch(url, requestOptions);
         const resData = await res.json();
-        console.log(resData.message);
 
     } catch(err){
         setError(err.msg);
     }
         resetForm();
+        history.push('/');
+        
+
     };
 
     return (

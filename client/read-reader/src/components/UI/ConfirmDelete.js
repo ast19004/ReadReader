@@ -30,13 +30,11 @@ const ConfirmDelete = (props) => {
             const resData = await res.json();
             const id = resData.updatedReader._id
 
-            history.push(`/`);
-
         } catch(err){
             setError(err.msg);
         }
+        history.push(`/`);
 
-            history.push('/');
     }
     return (
         <>
