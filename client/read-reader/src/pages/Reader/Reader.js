@@ -31,6 +31,28 @@ const Reader = () => {
     const [readingStart, setReadingStart] = useState(new Date());
     const [editIsOpen, setEditIsOpen] = useState(false);
 
+    const [secondsCount, setSecondsCount] = useState(0);
+
+    const [timer, setTimer] = useState();
+
+    const startCounter = useCallback( () => {
+
+        const timer = 
+            setInterval(
+                () => {
+                    setSecondsCount((prevCount) => prevCount + 1)
+                } ,
+                1000);
+        setTimer(timer);
+    }, [secondsCount]);
+
+    const stopCounter = () => {
+        clearInterval(timer);
+        setSecondsCount(0);
+    };
+
+    const currentReadingTime = `${Math.floor(secondsCount/60)} : ${secondsCount < 10 ? 0 : ''} ${secondsCount > 60 ? (secondsCount % 60) : secondsCount}`;
+
     const params = useParams();
     const readerId = params.id;
     //Get reader by readerId using id from url params
@@ -102,10 +124,12 @@ const Reader = () => {
     };
 
     const handleReadingStatus = async () => {
+        if(timer){stopCounter();}
 
         if(!isRecordingReading){
             setIsRecordingReading(true);
             setReadingStart(Date.now());
+            startCounter();
         }else{
             setIsRecordingReading(false);
             //If reading recording finished, get total time and save session.
@@ -134,13 +158,14 @@ const Reader = () => {
                 <>
                 <div>
                     <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}
-                    {!isReading && 
-                    <EditIcon sx={{alignSelf: 'start', padding: '2px', border: '1px solid rgba(153, 153, 153, .5)', borderRadius: '50%'}}/>}</Typography>
+                    <EditIcon sx={{alignSelf: 'start', padding: '2px', border: '1px solid rgba(153, 153, 153, .5)', borderRadius: '50%'}}/>
+                    </Typography>
                     <ReaderWeeklyAchievement/>
                 </div>
                  <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
                  </>}
             </ReaderSummaryContainer>
+
             <Route path={`/reader/:id/edit`}>
                 <EditUserModal open={editIsOpen} onClose={() => setEditIsOpen(false)}/>
             </Route>
@@ -155,8 +180,13 @@ const Reader = () => {
 
             {isReading && 
             <LogReadingActionButtons>
-                {!isRecordingReading && <Button onClick={handleLogReadingCancel} variant="outlined"><CloseIcon/></Button>}<Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
-            </LogReadingActionButtons>}
+                {!isRecordingReading ?
+                <Button onClick={handleLogReadingCancel} variant="outlined" sx={{gridRow: '2/3'}}><CloseIcon/></Button> :
+                <div sx={{gridColumn: '1/-1'}}>{currentReadingTime}</div>
+                }
+                 <Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1', gridRow: '2/3'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
+            </LogReadingActionButtons>
+            }
 
             {error && <p>{error}</p>}
             
