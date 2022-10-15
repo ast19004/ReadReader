@@ -7,6 +7,8 @@ const isAuth = require('../../middleware/isAuth');
 const router = express.Router();
 
 const readerPrizeValidation = [
+    body('reading_requirement').isLength({ min: 5 })
+    .isInt()
 ];
 
 router.get('/reader/:readerId/prizes', isAuth, readerController.getAllReaderPrizes);

@@ -12,13 +12,13 @@ exports.getAllReaderPrizes = async (req, res, next) => { };
     const readingRequirement = req.body['reading_requirement'];
     const readers = req.body['readers'];
 
-    // const errors = validationResult(req);
-    // if(!errors.isEmpty()){
-    //     return res.status(422).json({
-    //         errorMessage : errors.array()[0],
-    //         validationErrors: errors.array()
-    //     });
-    // }
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            errorMessage : errors.array()[0],
+            validationErrors: errors.array()
+        });
+    }
 
     const newPrize = new ReaderPrize({
         'prize_name' : prizeName,

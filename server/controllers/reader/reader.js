@@ -24,7 +24,7 @@ exports.postReader = async (req, res, next) => {
 
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(422).json({
+        return res.status(400).json({
             errorMessage : errors.array()[0],
             validationErrors: errors.array()
         });
