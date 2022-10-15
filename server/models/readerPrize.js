@@ -11,14 +11,19 @@ const prizeSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    prize_reading_requirement: {
+    reading_requirement: {
         type: Number,
         required: true
     },
-    image_id: {
-        type: Schema.Types.ObjectId,
-        required: true
+    readers: [
+        {
+        readerId: {
+            type: Schema.Types.ObjectId,
+            ref: "Reader",
+            required: true
+          },
     }
+]
 });
 
 module.exports = mongoose.model('ReaderPrize', prizeSchema);

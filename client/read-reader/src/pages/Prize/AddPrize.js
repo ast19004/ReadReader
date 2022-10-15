@@ -15,7 +15,7 @@ function AddPrize() {
     };
 
     const readingRequirementChangeHandler = (event) => {
-        setEnteredName(event.target.value);
+        setEnteredReadingRequirement(event.target.value);
     };
 
 
@@ -46,6 +46,7 @@ function AddPrize() {
     return (
         <CustomForm onSubmit={addPrize}>
         <TextField
+        multiline
         onChange={nameChangeHandler}
         value={enteredName}
         style={{ width: "200px", margin: "5px" }}

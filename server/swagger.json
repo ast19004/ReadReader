@@ -773,7 +773,7 @@
         "required": [
           "creator_id",
           "reading_requirement",
-          "image_id"
+          "readers"
         ],
         "properties": {
           "creator_id": {
@@ -782,8 +782,9 @@
           "reading_requirement": {
             "type": "string"
           },
-          "image_id": {
-            "type": "string"
+          "readers": {
+            "type": "array",
+            "$ref": "#definitions/Reader"
           }
         }
       },

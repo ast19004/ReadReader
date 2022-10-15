@@ -32,7 +32,7 @@ const readerSchema = mongoose.Schema({
         {
             prizeId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "ReaderPrizes",
+                ref: "ReaderPrize",
                 required: true
             }
         }

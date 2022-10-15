@@ -7,15 +7,46 @@ const Reader = require('../../models/reader');
 exports.getAllReaderPrizes = async (req, res, next) => { };
 
 /** Add a created ReaderPrize to the reader prizes database **/
- exports.postReaderPrize = async (req, res, next) => {};
+ exports.postReaderPrize = async (req, res, next) => {
+    const prizeName = req.body['prize_name'];
+    const readingRequirement = req.body['reading_requirement'];
+    const readers = req.body['readers'];
 
- /** Add an existing ReaderPrize to a user associated reader **/
- exports.postReaderPrizeToReader = async (req, res, next) => {};
+    // const errors = validationResult(req);
+    // if(!errors.isEmpty()){
+    //     return res.status(422).json({
+    //         errorMessage : errors.array()[0],
+    //         validationErrors: errors.array()
+    //     });
+    // }
 
- /** Return a reader prize by id for a specific reader **/
+    const newPrize = new ReaderPrize({
+        'prize_name' : prizeName,
+        'reading_requirement': readingRequirement,
+        'readers' : readers
+    });
+    try{
+    const savedPrize= await newPrize.save();
+        res.status(201).json({message: "User Added Successfully.", newPrize: savedPrize});
+    }catch{err => {
+        const error = new Error(err);
+        if(!err.statusCode){
+            error.statusCode = 500;
+        }
+        return next(error);
+    }};
+
+
+
+ };
+
+ /** Add an existing ReaderPrize to a reader **/
+ exports.postPrizeToReader = async (req, res, next) => {};
+
+ /** Return a prize by id **/
 exports.getReaderPrize = async (req, res, next) => {};
 
-/** Edit a reader prize for a specific reader in Reader Prize database **/
+/** Edit a reader prize in the Reader Prize database **/
 exports.putReaderPrize = async (req, res, next) => {};
 
 /** Delete a reader prize from Reader Prize database **/

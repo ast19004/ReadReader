@@ -17,7 +17,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import AuthContext from '../../store/auth-contex';
 
 import { useParams} from 'react-router-dom';
-import { HistoryEdu } from "@mui/icons-material";
 
 const Reader = () => {
     const history = useHistory();
@@ -29,11 +28,11 @@ const Reader = () => {
     const [isReading, setIsReading] = useState(false);
     const [isRecordingReading, setIsRecordingReading] = useState(false);
 
-    const [readingStart, setReadingStart] = useState(new Date());
     const [editIsOpen, setEditIsOpen] = useState(false);
 
-    const [secondsCount, setSecondsCount] = useState(0);
+    const [readingStart, setReadingStart] = useState(new Date());
 
+    const [secondsCount, setSecondsCount] = useState(0);
     const [timer, setTimer] = useState();
 
     const startCounter = useCallback( () => {
@@ -177,7 +176,6 @@ const Reader = () => {
                 <Button onClick={handleDisplayLogHistory} variant="outlined">Log History</Button>
                 {/* Include Redeem Prizes in Prizes */}
                 <Button variant="outlined">Earned Prizes</Button>
-                {/* <Button variant="outlined" onClick={handleUpdateUser}>Update Reader</Button> */}
             </ReaderInfoButtons>}
 
             <Route path={'/reader/:id/logReading/'} exact>
