@@ -7,14 +7,15 @@ const isAuth = require('../../middleware/isAuth');
 const router = express.Router();
 
 const readerPrizeValidation = [
-    body('reading_requirement').isLength({ min: 5 })
+    body('reading_requirement')
     .isInt()
 ];
 
-router.get('/reader/:readerId/prizes', isAuth, readerPrizesController.getAllReaderPrizes);
-router.post('/reader/prize', readerPrizeValidation, isAuth, readerPrizesController.postReaderPrize);
-router.get('/reader/:readerId/prize/:prizeId', isAuth, readerPrizesController.getReaderPrize);
-router.put('/reader/:readerId/prize/:prizeId', readerPrizeValidation, isAuth, readerPrizesController.putReaderPrize);
-router.delete('/reader/:readerId/prize/:prizeId', isAuth, readerPrizesController.deleteReaderPrize);
+router.get('/reader/:readerId/prizes', isAuth, readerPrizesController.getSpecificReaderPrizes);
+router.get('/prizes', isAuth, readerPrizesController.getAllReaderPrizes);
+router.post('/prize', readerPrizeValidation, isAuth, readerPrizesController.postReaderPrize);
+router.get('/prize/:prizeId', isAuth, readerPrizesController.getReaderPrize);
+router.put('/prize/:prizeId', readerPrizeValidation, isAuth, readerPrizesController.putReaderPrize);
+router.delete('/prize/:prizeId', isAuth, readerPrizesController.deleteReaderPrize);
 
 module.exports = router;

@@ -32,10 +32,7 @@ function AddPrize() {
             setSelectedReaders(prevReaders => [...prevReaders, id]);
 
         }else{
-            setSelectedReaders(prevReaders => {
-                console.log(JSON.stringify(prevReaders));
-                return prevReaders.filter(readerId => readerId !== id)
-            });
+            setSelectedReaders(prevReaders => {prevReaders.filter(readerId => readerId !== id)});
     };
     };
 
@@ -64,7 +61,7 @@ function AddPrize() {
             }
         });
             setReaders(loadedReaders);
-            setSelectedReaders(loadedReaders.map(reader => reader.id));
+            // setSelectedReaders(loadedReaders.map(reader => reader.id));
             };
 
             fetchReaderData().catch((err) => {
@@ -86,14 +83,15 @@ function AddPrize() {
             },
             body: JSON.stringify({
                 prize_name: enteredName,
-                prize_reading_requirement: +enteredReadingRequirement,
+                reading_requirement: +enteredReadingRequirement,
                 readers: selectedReaders
             })
         };
         const url = "http://localhost:5000/prize";
-        console.log(`requestOptions: ${JSON.stringify(requestOptions)}`);
+
         try{
-        const res = await fetch(url, requestOptions);
+            const res = await fetch(url, requestOptions);
+            const resData = await res.json();
 
     } catch(err){
         setError(err );
@@ -131,7 +129,7 @@ function AddPrize() {
             <>
             <FormGroup sx={{border: '1px solid rgba(136, 136, 136, 0.5)', padding: '1rem', borderRadius: '5px'}}>
                 <Typography sx={{marginBottom: '1rem'}}>Add prize to these readers:</Typography>
-                {readers.map(reader => <FormControlLabel key={reader.id} control={<Checkbox id={reader.id} onChange={handleReaderSelection} checked/>} label={reader.name}/>)}
+                {readers.map(reader => <FormControlLabel key={reader.id} control={<Checkbox id={reader.id} onChange={handleReaderSelection}/>} label={reader.name}/>)}
             </FormGroup>
             <br />
             </>

@@ -361,6 +361,25 @@
         }
       },
 
+    "reader/:readerId/prizes": {
+      "get": {
+        "security": [
+            {
+                "bearerAuth": []
+            }],
+          "tags": ["ReaderPrizes"],
+          "summary": "Gets all prize in Prizes database associated with reader",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#definitions/ReaderPrizes"
+              }
+            }
+          }
+        }
+    },
+
     "prizes": {
         "get": {
         "security": [

@@ -3,18 +3,23 @@ const { validationResult } = require('express-validator');
 const ReaderPrize = require('../../models/readerPrize');
 const Reader = require('../../models/reader');
 
-/** Return all reader prizes associated with a specific reader **/
+/** Return all reader prizes **/
 exports.getAllReaderPrizes = async (req, res, next) => { };
+
+
+/** Return all reader prizes associated with a specific reader **/
+exports.getSpecificReaderPrizes = async (req, res, next) => { };
 
 /** Add a created ReaderPrize to the reader prizes database **/
  exports.postReaderPrize = async (req, res, next) => {
-    console.log('In postReaderPrize');
-    const prizeName = req.body['prize_name'];
-    const readingRequirement = req.body['reading_requirement'];
-    const readerIds = req.body['readers'];
+    const prizeName = req.body.prize_name;
+    const readingRequirement = req.body.reading_requirement;
+    const readerIds = req.body.readers;
+
 
     const errors = validationResult(req);
     if(!errors.isEmpty()){
+        console.log(`error: ${errors.array()[0]}`);
         return res.status(400).json({
             errorMessage : errors.array()[0],
             validationErrors: errors.array()
@@ -24,7 +29,8 @@ exports.getAllReaderPrizes = async (req, res, next) => { };
     const newPrize = new ReaderPrize({
         'creator_id': req.userId,
         'prize_name' : prizeName,
-        'reading_requirement': readingRequirement
+        'reading_requirement': readingRequirement,
+        'readers': []
     });
 
     readerIds.forEach(id => newPrize.readers.push({readerId: id}));
