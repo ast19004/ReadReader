@@ -12,7 +12,8 @@ import Settings from './pages/AuthUser/Settings'
 import Reader from './pages/Reader/Reader';
 
 import AddReader from './pages/Reader/AddReader';
-import AddPrize from './pages/Prize/AddPrize'
+import AddPrize from './pages/Prize/AddPrize';
+import UpdatePrize from './pages/Prize/UpdatePrizes';
 
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 
