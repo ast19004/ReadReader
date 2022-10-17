@@ -30,11 +30,12 @@ function AddPrize() {
 
         if(checked){
             setSelectedReaders(prevReaders => [...prevReaders, id]);
+
         }else{
             setSelectedReaders(prevReaders => {
-                const filteredReaders = prevReaders.filter(reader => reader.id !== id);
-            return [...filteredReaders];
-        })
+                console.log(JSON.stringify(prevReaders));
+                return prevReaders.filter(readerId => readerId !== id)
+            });
     };
     };
 
@@ -75,13 +76,12 @@ function AddPrize() {
     const addPrize = async (event) => {
         event.preventDefault();
 
-        const readersList = [];
-
-
         const requestOptions = {
             method: 'POST',
             headers: {
-                'Content-Type' : 'application/json'
+                Authorization: 'Bearer ' + authCtx.token,
+                'Content-Type' : 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify({
                 prize_name: enteredName,
@@ -129,7 +129,7 @@ function AddPrize() {
             <>
             <FormGroup sx={{border: '1px solid rgba(136, 136, 136, 0.5)', padding: '1rem', borderRadius: '5px'}}>
                 <Typography sx={{marginBottom: '1rem'}}>Add prize to these readers:</Typography>
-                {readers.map(reader => <FormControlLabel key={reader.id} control={<Checkbox id={reader.id} onChange={handleReaderSelection}/>} label={reader.name}/>)}
+                {readers.map(reader => <FormControlLabel key={reader.id} control={<Checkbox id={reader.id} onChange={handleReaderSelection} checked/>} label={reader.name}/>)}
             </FormGroup>
             <br />
             </>
