@@ -8,6 +8,7 @@ exports.getAllReaderPrizes = async (req, res, next) => { };
 
 /** Add a created ReaderPrize to the reader prizes database **/
  exports.postReaderPrize = async (req, res, next) => {
+    console.log('In postReaderPrize');
     const prizeName = req.body['prize_name'];
     const readingRequirement = req.body['reading_requirement'];
     const readers = req.body['readers'];

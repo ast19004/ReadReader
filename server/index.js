@@ -17,6 +17,7 @@ const MONGODB_URL =
 const userRoutes = require('./routes/user');
 const readerRoutes = require('./routes/reader/reader');
 const readerSessionRoutes = require('./routes/reader/readerSession');
+const readerPrizeRoutes = require('./routes/reader/readerPrize');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 app.use(userRoutes);
 app.use(readerRoutes);
 app.use(readerSessionRoutes);
+app.use(readerPrizeRoutes)
 
 mongoose
     .connect(MONGODB_URL)
