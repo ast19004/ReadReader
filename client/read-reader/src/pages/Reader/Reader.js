@@ -182,7 +182,7 @@ const Reader = () => {
                 <LogReadingActionButtons>
                     {!isRecordingReading ?
                     <Button onClick={handleLogReadingCancel} variant="outlined" sx={{gridRow: '2/3'}}><CloseIcon/></Button> :
-                    <div sx={{gridColumn: '1/-1'}}>{currentReadingTime}</div>
+                    <div sx={{gridRow: '2/3'}}>{currentReadingTime}</div>
                     }
                     <Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1', gridRow: '2/3'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
                 </LogReadingActionButtons>
