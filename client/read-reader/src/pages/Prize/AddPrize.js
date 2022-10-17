@@ -64,6 +64,7 @@ function AddPrize() {
             }
         });
             setReaders(loadedReaders);
+            setSelectedReaders(loadedReaders.map(reader => reader.id));
             };
 
             fetchReaderData().catch((err) => {
@@ -79,9 +80,9 @@ function AddPrize() {
         const requestOptions = {
             method: 'POST',
             headers: {
-                Authorization: 'Bearer ' + authCtx.token,
                 'Content-Type' : 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                Authorization: 'Bearer ' + authCtx.token
             },
             body: JSON.stringify({
                 prize_name: enteredName,
@@ -89,12 +90,13 @@ function AddPrize() {
                 readers: selectedReaders
             })
         };
-        try{
         const url = "http://localhost:5000/prize";
+        console.log(`requestOptions: ${JSON.stringify(requestOptions)}`);
+        try{
         const res = await fetch(url, requestOptions);
 
     } catch(err){
-        console.log(err);
+        setError(err );
     }
         resetForm();
     };
@@ -137,7 +139,7 @@ function AddPrize() {
             <Button type="submit" variant="contained" color="primary">
             Add Prize
             </Button>
-            {error && <p>{error}</p>}
+            {error && <p>{error.message}</p>}
         </CustomForm>
         </>
     );
