@@ -772,6 +772,7 @@
       "ReaderPrize": {
         "required": [
           "creator_id",
+          "prize_name",
           "reading_requirement",
           "readers"
         ],
@@ -779,8 +780,11 @@
           "creator_id": {
             "type": "string"
           },
-          "reading_requirement": {
+          "prize_name": {
             "type": "string"
+          },
+          "reading_requirement": {
+            "type": "number"
           },
           "readers": {
             "type": "array",

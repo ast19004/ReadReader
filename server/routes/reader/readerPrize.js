@@ -11,10 +11,10 @@ const readerPrizeValidation = [
     .isInt()
 ];
 
-router.get('/reader/:readerId/prizes', isAuth, readerController.getAllReaderPrizes);
-router.post('/reader/prize', readerPrizeValidation, isAuth, readerController.postReaderPrize);
-router.get('/reader/:readerId/prize/:prizeId', isAuth, readerController.getReaderPrize);
-router.put('/reader/:readerId/prize/:prizeId', readerPrizeValidation, isAuth, readerController.putReaderPrize);
-router.delete('/reader/:readerId/prize/:prizeId', isAuth, readerController.deleteReaderPrize);
+router.get('/reader/:readerId/prizes', isAuth, readerPrizesController.getAllReaderPrizes);
+router.post('/reader/prize', readerPrizeValidation, isAuth, readerPrizesController.postReaderPrize);
+router.get('/reader/:readerId/prize/:prizeId', isAuth, readerPrizesController.getReaderPrize);
+router.put('/reader/:readerId/prize/:prizeId', readerPrizeValidation, isAuth, readerPrizesController.putReaderPrize);
+router.delete('/reader/:readerId/prize/:prizeId', isAuth, readerPrizesController.deleteReaderPrize);
 
 module.exports = router;

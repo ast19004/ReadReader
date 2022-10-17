@@ -11,7 +11,7 @@ exports.getAllReaderPrizes = async (req, res, next) => { };
     console.log('In postReaderPrize');
     const prizeName = req.body['prize_name'];
     const readingRequirement = req.body['reading_requirement'];
-    const readers = req.body['readers'];
+    const readerIds = req.body['readers'];
 
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -22,13 +22,16 @@ exports.getAllReaderPrizes = async (req, res, next) => { };
     }
 
     const newPrize = new ReaderPrize({
+        'creator_id': req.userId,
         'prize_name' : prizeName,
-        'reading_requirement': readingRequirement,
-        'readers' : readers
+        'reading_requirement': readingRequirement
     });
+
+    readerIds.forEach(id => newPrize.readers.push({readerId: id}));
+    
     try{
     const savedPrize= await newPrize.save();
-        res.status(201).json({message: "User Added Successfully.", newPrize: savedPrize});
+        res.status(201).json({message: "Reader Prize Added Successfully.", newPrize: savedPrize});
     }catch{err => {
         const error = new Error(err);
         if(!err.statusCode){
