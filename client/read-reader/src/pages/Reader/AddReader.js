@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import AuthContext from '../../store/auth-contex';
 
-import { TextField, Button} from '@mui/material';
+import { TextField, Button, Typography} from '@mui/material';
 import styled from 'styled-components';
 
 function AddReader() {
@@ -52,6 +52,7 @@ function AddReader() {
 
     return (
         <>
+        <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Add Reader</Typography>
         <CustomForm onSubmit={addReader}>
             <TextField
             onChange={nameChangeHandler}

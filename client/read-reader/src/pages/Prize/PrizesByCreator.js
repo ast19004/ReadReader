@@ -5,6 +5,8 @@ import AuthContext from "../../store/auth-contex";
 import styled from 'styled-components';
 import Prize from "./Prize";
 
+import { Typography } from '@mui/material'; 
+
 const PrizesByCreator = () => {
     const authCtx = useContext(AuthContext);
 
@@ -37,11 +39,14 @@ const PrizesByCreator = () => {
     }, [authCtx.token]);
 
     return (
+        <>
+        <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Prizes</Typography>
         <PrizesWrapper>
             {!prizes && <p>No prizes found.</p>}
             {prizes && prizes.map(prize => <Prize prizeName={prize.prize_name} readingRequirement={prize.reading_requirement}/>)}
             {error && <p>{error}</p>}
         </PrizesWrapper>
+        </>
     );
 
 };
