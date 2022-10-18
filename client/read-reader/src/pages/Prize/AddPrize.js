@@ -32,7 +32,7 @@ function AddPrize() {
             setSelectedReaders(prevReaders => [...prevReaders, id]);
 
         }else{
-            setSelectedReaders(prevReaders => {prevReaders.filter(readerId => readerId !== id)});
+            setSelectedReaders(prevReaders => prevReaders.filter(readerId => readerId !== id));
     };
     };
 

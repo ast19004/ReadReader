@@ -31,7 +31,6 @@ const PrizesByCreator = () => {
             };
             const resData = await res.json();
             const loadedPrizes = resData.prizes;
-            console.log(JSON.stringify(loadedPrizes));
             setPrizes(loadedPrizes);
         };
 
@@ -43,7 +42,7 @@ const PrizesByCreator = () => {
         <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Prizes</Typography>
         <PrizesWrapper>
             {!prizes && <p>No prizes found.</p>}
-            {prizes && prizes.map(prize => <Prize prizeName={prize.prize_name} readingRequirement={prize.reading_requirement}/>)}
+            {prizes && prizes.map(prize => <Prize key={prize._id} prizeName={prize.prize_name} readingRequirement={prize.reading_requirement}/>)}
             {error && <p>{error}</p>}
         </PrizesWrapper>
         </>
