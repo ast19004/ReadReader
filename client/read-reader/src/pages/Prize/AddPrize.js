@@ -1,4 +1,5 @@
-import { useState, useContext, useEffect, useRef } from 'react'; 
+import { useState, useContext, useEffect } from 'react'; 
+import { useHistory } from 'react-router-dom'
 
 import AuthContext from '../../store/auth-contex';
 
@@ -7,6 +8,7 @@ import styled from 'styled-components';
 
 function AddPrize() {
     const authCtx = useContext(AuthContext);
+    const history = useHistory();
 
     const [error, setError] = useState(''); 
     const [readers, setReaders] = useState(); 
@@ -14,9 +16,7 @@ function AddPrize() {
     const [enteredReadingRequirement, setEnteredReadingRequirement] = useState('');
     const [selectedReaders, setSelectedReaders] = useState([]);
 
-    const resetForm = () => {
-        setEnteredName('')
-    }
+
     const nameChangeHandler = (event) => {
         setEnteredName(event.target.value);
     };
@@ -96,7 +96,7 @@ function AddPrize() {
     } catch(err){
         setError(err );
     }
-        resetForm();
+        history.push('/prizes');
     };
 
     return (
