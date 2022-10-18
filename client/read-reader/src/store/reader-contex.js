@@ -2,14 +2,14 @@ import React , {useState } from 'react';
 
 const ReaderContext = React.createContext({
     isReader: false,
-    // currentReaderName & Id will be "" for an authUser 
     currentReaderId : '',
     currentReaderName : '',
-    onChangeReader : () => {},
+    onChangeReaderId : () => {},
     onChangeReaderName : () => {},
 });
 
 export const ReaderContextProvider = (props) => {
+    // currentReaderName & Id will be '' for an authUser 
     const [id, setChangeId] = useState('');
     const [name, setChangeName] = useState('');
     
@@ -30,7 +30,7 @@ export const ReaderContextProvider = (props) => {
                 isReader: isReader,
                 currentReaderId: id,
                 currentReaderName: name,
-                onChangeReader: changeReaderHandler,
+                onChangeReaderId: changeReaderHandler,
                 onChangeReaderName: changeReaderNameHandler
         }}>
             {props.children}

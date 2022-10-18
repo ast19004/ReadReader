@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from "react-router-dom"
 
 import AuthContext from '../../store/auth-contex';
+import ReaderContext from '../../store/reader-contex';
 
 import { Menu, MenuItem, IconButton, Avatar, Divider, ListItemIcon } from '@mui/material';
 import {Person, PersonAdd} from '@mui/icons-material';
@@ -12,6 +13,7 @@ import styled from 'styled-components';
 
 const AccountMenu = () => {
     const authCtx = useContext(AuthContext);
+    const readerCtx = useContext(ReaderContext);
 
     const history = useHistory();
 
@@ -21,6 +23,7 @@ const AccountMenu = () => {
     // if "" user == mainUser
     const[currentReader, setCurrentReader] = useState("");
 
+
     const userMenuOpen = !!anchorEl;
 
     const handleMenuClick = (event) => {
@@ -29,21 +32,28 @@ const AccountMenu = () => {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
+    const returnToMainUser = () => {
+        readerCtx.onChangeReaderName('');
+        readerCtx.onChangeReaderId('');
+    };
 
     const handleAddReader = () => {
+        returnToMainUser();
         history.push('/reader');
     };
 
     const handleAddPrize = () => {
+        returnToMainUser();
         history.push('/prize');
     };
 
     const handleViewPrizes = () => {
+        returnToMainUser();
         history.push('/prizes/');
     };
 
     const handleSelectMainUser = () => {
-        setCurrentReader("")
+        returnToMainUser();
         history.push('/');
     }
 
@@ -80,6 +90,16 @@ const AccountMenu = () => {
                 console.log(err);
             });
     }, []);
+
+    useEffect(() => {
+        if(readerCtx.currentReaderName !== ''){
+        const initials = [...readerCtx.currentReaderName].splice(0, 2).join("");
+        const capitalizedInitials = initials.charAt(0).toUpperCase() + initials.slice(1);
+        setCurrentReader(capitalizedInitials);
+        }else{
+            setCurrentReader('');
+        }
+    }, [readerCtx.currentReaderId, readerCtx.currentReaderName]);
 
     return (
         <div>
@@ -142,7 +162,7 @@ const AccountMenu = () => {
                 <MenuItem onClick={handleSelectMainUser}><Avatar/>USER</MenuItem>
                 <Divider />
                 { readers && readers.map((reader)=>  
-                     <MenuItem key={reader.id} onClick={ () => {setCurrentReader(reader.initials); history.push(`/reader/${reader.id}`);}}>
+                     <MenuItem key={reader.id} onClick={ () => {readerCtx.onChangeReaderName(reader.name); readerCtx.onChangeReaderId(reader.id); history.push(`/reader/${reader.id}`);}}>
                         <ListItemIcon>
                             <Avatar>{reader.initials}</Avatar>
                         </ListItemIcon>

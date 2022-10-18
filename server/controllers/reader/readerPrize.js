@@ -111,7 +111,10 @@ exports.putReaderPrize = async (req, res, next) => {
 };
 
 /** Delete a reader prize from Reader Prize database **/
- exports.deleteReaderPrize = async (req, res, next) => {};
+ exports.deleteReaderPrize = async (req, res, next) => {}
+ 
+ //TODO: add delete verification - include "Reader 1 & Reader 2 have earned this prize. You sure you want to delete it?"
+ ;
 
  /** Delete a reader prize from the reader prize list of a specified reader **/
  exports.deleteReaderPrizeFromReader = async (req, res, next) => {};
