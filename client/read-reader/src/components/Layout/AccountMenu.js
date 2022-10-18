@@ -162,7 +162,7 @@ const AccountMenu = () => {
                 <MenuItem onClick={handleSelectMainUser}><Avatar/>USER</MenuItem>
                 <Divider />
                 { readers && readers.map((reader)=>  
-                     <MenuItem key={reader.id} onClick={ () => {readerCtx.onChangeReaderName(reader.name); readerCtx.onChangeReaderId(reader.id); history.push(`/reader/${reader.id}`);}}>
+                     <MenuItem key={reader.id} onClick={ () => {readerCtx.onChangeReaderName(reader.name); readerCtx.onChangeReaderId(reader.id); history.push(`/reader/${reader.id}/logReading/`);}}>
                         <ListItemIcon>
                             <Avatar>{reader.initials}</Avatar>
                         </ListItemIcon>

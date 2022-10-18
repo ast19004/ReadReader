@@ -15,6 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 
 import AuthContext from '../../store/auth-contex';
+import ReaderContext from "../../store/reader-contex";
 
 import { useParams} from 'react-router-dom';
 
@@ -22,6 +23,8 @@ const Reader = () => {
     const history = useHistory();
 
     const authCtx = useContext(AuthContext);
+    const readerCtx = useContext(ReaderContext);
+
     const [error, setError] = useState('');
 
     const [reader, setReader] = useState();
@@ -105,18 +108,26 @@ const Reader = () => {
 
         }, [readerId, authCtx.token]);
 
+
+    const onChangeReader = (id, name) => {
+        readerCtx.onChangeReaderId(id);
+        readerCtx.onChangeReaderName(name);
+    };
+
     const handleUpdateUser = () => {
         history.push(`/reader/${readerId}/edit`);
         setEditIsOpen(true);
     };
 
     const handleLogReading = () => {
+        onChangeReader(reader._id, reader.reader_name);
         setIsReading(true);
         history.push(`/reader/${readerId}/logReading/`);
     };
 
     const handleLogReadingCancel = () => {
         setIsReading(false);
+        onChangeReader('', '');
         history.push(`/reader/${readerId}`);
     };
 
