@@ -1,20 +1,18 @@
-import { useContext, useState  } from 'react';
-
-import AuthContext from '../../store/auth-contex';
+import { useEffect, useState, useContext } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import ReaderContext from '../../store/reader-contex';
+
+import HomeIcon from '@mui/icons-material/Home';
 
 import styled from 'styled-components';
 import AccountMenu from './AccountMenu';
 
 
 const Header = () => {
-/* User Selector Btn also includes Logot btn
-    if logged in show logout and user selection btn*/
-    const authCtx = useContext(AuthContext);
-
+    const readerCtx = useContext(ReaderContext);
+    const [homeLinkPath, setHomeLinkPath] = useState(); 
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
 
     const openAccountsMenu = () => {
@@ -25,15 +23,23 @@ const Header = () => {
         setShowAccountsMenu(false);
     }
 
+    useEffect(() => {
+        if(readerCtx.currentReaderId === ''){
+            setHomeLinkPath('/');
+        }else{
+            setHomeLinkPath(`/reader/${readerCtx.currentReaderId}/logReading`);
+        }
+    }, [readerCtx.currentReaderId, readerCtx.currentReaderName]);
+
 
     return (
         <Wrapper>
             <nav>
                 <IconsWrapper>
-                    <HomeIconLink to='/'>
-                        <AutoStoriesIcon fontSize="medium"/>
+                    
+                    <HomeIconLink to={homeLinkPath}>
+                        <HomeIcon fontSize="medium"/>
                     </HomeIconLink>
-                    {authCtx.isLoggedIn &&
                     <AccountIconsWrapper>
                             <AccountMenu
                                 id="accounts-menu"
@@ -42,7 +48,6 @@ const Header = () => {
                                 onClick={closeAccountsMenu}
                             />
                     </AccountIconsWrapper>
-                    }
                 </IconsWrapper>
             </nav>
         </Wrapper>
@@ -75,9 +80,8 @@ const IconLink = styled(Link)`
     border-radius: 50%;
     padding: 3px 4px;
     margin: 0.5rem;
+    color: #888
     `;
-    // border: 1px solid #333;
-    // box-shadow: 3px 2px 6px 2px #444;
 
 const HomeIconLink = styled(IconLink)`
     margin: auto;
