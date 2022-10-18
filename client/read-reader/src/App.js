@@ -23,7 +23,9 @@ function App() {
   //The final Route sends any undefined route to the initial Auth: login/signup page
   return (
       <>
+      {authCtx.isLoggedIn &&
         <Header/>
+      }
         <main>
           <Switch>
               <Route path={'/'} exact>
