@@ -12,8 +12,8 @@ const readerPrizeValidation = [
 ];
 
 router.get('/reader/:readerId/prizes', isAuth, readerPrizesController.getSpecificReaderPrizes);
-router.get('/prizes', isAuth, readerPrizesController.getAllReaderPrizes);
-router.post('/prize', readerPrizeValidation, isAuth, readerPrizesController.postReaderPrize);
+router.get('/prizes/', isAuth, readerPrizesController.getAllReaderPrizes);
+router.post('/prize/', readerPrizeValidation, isAuth, readerPrizesController.postReaderPrize);
 router.get('/prize/:prizeId', isAuth, readerPrizesController.getReaderPrize);
 router.put('/prize/:prizeId', readerPrizeValidation, isAuth, readerPrizesController.putReaderPrize);
 router.delete('/prize/:prizeId', isAuth, readerPrizesController.deleteReaderPrize);

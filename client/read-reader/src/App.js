@@ -13,7 +13,7 @@ import Reader from './pages/Reader/Reader';
 
 import AddReader from './pages/Reader/AddReader';
 import AddPrize from './pages/Prize/AddPrize';
-import UpdatePrize from './pages/Prize/UpdatePrizes';
+import PrizesByCreator from './pages/Prize/PrizesByCreator';
 
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 
@@ -48,6 +48,10 @@ function App() {
 
               <ProtectedRoute path={'/reader/:id'} redirectPath={'/'}>
                 <Reader/>
+              </ProtectedRoute>
+
+              <ProtectedRoute path={'/prizes/'} exact redirectPath={'/'}>
+                <PrizesByCreator/>
               </ProtectedRoute>
 
               <ProtectedRoute path={'/prize/'} exact redirectPath={'/'}>

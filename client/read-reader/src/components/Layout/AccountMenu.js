@@ -6,6 +6,7 @@ import AuthContext from '../../store/auth-contex';
 import { Menu, MenuItem, IconButton, Avatar, Divider, ListItemIcon } from '@mui/material';
 import {Person, PersonAdd} from '@mui/icons-material';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PrizesIcon from '@mui/icons-material/EmojiEvents';
 
 import styled from 'styled-components';
 
@@ -35,6 +36,10 @@ const AccountMenu = () => {
 
     const handleAddPrize = () => {
         history.push('/prize');
+    };
+
+    const handleViewPrizes = () => {
+        history.push('/prizes/');
     };
 
     const handleSelectMainUser = () => {
@@ -144,14 +149,20 @@ const AccountMenu = () => {
                             {reader.name}
                     </MenuItem>
                 )}
-                <Divider />
                 <MenuItem onClick={handleAddReader}>
                 <ListItemIcon>
                     <PersonAdd fontSize="small" />
                 </ListItemIcon>
                     Add reader
                 </MenuItem>
+                <Divider />
 
+                <MenuItem onClick={handleViewPrizes}>
+                <ListItemIcon>
+                    <PrizesIcon fontSize="small" />
+                </ListItemIcon>
+                    Prizes
+                </MenuItem>
                 <MenuItem onClick={handleAddPrize}>
                 <ListItemIcon>
                     <PersonAdd fontSize="small" />

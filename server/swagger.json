@@ -380,7 +380,7 @@
         }
     },
 
-    "prizes": {
+    "/prizes": {
         "get": {
         "security": [
             {
@@ -813,7 +813,7 @@
       },
       "ReaderPrizes": {
         "type": "array",
-        "$ref": "#definitions/Prize"
+        "$ref": "#definitions/ReaderPrize"
       },
       "PrizeImage": {
         "required": [
