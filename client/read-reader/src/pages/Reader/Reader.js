@@ -25,7 +25,6 @@ const Reader = () => {
     const [error, setError] = useState('');
 
     const [reader, setReader] = useState();
-    const [isReading, setIsReading] = useState(false);
 
     const [editIsOpen, setEditIsOpen] = useState(false);
 
@@ -73,12 +72,7 @@ const Reader = () => {
 
     const handleLogReading = () => {
         onChangeReader(reader._id, reader.reader_name);
-        setIsReading(true);
         history.push(`/reader/${readerId}/logReading/`);
-    };
-
-    const handleLogReadingCancel = () => {
-        setIsReading(false);
     };
 
     const handleDisplayLogHistory = () => {
@@ -91,8 +85,7 @@ const Reader = () => {
         <>  
         { !error && reader && 
             <div>
-            {!isReading && 
-            <>
+           <Route path={'/reader/:id/'} exact>
             <ReaderSummaryContainer>
                 <div>
                     <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}
@@ -112,10 +105,10 @@ const Reader = () => {
                 {/* Include Redeem Prizes in Prizes */}
                 <Button variant="outlined">Earned Prizes</Button>
             </ReaderInfoButtons>
-            </>}
-
+            </Route>
+            
             <Route path={'/reader/:id/logReading/'} exact>
-                <ReaderLogSession onCancel={handleLogReadingCancel} minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
+                <ReaderLogSession minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
             </Route>
 
             {error && <p>{error}</p>}

@@ -54,7 +54,6 @@ const ReaderLogSession = (props) => {
     const handleLogReadingCancel = () => {
         // setIsReading(false);
         onChangeReader('', '');
-        props.onCancel();
         history.push(`/reader/${readerId}`);
     };
 
