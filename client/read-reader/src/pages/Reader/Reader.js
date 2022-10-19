@@ -85,26 +85,30 @@ const Reader = () => {
         <>  
         { !error && reader && 
             <div>
-           <Route path={'/reader/:id/'} exact>
-            <ReaderSummaryContainer>
-                <div>
-                    <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}
-                    <EditIcon sx={{alignSelf: 'start', padding: '2px', border: '1px solid rgba(153, 153, 153, .5)', borderRadius: '50%'}}/>
-                    </Typography>
-                    <ReaderWeeklyAchievement/>
-                </div>
-                 <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
-            </ReaderSummaryContainer>
+           <Route path={'/reader/:id/'}>
+                <ReaderSummaryContainer>
+                    <div>
+                        <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}
+                        <EditIcon sx={{alignSelf: 'start', padding: '2px', border: '1px solid rgba(153, 153, 153, .5)', borderRadius: '50%'}}/>
+                        </Typography>
+                        <ReaderWeeklyAchievement/>
+                    </div>
+                    <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
+                </ReaderSummaryContainer>
 
-            <Route path={`/reader/:id/edit`}>
-                <EditUserModal open={editIsOpen} onClose={() => setEditIsOpen(false)}/>
-            </Route>
+                <Route path={`/reader/:id/edit`} exact>
+                    <EditUserModal open={editIsOpen} onClose={() => setEditIsOpen(false)}/>
+                </Route>
 
-            <ReaderInfoButtons>
-                <Button onClick={handleDisplayLogHistory} variant="outlined">Log History</Button>
-                {/* Include Redeem Prizes in Prizes */}
-                <Button variant="outlined">Earned Prizes</Button>
-            </ReaderInfoButtons>
+                <ReaderInfoButtons>
+                    <Button onClick={handleDisplayLogHistory} variant="outlined">Log History</Button>
+                    {/* Include Redeem Prizes in Prizes */}
+                    <Button variant="outlined">Earned Prizes</Button>
+                </ReaderInfoButtons>
+
+                <Route path={`/reader/:id/sessions/`} exact>
+                    <SessionsHistory token={authCtx.token} readerId={readerId}/>
+                </Route>
             </Route>
             
             <Route path={'/reader/:id/logReading/'} exact>
@@ -113,9 +117,6 @@ const Reader = () => {
 
             {error && <p>{error}</p>}
         
-            <Route path={`/reader/:id/sessions/`} exact>
-                <SessionsHistory token={authCtx.token} readerId={readerId}/>
-            </Route>
             </div>
         }
         </>
