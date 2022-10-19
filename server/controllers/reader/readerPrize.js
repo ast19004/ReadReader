@@ -14,15 +14,37 @@ exports.getAllReaderPrizes = async (req, res, next) => {
 };
 
 
-/** Return all reader prizes associated with a specific reader **/
-exports.getSpecificReaderPrizes = async (req, res, next) => {
+/** Return all reader prizes available to a specific reader **/
+exports.getAvailableReaderPrizes = async (req, res, next) => {
     const id = req.params.readerId;
     //Find all prizes that contain readerId in reader list. 
-    const allPrizes = ReaderPrize.find();
+    const availablePrizes = await ReaderPrize.find({"readers.readerId" : id});
 
     res.status(200).json({
         message: "Fetched Prizes",
-        prizes: allPrizes
+        prizes: availablePrizes
+    })
+ };
+
+ /** Return all reader prizes earned by a specific reader **/
+exports.getEarnedReaderPrizes = async (req, res, next) => {
+    const id = req.params.readerId;
+
+    const reader = await Reader.findById(id);
+    let prizesIds = [];
+    let earnedPrizes = [];
+
+    if(reader.reader_prizes.length !== 0){
+        prizesIds = reader.reader_prizes.map(prize => prize.prizeId);
+    
+        //Find all prizes that contain a prizeId in prize list. 
+        earnedPrizes = await ReaderPrize.find({'_id' : {$in: prizesIds}});
+    }
+
+
+    res.status(200).json({
+        message: "Fetched Earned Prizes",
+        prizes: earnedPrizes
     })
  };
 

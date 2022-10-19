@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from "react";
-import { useHistory, Route } from "react-router-dom";
+import { useHistory, Route, Switch } from "react-router-dom";
 
 import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchievements";
 import SessionsHistory from "./Sessions/SessionsHistory";
@@ -8,7 +8,7 @@ import ReaderLogSession from "../../components/Reader/ReaderLogSession";
 
 import styled from 'styled-components';
 
-import { Button, Typography } from "@mui/material";
+import { Button,Typography } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 
 import AuthContext from '../../store/auth-contex';
@@ -85,35 +85,37 @@ const Reader = () => {
         <>  
         { !error && reader && 
             <div>
-           <Route path={'/reader/:id/'}>
-                <ReaderSummaryContainer>
-                    <div>
-                        <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}
-                        <EditIcon sx={{alignSelf: 'start', padding: '2px', border: '1px solid rgba(153, 153, 153, .5)', borderRadius: '50%'}}/>
-                        </Typography>
-                        <ReaderWeeklyAchievement/>
-                    </div>
-                    <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
-                </ReaderSummaryContainer>
-
-                <Route path={`/reader/:id/edit`} exact>
-                    <EditUserModal open={editIsOpen} onClose={() => setEditIsOpen(false)}/>
+            <Switch>
+                <Route path={'/reader/:id/logReading/'} exact>
+                    <ReaderLogSession minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
                 </Route>
+                
+                <Route path={'*'}>
+                    <ReaderSummaryContainer>
+                        <div>
+                            <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}
+                            <EditIcon sx={{alignSelf: 'start', padding: '2px', border: '1px solid rgba(153, 153, 153, .5)', borderRadius: '50%'}}/>
+                            </Typography>
+                            <ReaderWeeklyAchievement/>
+                        </div>
+                        <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
+                    </ReaderSummaryContainer>
 
-                <ReaderInfoButtons>
-                    <Button onClick={handleDisplayLogHistory} variant="outlined">Log History</Button>
-                    {/* Include Redeem Prizes in Prizes */}
-                    <Button variant="outlined">Earned Prizes</Button>
-                </ReaderInfoButtons>
+                    <Route path={`/reader/:id/edit`} exact>
+                        <EditUserModal open={editIsOpen} onClose={() => setEditIsOpen(false)}/>
+                    </Route>
 
-                <Route path={`/reader/:id/sessions/`} exact>
-                    <SessionsHistory token={authCtx.token} readerId={readerId}/>
+                    <ReaderInfoButtons>
+                        <Button onClick={handleDisplayLogHistory} variant="outlined">Log History</Button>
+                        {/* Include Redeem Prizes in Prizes */}
+                        <Button variant="outlined">Earned Prizes</Button>
+                    </ReaderInfoButtons>
+
+                    <Route path={`/reader/:id/sessions/`} exact>
+                        <SessionsHistory token={authCtx.token} readerId={readerId}/>
+                    </Route>
                 </Route>
-            </Route>
-            
-            <Route path={'/reader/:id/logReading/'} exact>
-                <ReaderLogSession minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
-            </Route>
+            </Switch>
 
             {error && <p>{error}</p>}
         
