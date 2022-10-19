@@ -44,7 +44,7 @@ const ReaderLogSession = (props) => {
         setSecondsCount(0);
     };
 
-    const currentReadingTime = `${Math.floor(secondsCount/60)} : ${secondsCount < 10 ? 0 : ''} ${secondsCount > 60 ? (secondsCount % 60) : secondsCount}`;
+    const currentReadingTime = `${Math.floor(secondsCount/60)} m : ${secondsCount < 10 || secondsCount % 60 < 10  ?  0 : ''} ${secondsCount > 60 ? (secondsCount % 60) : secondsCount} s`;
     
     const onChangeReader = (id, name) => {
         readerCtx.onChangeReaderId(id);
@@ -108,7 +108,7 @@ const ReaderLogSession = (props) => {
             <ReaderBadge minutesRead={props.minutesRead} coinsEarned={props.coinsEarned} readerName={props.readerName}/>
                 {!isRecordingReading ?
                 <Button onClick={handleLogReadingCancel} variant="outlined" sx={{gridRow: '2/3'}}><CloseIcon/></Button> :
-                <div sx={{gridRow: '2/3'}}>{currentReadingTime}</div>
+                <Timer>{currentReadingTime}</Timer>
                 }
                 <Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1', gridRow: '2/3'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
             </LogReadingContainer>
@@ -133,3 +133,10 @@ const LogReadingContainer = styled.div`
         max-width: 300px;
 }
 `;
+
+const Timer = styled.div`
+    grid-row: 2/3;
+    justify-self: center;
+    align-self: center;
+`;
+

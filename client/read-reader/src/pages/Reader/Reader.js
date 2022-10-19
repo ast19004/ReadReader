@@ -151,14 +151,3 @@ const ReaderInfoButtons = styled.div`
         margin-top: 6rem;
     }
 `;
-
-const LogReadingActionButtons = styled(ReaderInfoButtons)`
-@media(min-width: 500px){
-    grid-template-columns: 1fr 2fr;
-    justify-content: center;
-    margin-top: 6rem;
-    max-width: 300px;
-}
-`;
-
-const editReaderContainer = styled.div``;
