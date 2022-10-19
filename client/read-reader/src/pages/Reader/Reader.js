@@ -90,7 +90,7 @@ const Reader = () => {
                     <ReaderLogSession minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
                 </Route>
                 
-                <Route path={'*'}>
+                <Route path={'/reader/:id/'}>
                     <ReaderSummaryContainer>
                         <div>
                             <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}
@@ -101,7 +101,7 @@ const Reader = () => {
                         <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
                     </ReaderSummaryContainer>
 
-                    <Route path={`/reader/:id/edit`} exact>
+                    <Route path={`/reader/:id/edit`}>
                         <EditUserModal open={editIsOpen} onClose={() => setEditIsOpen(false)}/>
                     </Route>
 
