@@ -43,7 +43,7 @@ const ConfirmDelete = (props) => {
         </Typography>
         <TextField
             readOnly
-            value='Bobby Boy'
+            value={props.readerName}
             style={{ width: "200px", margin: "5px", margin: '2rem auto 0 auto'}}
             type="text"
             label="Name"

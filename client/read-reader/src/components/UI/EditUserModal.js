@@ -29,7 +29,7 @@ const EditUserModal = (props) => {
             aria-describedby="modal-modal-description"
         >
         <Box sx={style}>
-            <EditUserForm onClose={props.onClose}/>
+            <EditUserForm onClose={props.onClose} reader={props.reader}/>
         </Box>   
         </Modal>
     );

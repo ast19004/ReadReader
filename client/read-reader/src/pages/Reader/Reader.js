@@ -101,15 +101,14 @@ const Reader = () => {
                         <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
                     </ReaderSummaryContainer>
 
-                    <Route path={`/reader/:id/edit`}>
-                        <EditUserModal open={editIsOpen} onClose={() => setEditIsOpen(false)}/>
-                    </Route>
-
                     <ReaderInfoButtons>
                         <Button onClick={handleDisplayLogHistory} variant="outlined">Log History</Button>
-                        {/* Include Redeem Prizes in Prizes */}
                         <Button variant="outlined">Earned Prizes</Button>
                     </ReaderInfoButtons>
+
+                    <Route path={`/reader/:id/edit`}>
+                        <EditUserModal open={editIsOpen} onClose={() => setEditIsOpen(false)} reader={reader}/>
+                    </Route>
 
                     <Route path={`/reader/:id/sessions/`} exact>
                         <SessionsHistory token={authCtx.token} readerId={readerId}/>

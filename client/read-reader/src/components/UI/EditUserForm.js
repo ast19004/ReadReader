@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'; 
+import { useState, useContext, useEffect } from 'react'; 
 
 import { useParams, useHistory, Route } from 'react-router-dom';
 
@@ -9,7 +9,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 
 import ConfirmDelete from './ConfirmDelete';
-import { PropaneSharp } from '@mui/icons-material';
 
 function EditUserForm(props) {
     const params = useParams();
@@ -20,6 +19,12 @@ function EditUserForm(props) {
     const [enteredName, setEnteredName] = useState('');
     const [isConfirmDelete, setIsConfirmDelete] = useState(false);
 
+    const readerName = props.reader.reader_name;
+
+
+    useEffect(() => {
+        setEnteredName(readerName);
+    }, []);
 
     const resetForm = () => {
         setEnteredName('')
@@ -88,7 +93,7 @@ function EditUserForm(props) {
             </Button>
          </>}
         <Route path={`/reader/:id/edit/confirmDelete`} exact>
-            <ConfirmDelete onClose={props.onClose}/>
+            <ConfirmDelete onClose={props.onClose} readerName={readerName}/>
         </Route>
         {error && <p>{error}</p>}
         </>
