@@ -361,14 +361,50 @@
         }
       },
 
-    "reader/:readerId/prizes": {
+    "/reader/:readerId/prizes/available": {
       "get": {
         "security": [
             {
                 "bearerAuth": []
             }],
           "tags": ["ReaderPrizes"],
-          "summary": "Gets all prize in Prizes database associated with reader",
+          "parameters": [
+            {
+              "name": "readerId",
+              "in": "path",
+              "required": true,
+              "description": "ID of targeted reader",
+              "type": "string"
+            }
+          ],
+          "summary": "Gets all prizes in Prizes database availble to this reader",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#definitions/ReaderPrizes"
+              }
+            }
+          }
+        }
+    },
+    "/reader/:readerId/prizes/earned": {
+      "get": {
+        "security": [
+            {
+                "bearerAuth": []
+            }],
+          "tags": ["ReaderPrizes"],
+          "parameters": [
+            {
+              "name": "readerId",
+              "in": "path",
+              "required": true,
+              "description": "ID of targeted reader",
+              "type": "string"
+            }
+          ],
+          "summary": "Gets all prize in Prizes database earned by this reader",
           "responses": {
             "200": {
               "description": "OK",

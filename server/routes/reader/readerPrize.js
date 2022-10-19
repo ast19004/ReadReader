@@ -11,7 +11,8 @@ const readerPrizeValidation = [
     .isInt()
 ];
 
-router.get('/reader/:readerId/prizes', isAuth, readerPrizesController.getSpecificReaderPrizes);
+router.get('/reader/:readerId/prizes/available', isAuth, readerPrizesController.getEarnedReaderPrizes);
+router.get('/reader/:readerId/prizes/earned', isAuth, readerPrizesController.getAvailableReaderPrizes);
 router.get('/prizes/', isAuth, readerPrizesController.getAllReaderPrizes);
 router.post('/prize/', readerPrizeValidation, isAuth, readerPrizesController.postReaderPrize);
 router.get('/prize/:prizeId', isAuth, readerPrizesController.getReaderPrize);
