@@ -1,17 +1,14 @@
-import { useEffect, useContext, useState, useCallback } from "react";
+import { useEffect, useContext, useState } from "react";
 import { useHistory, Route } from "react-router-dom";
 
-import ReaderBadge from "../../components/Reader/ReaderBadge";
 import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchievements";
 import SessionsHistory from "./Sessions/SessionsHistory";
 import EditUserModal from "../../components/UI/EditUserModal";
+import ReaderLogSession from "../../components/Reader/ReaderLogSession";
 
 import styled from 'styled-components';
 
 import { Button, Typography } from "@mui/material";
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import StopCircleIcon from '@mui/icons-material/StopCircle';
-import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 
 import AuthContext from '../../store/auth-contex';
@@ -29,35 +26,13 @@ const Reader = () => {
 
     const [reader, setReader] = useState();
     const [isReading, setIsReading] = useState(false);
-    const [isRecordingReading, setIsRecordingReading] = useState(false);
 
     const [editIsOpen, setEditIsOpen] = useState(false);
 
-    const [readingStart, setReadingStart] = useState(new Date());
-
-    const [secondsCount, setSecondsCount] = useState(0);
-    const [timer, setTimer] = useState();
-
-    const startCounter = useCallback( () => {
-
-        const timer = 
-            setInterval(
-                () => {
-                    setSecondsCount((prevCount) => prevCount + 1)
-                } ,
-                1000);
-        setTimer(timer);
-    }, [secondsCount]);
-
-    const stopCounter = () => {
-        clearInterval(timer);
-        setSecondsCount(0);
-    };
-
-    const currentReadingTime = `${Math.floor(secondsCount/60)} : ${secondsCount < 10 ? 0 : ''} ${secondsCount > 60 ? (secondsCount % 60) : secondsCount}`;
 
     const params = useParams();
     const readerId = params.id;
+
     //Get reader by readerId using id from url params
     useEffect(()=>{
         const url = "http://localhost:5000/reader/" + readerId;
@@ -85,29 +60,6 @@ const Reader = () => {
     }, [readerId, authCtx.token]);
 
 
-    const fetchAddReaderSession = useCallback(async(minutesRead)=> {
-        const url = "http://localhost:5000/reader/session"; 
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                Authorization: 'Bearer ' + authCtx.token
-            },
-            body: JSON.stringify({
-                reader_id: readerId,
-                reading_duration: minutesRead
-            })
-        };
-        const res = await fetch(url, requestOptions);
-
-        if(!res.ok){
-            throw new Error('Something went wrong!');
-        };
-        const resData = await res.json();
-
-        }, [readerId, authCtx.token]);
-
 
     const onChangeReader = (id, name) => {
         readerCtx.onChangeReaderId(id);
@@ -127,47 +79,21 @@ const Reader = () => {
 
     const handleLogReadingCancel = () => {
         setIsReading(false);
-        onChangeReader('', '');
-        history.push(`/reader/${readerId}`);
     };
 
     const handleDisplayLogHistory = () => {
         history.push(`/reader/${readerId}/sessions`);
     };
 
-    const handleReadingStatus = async () => {
-        if(timer){stopCounter();}
 
-        if(!isRecordingReading){
-            setIsRecordingReading(true);
-            setReadingStart(Date.now());
-            startCounter();
-        }else{
-            setIsRecordingReading(false);
-            //If reading recording finished, get total time and save session.
-            const durationReadMillis = Date.now() - readingStart;
-            const durationReadMinutes = Math.round((durationReadMillis/ 1000)/ 60);
-
-            //If reading less than a minute, assume accidental session.
-            if(durationReadMinutes < 1){
-                return;
-            }
-            fetchAddReaderSession(durationReadMinutes).catch(error => setError(error));
-        }
-           
-    };
 
     return (
         <>  
         { !error && reader && 
             <div>
+            {!isReading && 
+            <>
             <ReaderSummaryContainer>
-                {isReading && 
-                    <ReaderBadge minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
-                }
-                
-                {!isReading && 
-                <>
                 <div>
                     <Typography variant="h2" onClick={handleUpdateUser} sx={{display: 'flex', cursor: 'pointer', color: "gray", marginTop: '2rem'}}>{reader['reader_name']}
                     <EditIcon sx={{alignSelf: 'start', padding: '2px', border: '1px solid rgba(153, 153, 153, .5)', borderRadius: '50%'}}/>
@@ -175,28 +101,21 @@ const Reader = () => {
                     <ReaderWeeklyAchievement/>
                 </div>
                  <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
-                 </>}
             </ReaderSummaryContainer>
 
             <Route path={`/reader/:id/edit`}>
                 <EditUserModal open={editIsOpen} onClose={() => setEditIsOpen(false)}/>
             </Route>
 
-            {!isReading && 
             <ReaderInfoButtons>
                 <Button onClick={handleDisplayLogHistory} variant="outlined">Log History</Button>
                 {/* Include Redeem Prizes in Prizes */}
                 <Button variant="outlined">Earned Prizes</Button>
-            </ReaderInfoButtons>}
+            </ReaderInfoButtons>
+            </>}
 
             <Route path={'/reader/:id/logReading/'} exact>
-                <LogReadingActionButtons>
-                    {!isRecordingReading ?
-                    <Button onClick={handleLogReadingCancel} variant="outlined" sx={{gridRow: '2/3'}}><CloseIcon/></Button> :
-                    <div sx={{gridRow: '2/3'}}>{currentReadingTime}</div>
-                    }
-                    <Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1', gridRow: '2/3'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
-                </LogReadingActionButtons>
+                <ReaderLogSession onCancel={handleLogReadingCancel} minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
             </Route>
 
             {error && <p>{error}</p>}
