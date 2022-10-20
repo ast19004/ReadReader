@@ -17,8 +17,10 @@ exports.getAllReaderPrizes = async (req, res, next) => {
 /** Return all reader prizes available to a specific reader **/
 exports.getAvailableReaderPrizes = async (req, res, next) => {
     const id = req.params.readerId;
+
     //Find all prizes that contain readerId in reader list. 
-    const availablePrizes = await ReaderPrize.find({"readers.readerId" : id});
+    const availablePrizes = await ReaderPrize.find({
+        "readers" : { $elemMatch: { "readerId" : id } } });
 
     res.status(200).json({
         message: "Fetched Prizes",

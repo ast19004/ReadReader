@@ -361,7 +361,7 @@
         }
       },
 
-    "/reader/:readerId/prizes/available": {
+    "/reader/{readerId}/prizes/available": {
       "get": {
         "security": [
             {
@@ -388,7 +388,7 @@
           }
         }
     },
-    "/reader/:readerId/prizes/earned": {
+    "/reader/{readerId}/prizes/earned": {
       "get": {
         "security": [
             {
