@@ -12,7 +12,7 @@ import AccountMenu from './AccountMenu';
 
 const Header = () => {
     const readerCtx = useContext(ReaderContext);
-    const [homeLinkPath, setHomeLinkPath] = useState(); 
+    const [homeLinkPath, setHomeLinkPath] = useState('/'); 
     const [showAccountsMenu, setShowAccountsMenu] = useState(false);
 
     const openAccountsMenu = () => {
@@ -35,11 +35,12 @@ const Header = () => {
     return (
         <Wrapper>
             <nav>
-                <IconsWrapper>
-                    
-                    <HomeIconLink to={homeLinkPath}>
-                        <HomeIcon fontSize="medium"/>
-                    </HomeIconLink>
+                <IconsWrapper>            
+                    <HomeIconWrapper>
+                        <Link to={homeLinkPath}>
+                            <HomeIcon fontSize="medium"/>
+                        </Link>
+                    </HomeIconWrapper>
                     <AccountIconsWrapper>
                             <AccountMenu
                                 id="accounts-menu"
@@ -74,17 +75,13 @@ const AccountIconsWrapper = styled.li`
 `;
 
 
-const IconLink = styled(Link)`
+const HomeIconWrapper = styled.li`
     display: block;
     background: white;
     border-radius: 50%;
     padding: 3px 4px;
-    margin: 0.5rem;
+    margin: auto;
     color: #888
     `;
-
-const HomeIconLink = styled(IconLink)`
-    margin: auto;
-`;
 
 

@@ -19,7 +19,6 @@ const AvailablePrizes = (props) => {
     const [prizes, setPrizes] = useState(); 
 
     useEffect(() => {
-        console.log(`readerId in AvailablePrizes : ${props.readerId}`);
         const url =  isMainUser ? `http://localhost:5000/prizes/` : `http://localhost:5000/reader/${props.readerId}/prizes/available`;
         const requestOptions = {
             method: 'GET',
@@ -45,6 +44,7 @@ const AvailablePrizes = (props) => {
     return (
         <>
         <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Prizes</Typography>
+        {props.children && props.children}
         <PrizesWrapper>
             {!prizes && <p>No prizes found.</p>}
             {prizes && prizes.map(prize => <Prize key={prize._id} prizeName={prize.prize_name} readingRequirement={prize.reading_requirement}/>)}
