@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import ReaderAuth from '../../store/reader-contex';
 
 import { Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,10 +9,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const Prize = (props) => {
+    const readerCtx = useContext(ReaderAuth);
     const history = useHistory();
+
+    const isMainUser = !readerCtx.currentReaderId;
+
     const [style, setStyle] = useState({display: 'none'});
 
-    const clickable = props.isEditable ? {cursor : 'pointer', height: '100px'} : {cursor : 'default'};
+    const clickable = isMainUser ? {cursor : 'pointer', height: '100px'} : {cursor : 'default'};
 
 
     const handleUpdatePrizeHandler = () => {
@@ -28,7 +34,7 @@ const Prize = (props) => {
     }}>
         <div>{props.prizeName}</div>
         <div>{props.readingRequirement}</div>
-        {props.isEditable && <div style={style}><Button><DeleteIcon/></Button> <Button><EditIcon onClick={handleUpdatePrizeHandler}/></Button></div>}
+        {isMainUser && <div style={style}><Button><DeleteIcon/></Button> <Button><EditIcon onClick={handleUpdatePrizeHandler}/></Button></div>}
     </div>
     );
 };

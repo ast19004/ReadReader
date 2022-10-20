@@ -1,10 +1,11 @@
 import { useEffect, useContext, useState } from "react";
-import { useHistory, Route, Switch } from "react-router-dom";
+import { useHistory, Route, Switch, useParams } from "react-router-dom";
 
 import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchievements";
 import SessionsHistory from "./Sessions/SessionsHistory";
 import EditUserModal from "../../components/UI/EditUserModal";
 import ReaderLogSession from "../../components/Reader/ReaderLogSession";
+import ReaderPrizeSelection from "../../components/Reader/ReaderPrizeSelection";
 
 import styled from 'styled-components';
 
@@ -14,7 +15,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import AuthContext from '../../store/auth-contex';
 import ReaderContext from "../../store/reader-contex";
 
-import { useParams} from 'react-router-dom';
 
 const Reader = () => {
     const history = useHistory();
@@ -70,9 +70,13 @@ const Reader = () => {
         setEditIsOpen(true);
     };
 
-    const handleLogReading = () => {
+    const handleStartLogReading = () => {
         onChangeReader(reader._id, reader.reader_name);
         history.push(`/reader/${readerId}/logReading/`);
+    };
+
+    const handleStopLogReading = () => {
+        history.push(`/reader/${readerId}/prizes/`);
     };
 
     const handleDisplayLogHistory = () => {
@@ -87,7 +91,11 @@ const Reader = () => {
             <div>
             <Switch>
                 <Route path={'/reader/:id/logReading/'} exact>
-                    <ReaderLogSession minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
+                    <ReaderLogSession onStopLogging ={handleStopLogReading} minutesRead={reader["total_reading_duration"]} coinsEarned={reader["reading_coins"]} readerName={reader['reader_name']}/>
+                </Route>
+
+                <Route path={'/reader/:id/prizes/'} exact>
+                    <ReaderPrizeSelection readerId={readerId}/>
                 </Route>
                 
                 <Route path={'/reader/:id/'}>
@@ -98,7 +106,7 @@ const Reader = () => {
                             </Typography>
                             <ReaderWeeklyAchievement/>
                         </div>
-                        <Button onClick={handleLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
+                        <Button onClick={handleStartLogReading} variant="outlined" sx={{fontSize:"24px", alignSelf: "center"}}>LOG Reading</Button>
                     </ReaderSummaryContainer>
 
                     <ReaderInfoButtons>

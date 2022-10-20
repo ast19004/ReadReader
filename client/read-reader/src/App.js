@@ -13,7 +13,7 @@ import Reader from './pages/Reader/Reader';
 
 import AddReader from './pages/Reader/AddReader';
 import AddPrize from './pages/Prize/AddPrize';
-import PrizesByCreator from './pages/Prize/PrizesByCreator';
+import AvailablePrizes from './pages/Prize/AvailablePrizes';
 
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 
@@ -53,7 +53,7 @@ function App() {
               </ProtectedRoute>
 
               <ProtectedRoute path={'/prizes/'} exact redirectPath={'/'}>
-                <PrizesByCreator/>
+                <AvailablePrizes/>
               </ProtectedRoute>
 
               <ProtectedRoute path={'/prize/'} exact redirectPath={'/'}>

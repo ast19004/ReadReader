@@ -1,21 +1,26 @@
 import { useEffect, useState, useContext} from "react";
 
 import AuthContext from "../../store/auth-contex";
+import ReaderContext from "../../store/reader-contex";
 
 import styled from 'styled-components';
-import Prize from "./Prize";
+import Prize from "../../components/Prize/Prize";
 
 import { Typography } from '@mui/material'; 
 
-const PrizesByCreator = () => {
+const AvailablePrizes = (props) => {
     const authCtx = useContext(AuthContext);
+    const readerCtx = useContext(ReaderContext);
+
+    const isMainUser = !readerCtx.currentReaderId;
 
     const [error, setError] = useState();
 
     const [prizes, setPrizes] = useState(); 
 
     useEffect(() => {
-        const url = `http://localhost:5000/prizes/`;
+        console.log(`readerId in AvailablePrizes : ${props.readerId}`);
+        const url =  isMainUser ? `http://localhost:5000/prizes/` : `http://localhost:5000/reader/${props.readerId}/prizes/available`;
         const requestOptions = {
             method: 'GET',
             headers: {
@@ -42,7 +47,7 @@ const PrizesByCreator = () => {
         <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Prizes</Typography>
         <PrizesWrapper>
             {!prizes && <p>No prizes found.</p>}
-            {prizes && prizes.map(prize => <Prize key={prize._id} prizeName={prize.prize_name} readingRequirement={prize.reading_requirement} isEditable={true}/>)}
+            {prizes && prizes.map(prize => <Prize key={prize._id} prizeName={prize.prize_name} readingRequirement={prize.reading_requirement}/>)}
             {error && <p>{error}</p>}
         </PrizesWrapper>
         </>
@@ -51,7 +56,7 @@ const PrizesByCreator = () => {
 };
 
 
-export default PrizesByCreator;
+export default AvailablePrizes;
 
 
 const PrizesWrapper = styled.div`

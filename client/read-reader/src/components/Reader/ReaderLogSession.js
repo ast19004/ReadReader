@@ -44,7 +44,7 @@ const ReaderLogSession = (props) => {
         setSecondsCount(0);
     };
 
-    const currentReadingTime = `${Math.floor(secondsCount/60)} m : ${secondsCount < 10 || secondsCount % 60 < 10  ?  0 : ''} ${secondsCount > 60 ? (secondsCount % 60) : secondsCount} s`;
+    const currentReadingTime = `${Math.floor(secondsCount/60)} m : ${secondsCount < 10 || secondsCount % 60 < 10  ?  0 : ''} ${ secondsCount % 60 == 0 ? '0' : secondsCount > 60 ? (secondsCount % 60) : secondsCount} s`;
     
     const onChangeReader = (id, name) => {
         readerCtx.onChangeReaderId(id);
@@ -97,6 +97,9 @@ const ReaderLogSession = (props) => {
             if(durationReadMinutes < 1){
                 return;
             }
+            //Allow parent component to react reading end. 
+            props.onStopLogging();
+
             fetchAddReaderSession(durationReadMinutes).catch(error => setError(error));
         }
            
@@ -108,11 +111,10 @@ const ReaderLogSession = (props) => {
             <ReaderBadge minutesRead={props.minutesRead} coinsEarned={props.coinsEarned} readerName={props.readerName}/>
                 {!isRecordingReading ?
                 <Button onClick={handleLogReadingCancel} variant="outlined" sx={{gridRow: '2/3'}}><CloseIcon/></Button> :
-                <Timer>{currentReadingTime}</Timer>
+                <TimerBox>{currentReadingTime}</TimerBox>
                 }
                 <Button onClick={handleReadingStatus} variant="outlined" sx={{gridColumn: '2/-1', gridRow: '2/3'}}>{!isRecordingReading ? <PlayArrowIcon/> : <StopCircleIcon/>}</Button>
             </LogReadingContainer>
-            {error && <p>{error}</p>}
         </>
     );
 };
@@ -134,7 +136,7 @@ const LogReadingContainer = styled.div`
 }
 `;
 
-const Timer = styled.div`
+const TimerBox = styled.div`
     grid-row: 2/3;
     justify-self: center;
     align-self: center;
