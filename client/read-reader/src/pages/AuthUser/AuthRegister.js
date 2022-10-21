@@ -1,6 +1,7 @@
 import { useState } from 'react'; 
+import { Link } from 'react-router-dom';
 
-import { TextField, Button} from '@mui/material';
+import { TextField, Button, Typography} from '@mui/material';
 import styled from 'styled-components';
 
 function RegisterUser() {
@@ -72,57 +73,61 @@ function RegisterUser() {
     };
 
     return (
-        <RegisterForm onSubmit={registerUser}>
-        <TextField
-        onChange={firstNameChangeHandler}
-        value={enteredFirstName}
-        style={{ width: "200px", margin: "5px" }}
-        type="text"
-        label="First Name"
-        variant="outlined"
-        />
-        <br />
-        <TextField
-        onChange={lastNameChangeHandler}
-        value={enteredLastName}
-        style={{ width: "200px", margin: "5px" }}
-        type="text"
-        label="Last Name"
-        variant="outlined"
-        />
-        <br />
-        <TextField
-        onChange={emailChangeHandler}
-        value={enteredEmail}
-        style={{ width: "200px", margin: "5px" }}
-        type="email"
-        label="Email"
-        variant="outlined"
-        />
-        <br />
-        <TextField
-        onChange={passwordChangeHandler}
-        value={enteredPassword}
-        style={{ width: "200px", margin: "5px" }}
-        type="password"
-        label="Password"
-        variant="outlined"
-        />
-        <br />
-        <TextField
-        onChange={passwordConfirmChangeHandler}
-        value={enteredPasswordConfirm}
-        style={{ width: "200px", margin: "5px" }}
-        type="password"
-        label="Confirm Password"
-        variant="outlined"
-        />
-        <br />
-        <Button type="submit" variant="contained" color="primary">
-        Register
-        </Button>
-        {error && <p>{error}</p>}
-    </RegisterForm>
+        <>
+            <Typography align="center" variant="h4" component={'h2'} sx={{color: "gray", marginTop: '2rem'}}>New Account</Typography>
+            <RegisterForm onSubmit={registerUser}>
+            <TextField
+            onChange={firstNameChangeHandler}
+            value={enteredFirstName}
+            style={{ width: "200px", margin: "5px" }}
+            type="text"
+            label="First Name"
+            variant="outlined"
+            />
+            <br />
+            <TextField
+            onChange={lastNameChangeHandler}
+            value={enteredLastName}
+            style={{ width: "200px", margin: "5px" }}
+            type="text"
+            label="Last Name"
+            variant="outlined"
+            />
+            <br />
+            <TextField
+            onChange={emailChangeHandler}
+            value={enteredEmail}
+            style={{ width: "200px", margin: "5px" }}
+            type="email"
+            label="Email"
+            variant="outlined"
+            />
+            <br />
+            <TextField
+            onChange={passwordChangeHandler}
+            value={enteredPassword}
+            style={{ width: "200px", margin: "5px" }}
+            type="password"
+            label="Password"
+            variant="outlined"
+            />
+            <br />
+            <TextField
+            onChange={passwordConfirmChangeHandler}
+            value={enteredPasswordConfirm}
+            style={{ width: "200px", margin: "5px" }}
+            type="password"
+            label="Confirm Password"
+            variant="outlined"
+            />
+            <br />
+            <Button type="submit" variant="contained" color="primary">
+            Register
+            </Button>
+            {error && <p>{error}</p>}
+            <Link to='/' variant="contained" style={{marginTop: '1rem', textAlign: 'center'}}>Sign In Instead</Link>
+        </RegisterForm>
+    </>
     );
   }
   
