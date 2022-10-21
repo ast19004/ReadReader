@@ -16,7 +16,8 @@ const Prize = (props) => {
 
     const [style, setStyle] = useState({display: 'none'});
 
-    const clickable = isMainUser ? {cursor : 'pointer', height: '100px'} : {cursor : 'default'};
+    const listContainerStyle = {height: '150px', listStyle: 'none', padding: '5px'};
+    isMainUser ? (listContainerStyle.cursor = 'pointer') : (listContainerStyle.cursor = 'default');
 
 
     const handleUpdatePrizeHandler = () => {
@@ -25,7 +26,7 @@ const Prize = (props) => {
     };
 
     return (
-    <div style={clickable}
+    <li style={listContainerStyle}
     onMouseEnter={e => {
         setStyle({display: 'flex', justifyContent: 'space-between'});
     }}
@@ -35,7 +36,7 @@ const Prize = (props) => {
         <div>{props.prizeName}</div>
         <div>{props.readingRequirement}</div>
         {isMainUser && <div style={style}><Button><DeleteIcon/></Button> <Button><EditIcon onClick={handleUpdatePrizeHandler}/></Button></div>}
-    </div>
+    </li>
     );
 };
 
