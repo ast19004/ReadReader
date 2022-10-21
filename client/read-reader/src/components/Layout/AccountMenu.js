@@ -8,6 +8,7 @@ import { Menu, MenuItem, IconButton, Avatar, Divider, ListItemIcon } from '@mui/
 import {Person, PersonAdd} from '@mui/icons-material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PrizesIcon from '@mui/icons-material/EmojiEvents';
+import AddPrizeIcon from '../UI/AddPrizeIcon';
 
 import styled from 'styled-components';
 
@@ -185,7 +186,7 @@ const AccountMenu = () => {
                 </MenuItem>
                 <MenuItem onClick={handleAddPrize}>
                 <ListItemIcon>
-                    <PersonAdd fontSize="small" />
+                    <AddPrizeIcon/>
                 </ListItemIcon>
                     Add prize
                 </MenuItem>

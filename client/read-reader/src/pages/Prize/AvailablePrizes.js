@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import Prize from "../../components/Prize/Prize";
 
 import { Typography } from '@mui/material'; 
+import { Person, PersonAdd, ArrowRightAlt } from '@mui/icons-material';
+import AddPrizeIcon from "../../components/UI/AddPrizeIcon";
 
 const AvailablePrizes = (props) => {
     const authCtx = useContext(AuthContext);
@@ -14,9 +16,11 @@ const AvailablePrizes = (props) => {
 
     const isMainUser = !readerCtx.currentReaderId;
 
-    const [error, setError] = useState();
+    const [error, setError] = useState('');
 
-    const [prizes, setPrizes] = useState(); 
+    const [prizes, setPrizes] = useState([]); 
+
+    const [hasPrizes, setHasPrizes] = useState(false);
 
     useEffect(() => {
         const url =  isMainUser ? `http://localhost:5000/prizes/` : `http://localhost:5000/reader/${props.readerId}/prizes/available`;
@@ -36,6 +40,7 @@ const AvailablePrizes = (props) => {
             const resData = await res.json();
             const loadedPrizes = resData.prizes;
             setPrizes(loadedPrizes);
+            setHasPrizes(loadedPrizes.length !== 0);
         };
 
         fetchPrizesData().catch(err => setError(err.message))
@@ -45,11 +50,16 @@ const AvailablePrizes = (props) => {
         <>
         <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Prizes</Typography>
         {props.children && props.children}
-        <PrizesWrapper>
-            {!prizes && <p>No prizes found.</p>}
-            {prizes && prizes.map(prize => <Prize key={prize._id} prizeName={prize.prize_name} readingRequirement={prize.reading_requirement}/>)}
-            {error && <p>{error}</p>}
-        </PrizesWrapper>
+        {hasPrizes ?
+            <PrizesWrapper>
+                {prizes.map(prize => <Prize key={prize._id} prizeName={prize.prize_name} readingRequirement={prize.reading_requirement}/>)}
+            </PrizesWrapper> :
+
+            <>
+                <Typography align="center" variant="h4" component="p" sx={{color: "gray", marginTop: '2rem'}}>You have not yet created any prizes.</Typography>
+                <Typography variant="h6" component="p" sx={{display: 'flex', justifyContent: 'center', color: "gray", marginTop: '1rem'}}><Person fontSize="medium"/> <ArrowRightAlt/>&nbsp;<AddPrizeIcon fontSize="medium"/>Add Prize</Typography>
+            </>
+         }
         </>
     );
 

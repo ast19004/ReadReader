@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import AuthContext from '../../store/auth-contex';
 
 import { Typography, FormGroup, FormControlLabel, Checkbox, TextField, Button } from '@mui/material';
+import { Person, PersonAdd, ArrowRightAlt } from '@mui/icons-material';
 import styled from 'styled-components';
 
 function AddPrize() {
@@ -15,6 +16,8 @@ function AddPrize() {
     const [enteredName, setEnteredName] = useState('');
     const [enteredReadingRequirement, setEnteredReadingRequirement] = useState('');
     const [selectedReaders, setSelectedReaders] = useState([]);
+
+    const [userHasReader, setUserHasReaders] = useState(false);
 
 
     const nameChangeHandler = (event) => {
@@ -61,8 +64,9 @@ function AddPrize() {
             }
         });
             setReaders(loadedReaders);
-            // setSelectedReaders(loadedReaders.map(reader => reader.id));
+            setUserHasReaders(loadedReaders.length !== 0);
             };
+
 
             fetchReaderData().catch((err) => {
                 setError(err.msg);
@@ -101,7 +105,8 @@ function AddPrize() {
 
     return (
         <>
-        <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Add Prize</Typography>
+         <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Add Prize</Typography>
+        { userHasReader ?
         <CustomForm onSubmit={addPrize}>
             <TextField
             multiline
@@ -125,7 +130,6 @@ function AddPrize() {
             required
             />
             <br />
-            { readers && 
             <>
             <FormGroup sx={{border: '1px solid rgba(136, 136, 136, 0.5)', padding: '1rem', borderRadius: '5px'}}>
                 <Typography sx={{marginBottom: '1rem'}}>Add prize to these readers:</Typography>
@@ -133,12 +137,16 @@ function AddPrize() {
             </FormGroup>
             <br />
             </>
-            }
             <Button type="submit" variant="contained" color="primary">
             Add Prize
             </Button>
             {error && <p>{error.message}</p>}
-        </CustomForm>
+        </CustomForm> :
+        <>
+            <Typography align="center" variant="h4" component="p" sx={{color: "gray", marginTop: '2rem'}}>Please add reader(s) before adding prizes.</Typography>
+            <Typography variant="h6" component="p" sx={{display: 'flex', justifyContent: 'center', color: "gray", marginTop: '1rem'}}><Person/> <ArrowRightAlt/> <PersonAdd/>&nbsp;Add Reader</Typography>
+        </>
+        }
         </>
     );
   }

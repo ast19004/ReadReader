@@ -4,16 +4,18 @@ import AuthContext from '../../store/auth-contex';
 
 import ReaderBadgeLink from '../../components/Reader/ReaderBadgeLink'
 
-import { Link } from 'react-router-dom';
+import { Typography } from "@mui/material";
+import { Person, PersonAdd, ArrowRightAlt } from '@mui/icons-material';
 
 import styled from 'styled-components';
-import { Typography } from "@mui/material";
 
 const AuthWelcome = () => {
     const authCtx = useContext(AuthContext);
     const [error, setError] = useState('');
 
     const [readers, setReaders] = useState([]);
+
+    const [userHasReader, setUserHasReaders] = useState(false);
 
 
 
@@ -44,6 +46,7 @@ const AuthWelcome = () => {
             }
         });
             setReaders(loadedReaders);
+            setUserHasReaders(loadedReaders.length !== 0);
             };
 
             fetchReaderData().catch((err) => {
@@ -54,17 +57,19 @@ const AuthWelcome = () => {
 
     return (
         <>
-        { !error && readers && 
-        <>
         <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Readers</Typography>
+        { !error && userHasReader && 
         <ReaderBadgesContainer>
             {readers.map(reader => {
                 return <ReaderBadgeLink key={reader.id} id={reader.id} minutesRead={reader.minutesRead} coinsEarned={reader.coinsEarned} readerName={reader.name}/>
             })}
         </ReaderBadgesContainer>
-        </>
+        }{ !error && !userHasReader && 
+            <>
+                <Typography align="center" variant="h4" component="p" sx={{color: "gray", marginTop: '2rem'}}>Please add reader(s) to begin.</Typography>
+                <Typography variant="h6" component="p" sx={{display: 'flex', justifyContent: 'center', color: "gray", marginTop: '1rem'}}><Person/> <ArrowRightAlt/> <PersonAdd/>&nbsp;Add Reader</Typography>
+            </>
         }
-        {!readers && !error && <Link to={'/reader/add'}>Add Reader</Link>}
         {error && <p>{error}</p>}
         </>
     );
