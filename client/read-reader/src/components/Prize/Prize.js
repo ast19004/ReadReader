@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-import ReaderAuth from '../../store/reader-contex';
+import ReaderContext from '../../store/reader-contex';
 
 import { Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,8 +9,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const Prize = (props) => {
-    const readerCtx = useContext(ReaderAuth);
     const history = useHistory();
+
+    const readerCtx = useContext(ReaderContext);
 
     const isMainUser = !readerCtx.currentReaderId;
 

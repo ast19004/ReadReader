@@ -48,6 +48,8 @@ const AvailablePrizes = (props) => {
         fetchPrizesData().catch(err => setError(err.message))
     }, [authCtx.token]);
 
+    
+
     return (
         <>
         <Typography align="center" variant="h2" sx={{color: "gray", marginTop: '2rem'}}>Prizes</Typography>
