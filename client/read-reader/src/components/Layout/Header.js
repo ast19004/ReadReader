@@ -16,7 +16,7 @@ const Header = () => {
   const [homeLinkPath, setHomeLinkPath] = useState("/");
   const [showAccountsMenu, setShowAccountsMenu] = useState(false);
 
-  const isMainUser = readerCtx.currentReaderId === "";
+  const isMainUser = !readerCtx.currentReaderId;
   const prizeLinkPath = `/reader/${readerCtx.currentReaderId}/prizes`;
 
   const openAccountsMenu = () => {

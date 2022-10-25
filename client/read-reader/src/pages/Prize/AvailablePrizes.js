@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Prize from "../../components/Prize/Prize";
 
 import { Typography } from "@mui/material";
-import { Person, PersonAdd, ArrowRightAlt } from "@mui/icons-material";
+import { Person, ArrowRightAlt } from "@mui/icons-material";
 import AddPrizeIcon from "../../components/Prize/AddPrizeIcon";
 
 const AvailablePrizes = (props) => {
@@ -50,7 +50,7 @@ const AvailablePrizes = (props) => {
     };
 
     fetchPrizesData().catch((err) => setError(err.message));
-  }, [authCtx.token]);
+  }, [authCtx.token, props.readerId, isMainUser]);
 
   return (
     <>
