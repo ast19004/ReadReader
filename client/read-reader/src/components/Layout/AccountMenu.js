@@ -34,6 +34,8 @@ const AccountMenu = () => {
 
   const userMenuOpen = !!anchorEl;
 
+  readerCtx.onChangeIsUpdated(false);
+
   const handleMenuClick = (event) => {
     setAnchorEl(event.target);
   };
@@ -66,6 +68,7 @@ const AccountMenu = () => {
   };
 
   useEffect(() => {
+    console.log(`getting readers for header`);
     const url = "http://localhost:5000/readers";
     const requestOptions = {
       method: "GET",
@@ -97,7 +100,7 @@ const AccountMenu = () => {
     fetchReaderData().catch((err) => {
       console.log(err);
     });
-  }, [authCtx.token]);
+  }, [authCtx.token, readerCtx.isUpdated]);
 
   useEffect(() => {
     if (!isMainUser) {

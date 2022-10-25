@@ -1,111 +1,122 @@
-import { useState, useContext, useEffect } from 'react'; 
+import { useState, useContext, useEffect } from "react";
 
-import { useParams, useHistory, Route } from 'react-router-dom';
+import { useParams, useHistory, Route } from "react-router-dom";
 
-import AuthContext from '../../store/auth-contex';
+import AuthContext from "../../store/auth-contex";
+import ReaderContext from "../../store/reader-contex";
 
-import { TextField, Button, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import styled from 'styled-components';
+import { TextField, Button, Typography } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import styled from "styled-components";
 
-import ConfirmDelete from './ConfirmDelete';
+import ConfirmDelete from "./ConfirmDelete";
 
 function EditUserForm(props) {
-    const params = useParams();
-    const history = useHistory();
-    const authCtx = useContext(AuthContext);
+  const params = useParams();
+  const history = useHistory();
+  const authCtx = useContext(AuthContext);
+  const readerCtx = useContext(ReaderContext);
 
-    const [error, setError] = useState('');
-    const [enteredName, setEnteredName] = useState('');
-    const [isConfirmDelete, setIsConfirmDelete] = useState(false);
+  const [error, setError] = useState("");
+  const [enteredName, setEnteredName] = useState("");
+  const [isConfirmDelete, setIsConfirmDelete] = useState(false);
 
-    const readerName = props.reader.reader_name;
+  const readerName = props.reader.reader_name;
 
+  useEffect(() => {
+    setEnteredName(readerName);
+  }, [readerName]);
 
-    useEffect(() => {
-        setEnteredName(readerName);
-    }, []);
+  const resetForm = () => {
+    setEnteredName("");
+  };
+  const nameChangeHandler = (event) => {
+    setEnteredName(event.target.value);
+  };
 
-    const resetForm = () => {
-        setEnteredName('')
+  const updateReader = async (event) => {
+    event.preventDefault();
+
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + authCtx.token,
+      },
+      body: JSON.stringify({
+        reader_name: enteredName,
+      }),
+    };
+    try {
+      const url = `http://localhost:5000/reader/${params.id}/`;
+      const res = await fetch(url, requestOptions);
+      const resData = await res.json();
+      const id = resData.updatedReader._id;
+
+      history.push(`/reader/${id}`);
+    } catch (err) {
+      setError(err.msg);
     }
-    const nameChangeHandler = (event) => {
-        setEnteredName(event.target.value);
-    };
+    readerCtx.onChangeIsUpdated(true);
+    resetForm();
+  };
 
-    const updateReader = async (event) => {
-        event.preventDefault();
+  const deleteReader = (event) => {
+    setIsConfirmDelete(true);
+    history.push(`/reader/${params.id}/edit/confirmDelete`);
+  };
 
-        const requestOptions = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                Authorization: 'Bearer ' + authCtx.token
-            },
-            body: JSON.stringify({
-                reader_name: enteredName
-            })
-        };
-        try{
-        const url = `http://localhost:5000/reader/${params.id}/`;
-        const res = await fetch(url, requestOptions);
-        const resData = await res.json();
-        const id = resData.updatedReader._id
-
-        history.push(`/reader/${id}`);
-
-    } catch(err){
-        setError(err.msg);
-    }
-        resetForm();
-    };
-
-    const deleteReader = (event) => {
-        setIsConfirmDelete(true);
-        history.push(`/reader/${params.id}/edit/confirmDelete`);
-    };
-
-    return (
+  return (
+    <>
+      {!isConfirmDelete && (
         <>
-        {!isConfirmDelete && 
-        <>
-        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{textAlign: 'center'}}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            sx={{ textAlign: "center" }}
+          >
             Update Reader
-        </Typography>
-        <CustomForm onSubmit={updateReader}>
+          </Typography>
+          <CustomForm onSubmit={updateReader}>
             <TextField
-            onChange={nameChangeHandler}
-            value={enteredName}
-            style={{ width: "200px", margin: "5px" }}
-            type="text"
-            label="Name"
-            variant="outlined"
-            required
+              onChange={nameChangeHandler}
+              value={enteredName}
+              style={{ width: "200px", margin: "5px" }}
+              type="text"
+              label="Name"
+              variant="outlined"
+              required
             />
             <br />
             <Button type="submit" variant="contained" color="primary">
-            Submit Changes
+              Submit Changes
             </Button>
-        </CustomForm>
-            <Button onClick={deleteReader} variant="contained" color="error" sx={{marginTop: '2rem', width: '24px', justifySelf: 'center'}}>
-                <DeleteIcon sx={{width: '20px'}}/>
-            </Button>
-         </>}
-        <Route path={`/reader/:id/edit/confirmDelete`} exact>
-            <ConfirmDelete onClose={props.onClose} readerName={readerName}/>
-        </Route>
-        {error && <p>{error}</p>}
+          </CustomForm>
+          <Button
+            onClick={deleteReader}
+            variant="contained"
+            color="error"
+            sx={{ marginTop: "2rem", width: "24px", justifySelf: "center" }}
+          >
+            <DeleteIcon sx={{ width: "20px" }} />
+          </Button>
         </>
-    );
-  }
-  
-  export default EditUserForm;
+      )}
+      <Route path={`/reader/:id/edit/confirmDelete`} exact>
+        <ConfirmDelete onClose={props.onClose} readerName={readerName} />
+      </Route>
+      {error && <p>{error}</p>}
+    </>
+  );
+}
 
-  const CustomForm = styled.form`
+export default EditUserForm;
+
+const CustomForm = styled.form`
   display: grid;
   grid-template-column: auto;
   justify-content: center;
   margin-top: 2rem;
 `;
-

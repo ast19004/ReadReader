@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 
 const ReaderContext = React.createContext({
-  isReader: false,
+  isUpdated: false,
   currentReaderId: "",
   currentReaderName: "",
   onChangeReaderId: () => {},
   onChangeReaderName: () => {},
+  onChangeIsUpdated: () => {},
 });
 
 export const ReaderContextProvider = (props) => {
   // currentReaderName & Id will be '' for an authUser
   const [id, setChangeId] = useState("");
   const [name, setChangeName] = useState("");
-
-  const isReader = !!id;
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const changeReaderHandler = (id) => {
     setChangeId(id);
@@ -23,14 +23,19 @@ export const ReaderContextProvider = (props) => {
     setChangeName(name);
   };
 
+  const changeIsUpdatedHandler = (bool) => {
+    setIsUpdated(bool);
+  };
+
   return (
     <ReaderContext.Provider
       value={{
-        isReader: isReader,
+        isUpdated: isUpdated,
         currentReaderId: id,
         currentReaderName: name,
         onChangeReaderId: changeReaderHandler,
         onChangeReaderName: changeReaderNameHandler,
+        onChangeIsUpdated: changeIsUpdatedHandler,
       }}
     >
       {props.children}
