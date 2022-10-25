@@ -34,8 +34,6 @@ const AccountMenu = () => {
 
   const userMenuOpen = !!anchorEl;
 
-  readerCtx.onChangeIsUpdated(false);
-
   const handleMenuClick = (event) => {
     setAnchorEl(event.target);
   };
@@ -66,6 +64,17 @@ const AccountMenu = () => {
     returnToMainUser();
     history.push("/");
   };
+
+  const showIfMainUser = (component) => {
+    if (!isMainUser) {
+      return;
+    }
+    return component;
+  };
+
+  useEffect(() => {
+    readerCtx.onChangeIsUpdated(false);
+  }, [readerCtx.isUpdated]);
 
   useEffect(() => {
     console.log(`getting readers for header`);
@@ -200,36 +209,39 @@ const AccountMenu = () => {
                 {reader.name}
               </MenuItem>
             ))}
-          {isMainUser && (
-            <>
-              <MenuItem onClick={handleAddReader}>
-                <ListItemIcon>
-                  <PersonAdd fontSize="small" />
-                </ListItemIcon>
-                Add reader
-              </MenuItem>
-              <Divider />
-
-              <MenuItem onClick={handleViewPrizes}>
-                <ListItemIcon>
-                  <PrizesIcon fontSize="small" />
-                </ListItemIcon>
-                Prizes
-              </MenuItem>
-              <MenuItem onClick={handleAddPrize}>
-                <ListItemIcon>
-                  <AddPrizeIcon />
-                </ListItemIcon>
-                Add prize
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={authCtx.onLogout}>
-                <ListItemIcon>
-                  <LogoutIcon fontSize="small" />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
-            </>
+          {showIfMainUser(
+            <MenuItem onClick={handleAddReader}>
+              <ListItemIcon>
+                <PersonAdd fontSize="small" />
+              </ListItemIcon>
+              Add reader
+            </MenuItem>
+          )}
+          {showIfMainUser(<Divider />)}
+          {showIfMainUser(
+            <MenuItem onClick={handleViewPrizes}>
+              <ListItemIcon>
+                <PrizesIcon fontSize="small" />
+              </ListItemIcon>
+              Prizes
+            </MenuItem>
+          )}
+          {showIfMainUser(
+            <MenuItem onClick={handleAddPrize}>
+              <ListItemIcon>
+                <AddPrizeIcon />
+              </ListItemIcon>
+              Add prize
+            </MenuItem>
+          )}
+          {showIfMainUser(<Divider />)}
+          {showIfMainUser(
+            <MenuItem onClick={authCtx.onLogout}>
+              <ListItemIcon>
+                <LogoutIcon fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
           )}
         </Menu>
       </MenuWrapper>
