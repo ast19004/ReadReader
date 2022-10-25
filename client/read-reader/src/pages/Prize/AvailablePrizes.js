@@ -84,21 +84,26 @@ const AvailablePrizes = (props) => {
           >
             {hasNoPrizeText}
           </Typography>
-          <Typography
-            variant="h6"
-            component="p"
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              color: "gray",
-              marginTop: "1rem",
-            }}
-          >
-            <Person fontSize="medium" /> <ArrowRightAlt />
-            &nbsp;
-            <AddPrizeIcon fontSize="medium" />
-            Add Prize
-          </Typography>
+
+          {isMainUser && (
+            <>
+              <Typography
+                variant="h6"
+                component="p"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  color: "gray",
+                  marginTop: "1rem",
+                }}
+              >
+                <Person fontSize="medium" /> <ArrowRightAlt />
+                &nbsp;
+                <AddPrizeIcon fontSize="medium" />
+                Add Prize
+              </Typography>
+            </>
+          )}
         </>
       )}
     </>
