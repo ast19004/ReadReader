@@ -30,6 +30,7 @@ const AccountMenu = () => {
 
   // if "" user == mainUser
   const [currentReader, setCurrentReader] = useState("");
+  const isMainUser = readerCtx.currentReaderName === "";
 
   const userMenuOpen = !!anchorEl;
 
@@ -96,10 +97,10 @@ const AccountMenu = () => {
     fetchReaderData().catch((err) => {
       console.log(err);
     });
-  }, []);
+  }, [authCtx.token]);
 
   useEffect(() => {
-    if (readerCtx.currentReaderName !== "") {
+    if (!isMainUser) {
       const initials = [...readerCtx.currentReaderName].splice(0, 2).join("");
       const capitalizedInitials =
         initials.charAt(0).toUpperCase() + initials.slice(1);
@@ -107,7 +108,7 @@ const AccountMenu = () => {
     } else {
       setCurrentReader("");
     }
-  }, [readerCtx.currentReaderId, readerCtx.currentReaderName]);
+  }, [isMainUser, readerCtx.currentReaderName]);
 
   return (
     <div>
@@ -179,7 +180,7 @@ const AccountMenu = () => {
             <Avatar />
             USER
           </MenuItem>
-          <Divider />
+          {readers && <Divider />}
           {readers &&
             readers.map((reader) => (
               <MenuItem
@@ -196,33 +197,37 @@ const AccountMenu = () => {
                 {reader.name}
               </MenuItem>
             ))}
-          <MenuItem onClick={handleAddReader}>
-            <ListItemIcon>
-              <PersonAdd fontSize="small" />
-            </ListItemIcon>
-            Add reader
-          </MenuItem>
-          <Divider />
+          {isMainUser && (
+            <>
+              <MenuItem onClick={handleAddReader}>
+                <ListItemIcon>
+                  <PersonAdd fontSize="small" />
+                </ListItemIcon>
+                Add reader
+              </MenuItem>
+              <Divider />
 
-          <MenuItem onClick={handleViewPrizes}>
-            <ListItemIcon>
-              <PrizesIcon fontSize="small" />
-            </ListItemIcon>
-            Prizes
-          </MenuItem>
-          <MenuItem onClick={handleAddPrize}>
-            <ListItemIcon>
-              <AddPrizeIcon />
-            </ListItemIcon>
-            Add prize
-          </MenuItem>
-          <Divider />
-          <MenuItem onClick={authCtx.onLogout}>
-            <ListItemIcon>
-              <LogoutIcon fontSize="small" />
-            </ListItemIcon>
-            Logout
-          </MenuItem>
+              <MenuItem onClick={handleViewPrizes}>
+                <ListItemIcon>
+                  <PrizesIcon fontSize="small" />
+                </ListItemIcon>
+                Prizes
+              </MenuItem>
+              <MenuItem onClick={handleAddPrize}>
+                <ListItemIcon>
+                  <AddPrizeIcon />
+                </ListItemIcon>
+                Add prize
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={authCtx.onLogout}>
+                <ListItemIcon>
+                  <LogoutIcon fontSize="small" />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </>
+          )}
         </Menu>
       </MenuWrapper>
     </div>
