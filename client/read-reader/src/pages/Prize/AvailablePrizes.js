@@ -61,17 +61,19 @@ const AvailablePrizes = (props) => {
       >
         Prizes
       </Typography>
-      {props.children && props.children}
       {hasPrizes ? (
-        <PrizesWrapper>
-          {prizes.map((prize) => (
-            <Prize
-              key={prize._id}
-              prizeName={prize.prize_name}
-              readingRequirement={prize.reading_requirement}
-            />
-          ))}
-        </PrizesWrapper>
+        <>
+          {props.children && props.children}
+          <PrizesWrapper>
+            {prizes.map((prize) => (
+              <Prize
+                key={prize._id}
+                prizeName={prize.prize_name}
+                readingRequirement={prize.reading_requirement}
+              />
+            ))}
+          </PrizesWrapper>
+        </>
       ) : (
         <>
           <Typography
