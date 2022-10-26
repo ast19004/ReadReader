@@ -70,6 +70,7 @@ const AvailablePrizes = (props) => {
                 key={prize._id}
                 prizeName={prize.prize_name}
                 readingRequirement={prize.reading_requirement}
+                earnedCoins={props.earnedCoins}
               />
             ))}
           </PrizesWrapper>
