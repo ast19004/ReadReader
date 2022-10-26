@@ -51,13 +51,14 @@ const Prize = (props) => {
         setStyle({ display: "none" });
       }}
     >
-      {isLocked ? (
+      {isLocked && (
         <LockedStyle>
           <li>
             <LockIcon fontSize="large" />
           </li>
         </LockedStyle>
-      ) : (
+      )}
+      {!isLocked && !isMainUser && (
         <UnLockedStyle>
           <li>
             <Tooltip title="Select Prize">
