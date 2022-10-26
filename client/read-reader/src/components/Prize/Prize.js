@@ -21,6 +21,7 @@ const Prize = (props) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const listContainerStyle = {
+    display: "grid",
     height: "150px",
     width: "200px",
     listStyle: "none",
@@ -67,16 +68,20 @@ const Prize = (props) => {
             style={{
               display: "grid",
               gridTemplateColumns: "auto auto",
+              gridGap: "70px",
+              gridColumn: 2 / -1,
+              alignSelf: "end",
+              marginBottom: "1rem",
             }}
           >
-            <Tooltip title="Delete Prize" sx={{ justifyContent: "start" }}>
+            <Tooltip title="Delete Prize">
               <Button>
-                <DeleteIcon />
+                <DeleteIcon color="action" />
               </Button>
             </Tooltip>
-            <Tooltip title="Edit Prize" sx={{ justifyContent: "end" }}>
+            <Tooltip title="Edit Prize">
               <Button>
-                <EditIcon onClick={handleUpdatePrizeHandler} />
+                <EditIcon onClick={handleUpdatePrizeHandler} color="action" />
               </Button>
             </Tooltip>
           </li>
@@ -95,7 +100,6 @@ export default Prize;
 const LockedStyle = styled.ul`
   position: absolute;
   display: flex;
-  justify-content: center;
   align-items: center;
   z-index: 2;
   height: 150px;
