@@ -17,12 +17,12 @@ const Prize = (props) => {
 
   const isMainUser = !readerCtx.currentReaderId;
 
-  const [style, setStyle] = useState({ display: "none" });
   const [isLocked, setIsLocked] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
 
   const listContainerStyle = {
     height: "150px",
+    width: "200px",
     listStyle: "none",
     padding: "5px",
   };
@@ -42,15 +42,7 @@ const Prize = (props) => {
   }, [props.earnedCoins, props.readingRequirement]);
 
   return (
-    <li
-      style={listContainerStyle}
-      onMouseEnter={(e) => {
-        setStyle({ display: "flex", justifyContent: "space-between" });
-      }}
-      onMouseLeave={(e) => {
-        setStyle({ display: "none" });
-      }}
-    >
+    <li style={listContainerStyle}>
       {isLocked && (
         <LockedStyle>
           <li>
@@ -59,7 +51,7 @@ const Prize = (props) => {
         </LockedStyle>
       )}
       {!isLocked && !isMainUser && (
-        <UnLockedStyle>
+        <UnlockedStyle>
           <li>
             <Tooltip title="Select Prize">
               <Button>
@@ -67,21 +59,32 @@ const Prize = (props) => {
               </Button>
             </Tooltip>
           </li>
-        </UnLockedStyle>
+        </UnlockedStyle>
+      )}
+      {isMainUser && (
+        <UnlockedStyle>
+          <li
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto",
+            }}
+          >
+            <Tooltip title="Delete Prize" sx={{ justifyContent: "start" }}>
+              <Button>
+                <DeleteIcon />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Edit Prize" sx={{ justifyContent: "end" }}>
+              <Button>
+                <EditIcon onClick={handleUpdatePrizeHandler} />
+              </Button>
+            </Tooltip>
+          </li>
+        </UnlockedStyle>
       )}
       <ul style={{ position: "absolute", zIndex: 1, padding: "10px" }}>
         <li>{props.prizeName}</li>
         <li>{props.readingRequirement}</li>
-        {isMainUser && (
-          <li style={style}>
-            <Button>
-              <DeleteIcon />
-            </Button>{" "}
-            <Button>
-              <EditIcon onClick={handleUpdatePrizeHandler} />
-            </Button>
-          </li>
-        )}
       </ul>
     </li>
   );
@@ -101,7 +104,7 @@ const LockedStyle = styled.ul`
   border-radius: 5px;
 `;
 
-const UnLockedStyle = styled(LockedStyle)`
+const UnlockedStyle = styled(LockedStyle)`
   background-color: rgba(200, 200, 200, 0.2);
   border: 1px solid rgba(125, 125, 125, 0.3);
 `;

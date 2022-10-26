@@ -119,10 +119,10 @@ const PrizesWrapper = styled.ul`
   padding: 4rem;
   justify-content: center;
 
-  @media (min-width: 420px) {
+  @media (min-width: 500px) {
     grid-template-columns: repeat(2, 200px);
   }
-  @media (min-width: 750px) {
+  @media (min-width: 760px) {
     grid-template-columns: repeat(3, 200px);
   }
 `;
