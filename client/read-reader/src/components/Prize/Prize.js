@@ -51,12 +51,24 @@ const Prize = (props) => {
         setStyle({ display: "none" });
       }}
     >
-      {isLocked && (
+      {isLocked ? (
         <LockedStyle>
-          <LockIcon fontSize="large" />
+          <li>
+            <LockIcon fontSize="large" />
+          </li>
         </LockedStyle>
+      ) : (
+        <UnLockedStyle>
+          <li>
+            <Tooltip title="Select Prize">
+              <Button>
+                <AddCircleIcon fontSize="large" />
+              </Button>
+            </Tooltip>
+          </li>
+        </UnLockedStyle>
       )}
-      <ul style={{ position: "absolute", zIndex: 1 }}>
+      <ul style={{ position: "absolute", zIndex: 1, padding: "10px" }}>
         <li>{props.prizeName}</li>
         <li>{props.readingRequirement}</li>
         {isMainUser && (
@@ -67,15 +79,6 @@ const Prize = (props) => {
             <Button>
               <EditIcon onClick={handleUpdatePrizeHandler} />
             </Button>
-          </li>
-        )}
-        {!isMainUser && !isLocked && (
-          <li>
-            <Tooltip title="Select Prize">
-              <Button>
-                <AddCircleIcon />
-              </Button>
-            </Tooltip>
           </li>
         )}
       </ul>
@@ -93,6 +96,11 @@ const LockedStyle = styled.ul`
   z-index: 2;
   height: 150px;
   width: 200px;
-  background-color: rgba(136, 136, 136, 0.2);
+  background-color: rgba(125, 125, 125, 0.3);
   border-radius: 5px;
+`;
+
+const UnLockedStyle = styled(LockedStyle)`
+  background-color: rgba(200, 200, 200, 0.2);
+  border: 1px solid rgba(125, 125, 125, 0.3);
 `;
