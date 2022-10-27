@@ -99,14 +99,24 @@ exports.postPrizeToReader = async (req, res, next) => {
     .where("parent_id")
     .equals(req.userId);
 
-  if (!reader) {
-    const error = new Error("Reader not found.");
+  const prize = await ReaderPrize.findById(prizeId)
+    .where("creator_id")
+    .equals(req.userId);
+  let errorMessage = "";
+
+  !reader ? (errorMessage = "Reader not found.") : "";
+  !prize ? (errorMessage = "Prize not found.") : "";
+
+  if (!reader || !prize) {
+    const error = new Error(errorMessage);
     error.statusCode = 404;
     throw error;
   }
+
   try {
     reader.reader_prizes.push({ prizeId: prizeId });
-    const updatedReader = reader.save();
+    reader.reading_coins -= prize.reading_requirement;
+    const updatedReader = await reader.save();
 
     res.status(200).json({
       message: "Prize added to reader",

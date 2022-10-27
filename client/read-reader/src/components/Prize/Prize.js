@@ -1,7 +1,8 @@
 import { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import ReaderContext from "../../store/reader-contex";
+import AuthContext from "../../store/auth-contex";
 
 import { Button, Tooltip } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
@@ -12,8 +13,10 @@ import styled from "styled-components";
 
 const Prize = (props) => {
   const history = useHistory();
+  const params = useParams();
 
   const readerCtx = useContext(ReaderContext);
+  const authCtx = useContext(AuthContext);
 
   const isMainUser = !readerCtx.currentReaderId;
 
@@ -31,6 +34,26 @@ const Prize = (props) => {
     ? (listContainerStyle.cursor = "pointer")
     : (listContainerStyle.cursor = "default");
 
+  const handleAddPrizeToReader = async (event) => {
+    event.preventDefault();
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + authCtx.token,
+      },
+    };
+    const url = `http://localhost:5000/prize/${props.id}/${readerCtx.currentReaderId}`;
+
+    try {
+      await fetch(url, requestOptions);
+    } catch (err) {
+      console.log(err);
+    }
+    setIsSelected(true);
+  };
   const handleUpdatePrizeHandler = () => {
     //TODO: change route
     history.push(`/`);
@@ -55,7 +78,7 @@ const Prize = (props) => {
         <UnlockedStyle>
           <li>
             <Tooltip title="Select Prize">
-              <Button>
+              <Button onClick={handleAddPrizeToReader}>
                 <AddCircleIcon fontSize="large" />
               </Button>
             </Tooltip>
