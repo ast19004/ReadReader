@@ -77,7 +77,6 @@ const AccountMenu = () => {
   }, [readerCtx.isUpdated]);
 
   useEffect(() => {
-    console.log(`getting readers for header`);
     const url = "http://localhost:5000/readers";
     const requestOptions = {
       method: "GET",

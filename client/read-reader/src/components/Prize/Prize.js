@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import ReaderContext from "../../store/reader-contex";
 import AuthContext from "../../store/auth-contex";
@@ -9,11 +9,11 @@ import LockIcon from "@mui/icons-material/Lock";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SelectedIcon from "@mui/icons-material/CheckBox";
 import styled from "styled-components";
 
 const Prize = (props) => {
   const history = useHistory();
-  const params = useParams();
 
   const readerCtx = useContext(ReaderContext);
   const authCtx = useContext(AuthContext);
@@ -34,6 +34,44 @@ const Prize = (props) => {
     ? (listContainerStyle.cursor = "pointer")
     : (listContainerStyle.cursor = "default");
 
+  //If reader coins < prize, prize is locked
+  useEffect(() => {
+    if (props.earnedCoins) {
+      setIsLocked(props.earnedCoins < props.readingRequirement);
+    }
+  }, [props.earnedCoins, props.readingRequirement]);
+
+  //If prize in one reader has earned set as selected
+  useEffect(() => {
+    if (isMainUser) {
+      return;
+    }
+    const url = "http://localhost:5000/reader/" + readerCtx.currentReaderId;
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + authCtx.token,
+      },
+    };
+    const fetchReaderPrizes = async () => {
+      const res = await fetch(url, requestOptions);
+
+      if (!res.ok) {
+        throw new Error("Something went wrong!");
+      }
+      const resData = await res.json();
+      const loadedReader = resData.reader;
+      const earnedReaderPrizes = loadedReader.reader_prizes.map(
+        (reader) => reader.prizeId
+      );
+      if (earnedReaderPrizes.includes(props.id)) {
+        setIsSelected(true);
+      }
+    };
+    fetchReaderPrizes().catch((err) => console.log(err.message));
+  }, [isMainUser, readerCtx.currentReaderId, authCtx.token, props.id]);
+
   const handleAddPrizeToReader = async (event) => {
     event.preventDefault();
 
@@ -53,28 +91,32 @@ const Prize = (props) => {
       console.log(err);
     }
     setIsSelected(true);
+    setIsLocked(false);
   };
   const handleUpdatePrizeHandler = () => {
     //TODO: change route
     history.push(`/`);
   };
 
-  useEffect(() => {
-    if (props.earnedCoins) {
-      setIsLocked(props.earnedCoins < props.readingRequirement);
-    }
-  }, [props.earnedCoins, props.readingRequirement]);
-
   return (
     <li id={props.id} style={listContainerStyle}>
-      {isLocked && (
+      {isSelected && (
+        <UnlockedStyle>
+          <li>
+            <Tooltip title="Get prize from your adult">
+              <SelectedIcon fontSize="large" color="action" />
+            </Tooltip>
+          </li>
+        </UnlockedStyle>
+      )}
+      {isLocked && !isSelected && (
         <LockedStyle>
           <li>
             <LockIcon fontSize="large" />
           </li>
         </LockedStyle>
       )}
-      {!isLocked && !isMainUser && (
+      {!isLocked && !isMainUser && !isSelected && (
         <UnlockedStyle>
           <li>
             <Tooltip title="Select Prize">
@@ -85,6 +127,7 @@ const Prize = (props) => {
           </li>
         </UnlockedStyle>
       )}
+
       {isMainUser && (
         <UnlockedStyle>
           <li
