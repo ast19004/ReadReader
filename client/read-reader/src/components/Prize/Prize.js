@@ -43,7 +43,7 @@ const Prize = (props) => {
   }, [props.earnedCoins, props.readingRequirement]);
 
   return (
-    <li style={listContainerStyle}>
+    <li id={props.id} style={listContainerStyle}>
       {isLocked && (
         <LockedStyle>
           <li>
@@ -100,6 +100,7 @@ export default Prize;
 const LockedStyle = styled.ul`
   position: absolute;
   display: flex;
+  justify-content: center;
   align-items: center;
   z-index: 2;
   height: 150px;

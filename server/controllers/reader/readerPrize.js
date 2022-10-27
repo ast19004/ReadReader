@@ -1,148 +1,170 @@
-const { validationResult } = require('express-validator');
+const { validationResult } = require("express-validator");
 
-const ReaderPrize = require('../../models/readerPrize');
-const Reader = require('../../models/reader');
+const ReaderPrize = require("../../models/readerPrize");
+const Reader = require("../../models/reader");
 
 /** Return all reader prizes **/
-exports.getAllReaderPrizes = async (req, res, next) => { 
-    const allPrizes = await ReaderPrize.find({'creator_id' : req.userId});
+exports.getAllReaderPrizes = async (req, res, next) => {
+  const allPrizes = await ReaderPrize.find({ creator_id: req.userId });
 
-    res.status(200).json({
-        message: "Fetched Prizes",
-        prizes: allPrizes
-    })
+  res.status(200).json({
+    message: "Fetched Prizes",
+    prizes: allPrizes,
+  });
 };
-
 
 /** Return all reader prizes available to a specific reader **/
 exports.getAvailableReaderPrizes = async (req, res, next) => {
-    const id = req.params.readerId;
+  const id = req.params.readerId;
 
-    //Find all prizes that contain readerId in reader list. 
-    const availablePrizes = await ReaderPrize.find({
-        "readers" : { $elemMatch: { "readerId" : id } } });
+  //Find all prizes that contain readerId in reader list.
+  const availablePrizes = await ReaderPrize.find({
+    readers: { $elemMatch: { readerId: id } },
+  });
 
-    res.status(200).json({
-        message: "Fetched Prizes",
-        prizes: availablePrizes
-    })
- };
+  res.status(200).json({
+    message: "Fetched Prizes",
+    prizes: availablePrizes,
+  });
+};
 
- /** Return all reader prizes earned by a specific reader **/
+/** Return all reader prizes earned by a specific reader **/
 exports.getEarnedReaderPrizes = async (req, res, next) => {
-    const id = req.params.readerId;
+  const id = req.params.readerId;
 
-    const reader = await Reader.findById(id);
-    let prizesIds = [];
-    let earnedPrizes = [];
+  const reader = await Reader.findById(id);
+  let prizesIds = [];
+  let earnedPrizes = [];
 
-    if(reader.reader_prizes.length !== 0){
-        prizesIds = reader.reader_prizes.map(prize => prize.prizeId);
-    
-        //Find all prizes that contain a prizeId in prize list. 
-        earnedPrizes = await ReaderPrize.find({'_id' : {$in: prizesIds}});
-    }
+  if (reader.reader_prizes.length !== 0) {
+    prizesIds = reader.reader_prizes.map((prize) => prize.prizeId);
 
+    //Find all prizes that contain a prizeId in prize list.
+    earnedPrizes = await ReaderPrize.find({ _id: { $in: prizesIds } });
+  }
 
-    res.status(200).json({
-        message: "Fetched Earned Prizes",
-        prizes: earnedPrizes
-    })
- };
+  res.status(200).json({
+    message: "Fetched Earned Prizes",
+    prizes: earnedPrizes,
+  });
+};
 
 /** Add a created ReaderPrize to the reader prizes database **/
- exports.postReaderPrize = async (req, res, next) => {
-    const prizeName = req.body.prize_name;
-    const readingRequirement = req.body.reading_requirement;
-    const readerIds = req.body.readers;
+exports.postReaderPrize = async (req, res, next) => {
+  const prizeName = req.body.prize_name;
+  const readingRequirement = req.body.reading_requirement;
+  const readerIds = req.body.readers;
 
-
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        console.log(`error: ${errors.array()[0]}`);
-        return res.status(400).json({
-            errorMessage : errors.array()[0],
-            validationErrors: errors.array()
-        });
-    }
-
-    const newPrize = new ReaderPrize({
-        'creator_id': req.userId,
-        'prize_name' : prizeName,
-        'reading_requirement': readingRequirement,
-        'readers': []
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(`error: ${errors.array()[0]}`);
+    return res.status(400).json({
+      errorMessage: errors.array()[0],
+      validationErrors: errors.array(),
     });
+  }
 
-    readerIds.forEach(id => newPrize.readers.push({readerId: id}));
-    
-    try{
-    const savedPrize= await newPrize.save();
-        res.status(201).json({message: "Reader Prize Added Successfully.", newPrize: savedPrize});
-    }catch{err => {
-        const error = new Error(err);
-        if(!err.statusCode){
-            error.statusCode = 500;
-        }
-        return next(error);
-    }};
+  const newPrize = new ReaderPrize({
+    creator_id: req.userId,
+    prize_name: prizeName,
+    reading_requirement: readingRequirement,
+    readers: [],
+  });
 
+  readerIds.forEach((id) => newPrize.readers.push({ readerId: id }));
 
+  try {
+    const savedPrize = await newPrize.save();
+    res.status(201).json({
+      message: "Reader Prize Added Successfully.",
+      newPrize: savedPrize,
+    });
+  } catch {
+    (err) => {
+      const error = new Error(err);
+      if (!err.statusCode) {
+        error.statusCode = 500;
+      }
+      return next(error);
+    };
+  }
+};
 
- };
+/** Add an existing ReaderPrize to a reader **/
+exports.postPrizeToReader = async (req, res, next) => {
+  const prizeId = req.params.prizeId;
+  const readerId = req.params.readerId;
 
- /** Add an existing ReaderPrize to a reader **/
- exports.postPrizeToReader = async (req, res, next) => {};
+  const reader = await Reader.findById(readerId)
+    .where("parent_id")
+    .equals(req.userId);
 
- /** Return a prize by id **/
+  if (!reader) {
+    const error = new Error("Reader not found.");
+    error.statusCode = 404;
+    throw error;
+  }
+  try {
+    reader.reader_prizes.push({ prizeId: prizeId });
+    const updatedReader = reader.save();
+
+    res.status(200).json({
+      message: "Prize added to reader",
+      updatedReader: updatedReader,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+/** Return a prize by id **/
 exports.getReaderPrize = async (req, res, next) => {};
 
 /** Edit a reader prize in the Reader Prize database **/
 exports.putReaderPrize = async (req, res, next) => {
-    const prizeId = req.params.prizeId;
-    const updatedPrizeName = req.body.prize_name;
-    const updatedReadingRequirement = req.body.reading_requirement;
-    const updatedReaderIds = req.body.readers.map(id => {return {readerId: id}});
+  const prizeId = req.params.prizeId;
+  const updatedPrizeName = req.body.prize_name;
+  const updatedReadingRequirement = req.body.reading_requirement;
+  const updatedReaderIds = req.body.readers.map((id) => {
+    return { readerId: id };
+  });
 
-    try{
-        const prize = await ReaderPrize.findById(prizeId).where('creator_id')
-        .equals(req.userId);
+  try {
+    const prize = await ReaderPrize.findById(prizeId)
+      .where("creator_id")
+      .equals(req.userId);
 
-        if(!prize){
-            const error = new Error("Prize not found.");
-            error.statusCode= 404;
-            throw error;
-        }
-
-        prize.prize_name = updatedPrizeName;
-        prize.reading_requirement = updatedReadingRequirement;
-        prize.readers = updatedReaderIds;
-
-        await prize.save();
-
-
-        res.status(200).json({
-            message: 'Prize updated',
-            updatedPrize : prize
-        });
-
-    }catch(err){
-        if(!err.statusCode){
-            err.statusCode = 500;
-        }
-        next(err);
+    if (!prize) {
+      const error = new Error("Prize not found.");
+      error.statusCode = 404;
+      throw error;
     }
 
+    prize.prize_name = updatedPrizeName;
+    prize.reading_requirement = updatedReadingRequirement;
+    prize.readers = updatedReaderIds;
+
+    await prize.save();
+
+    res.status(200).json({
+      message: "Prize updated",
+      updatedPrize: prize,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
 };
 
 /** Delete a reader prize from Reader Prize database **/
- exports.deleteReaderPrize = async (req, res, next) => {}
- 
- //TODO: add delete verification - include "Reader 1 & Reader 2 have earned this prize. You sure you want to delete it?"
- ;
+exports.deleteReaderPrize = async (req, res, next) => {};
 
- /** Delete a reader prize from the reader prize list of a specified reader **/
- exports.deleteReaderPrizeFromReader = async (req, res, next) => {};
+//TODO: add delete verification - include "Reader 1 & Reader 2 have earned this prize. You sure you want to delete it?"
 
-
-
-
+/** Delete a reader prize from the reader prize list of a specified reader **/
+exports.deleteReaderPrizeFromReader = async (req, res, next) => {};

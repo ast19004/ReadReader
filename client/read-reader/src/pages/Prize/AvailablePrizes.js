@@ -68,6 +68,7 @@ const AvailablePrizes = (props) => {
             {prizes.map((prize) => (
               <Prize
                 key={prize._id}
+                id={prize._id}
                 prizeName={prize.prize_name}
                 readingRequirement={prize.reading_requirement}
                 earnedCoins={props.earnedCoins}
