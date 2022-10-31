@@ -10,6 +10,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SelectedIcon from "@mui/icons-material/CheckBox";
+import RedeemIcon from "@mui/icons-material/Redeem";
+
 import styled from "styled-components";
 
 const Prize = (props) => {
@@ -93,6 +95,26 @@ const Prize = (props) => {
     setIsSelected(true);
     setIsLocked(false);
   };
+
+  const handleRemovePrizeFromReader = async (event) => {
+    event.preventDefault();
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + authCtx.token,
+      },
+    };
+    const url = `http://localhost:5000/prize/${props.id}/${readerCtx.currentReaderId}/delete`;
+
+    try {
+      await fetch(url, requestOptions);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleUpdatePrizeHandler = () => {
     //TODO: change route
     history.push(`/`);
@@ -128,7 +150,7 @@ const Prize = (props) => {
         </UnlockedStyle>
       )}
 
-      {isMainUser && (
+      {isMainUser && !props.redeem && (
         <UnlockedStyle>
           <li
             style={{
@@ -152,6 +174,13 @@ const Prize = (props) => {
             </Tooltip>
           </li>
         </UnlockedStyle>
+      )}
+      {isMainUser && props.redeem && (
+        <Tooltip title="Remove Claimed Prize">
+          <Button onClick={handleRemovePrizeFromReader}>
+            <RedeemIcon />
+          </Button>
+        </Tooltip>
       )}
       <ul style={{ position: "absolute", zIndex: 1, padding: "10px" }}>
         <li>{props.prizeName}</li>

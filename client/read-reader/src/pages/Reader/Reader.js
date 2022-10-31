@@ -14,6 +14,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
+import RedeemPrizes from "../Prize/RedeemPrizes";
 
 const Reader = () => {
   const history = useHistory();
@@ -78,6 +79,10 @@ const Reader = () => {
     history.push(`/reader/${readerId}/sessions`);
   };
 
+  const handleDisplayEarnedPrizes = () => {
+    history.push(`/reader/${readerId}/earnedPrizes`);
+  };
+
   return (
     <>
       {!error && reader && (
@@ -134,7 +139,9 @@ const Reader = () => {
                 <Button onClick={handleDisplayLogHistory} variant="outlined">
                   Log History
                 </Button>
-                <Button variant="outlined">Earned Prizes</Button>
+                <Button onClick={handleDisplayEarnedPrizes} variant="outlined">
+                  Earned Prizes
+                </Button>
               </ReaderInfoButtons>
 
               <Route path={`/reader/:id/edit`}>
@@ -147,6 +154,10 @@ const Reader = () => {
 
               <Route path={`/reader/:id/sessions/`} exact>
                 <SessionsHistory token={authCtx.token} readerId={readerId} />
+              </Route>
+
+              <Route path={`/reader/:id/earnedPrizes`} exact>
+                <RedeemPrizes readerId={readerId} />
               </Route>
             </Route>
           </Switch>
