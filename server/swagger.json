@@ -589,6 +589,48 @@
         }
       }
     },
+    "/prize/{prizeId}/{readerId}/delete": {
+      "parameters": [
+        {
+          "name": "readerId",
+          "in": "path",
+          "required": true,
+          "description": "ID of targeted reader",
+          "type": "string"
+        },
+        {
+          "name": "prizeId",
+          "in": "path",
+          "required": true,
+          "description": "ID of targeted reader prize",
+          "type": "string"
+        }
+      ],
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete prize from Reader prize list in Reader database",
+        "tags": ["ReaderPrizes"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Prize is deleted from Reader",
+            "schema": {
+              "$ref": "#definitions/ReaderPrize"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Reader prize not found"
+          }
+        }
+      }
+    },
     "/images": {
       "get": {
         "security": [

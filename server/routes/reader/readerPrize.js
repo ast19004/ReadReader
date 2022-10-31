@@ -44,5 +44,10 @@ router.delete(
   isAuth,
   readerPrizesController.deleteReaderPrize
 );
+router.delete(
+  "/prize/:prizeId/:readerId/delete",
+  isAuth,
+  readerPrizesController.deletePrizeFromReader
+);
 
 module.exports = router;

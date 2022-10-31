@@ -177,4 +177,36 @@ exports.deleteReaderPrize = async (req, res, next) => {};
 //TODO: add delete verification - include "Reader 1 & Reader 2 have earned this prize. You sure you want to delete it?"
 
 /** Delete a reader prize from the reader prize list of a specified reader **/
-exports.deleteReaderPrizeFromReader = async (req, res, next) => {};
+exports.deletePrizeFromReader = async (req, res, next) => {
+  const readerId = req.params.readerId;
+  const prizeId = req.params.sessionId;
+
+  console.log(`readerId: ${readerId}`);
+  console.log(`prizeId: ${prizeId}`);
+
+  try {
+    const reader = await Reader.findById(readerId);
+    if (!reader) {
+      const error = new Error("Reader not found.");
+      error.statusCode = 404;
+      throw error;
+    }
+    //Remove Prize from Reader's prize list
+    const updatedReaderPrizes = reader["reader_prizes"].filter(
+      (prize) => prize.prizeId.toString() !== prizeId.toString()
+    );
+    reader["reader_prizes"] = updatedReaderPrizes;
+
+    await reader.save();
+
+    res.status(200).json({
+      message: "Prize deleted from Readers earned prizes list",
+      updatedReader: reader,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
