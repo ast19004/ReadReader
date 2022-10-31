@@ -57,6 +57,7 @@ exports.postReader = async (req, res, next) => {
       });
       //If Reader is successfully added, add readerId to logged in user's readers list
       user.readers.push({ readerId: result._id });
+      req.userReaderIds.push(result._id);
       return user.save();
     })
     .catch((err) => {
