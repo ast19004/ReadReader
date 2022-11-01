@@ -72,7 +72,7 @@ exports.postLogin = (req, res, next) => {
                 readerIds: readerIds,
               },
               process.env.JWT_SECRET,
-              { expiresIn: "21m" }
+              { expiresIn: "4h" }
             );
             res.status(200).json({
               message: "Successfully Logged In",

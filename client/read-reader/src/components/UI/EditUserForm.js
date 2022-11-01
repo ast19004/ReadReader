@@ -54,11 +54,11 @@ function EditUserForm(props) {
       const resData = await res.json();
       const id = resData.updatedReader._id;
 
+      readerCtx.onReaderIsUpdated();
       history.push(`/reader/${id}`);
     } catch (err) {
       setError(err.msg);
     }
-    readerCtx.onChangeIsUpdated(true);
     resetForm();
   };
 

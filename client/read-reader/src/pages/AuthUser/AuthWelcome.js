@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 
 import AuthContext from "../../store/auth-contex";
+import ReaderContext from "../../store/reader-contex";
 
 import ReaderBadgeLink from "../../components/Reader/ReaderBadgeLink";
 
@@ -11,6 +12,7 @@ import styled from "styled-components";
 
 const AuthWelcome = () => {
   const authCtx = useContext(AuthContext);
+  const readerCtx = useContext(ReaderContext);
   const [error, setError] = useState("");
 
   const [readers, setReaders] = useState([]);
@@ -50,7 +52,7 @@ const AuthWelcome = () => {
     fetchReaderData().catch((err) => {
       setError(err.msg);
     });
-  }, [authCtx.token]);
+  }, [authCtx.token, readerCtx.isUpdated]);
 
   return (
     <>

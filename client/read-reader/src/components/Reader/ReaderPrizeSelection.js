@@ -35,7 +35,7 @@ const ReaderPrizeSelection = (props) => {
       setEarnedCoins(loadedReader.reading_coins);
     };
     fetchReader().catch((err) => setError(err.msg));
-  }, [authCtx.token]);
+  }, [authCtx.token, props.readerId]);
 
   return (
     <AvailablePrizes readerId={props.readerId} earnedCoins={earnedCoins}>

@@ -34,7 +34,7 @@ const ConfirmDelete = (props) => {
     } catch (err) {
       setError(err.msg);
     }
-    readerCtx.onChangeIsUpdated(true);
+    readerCtx.onReaderIsUpdated();
     history.push(`/`);
   };
   return (

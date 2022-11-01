@@ -73,10 +73,6 @@ const AccountMenu = () => {
   };
 
   useEffect(() => {
-    readerCtx.onChangeIsUpdated(false);
-  }, [readerCtx.isUpdated]);
-
-  useEffect(() => {
     const url = "http://localhost:5000/readers";
     const requestOptions = {
       method: "GET",
@@ -119,7 +115,7 @@ const AccountMenu = () => {
     } else {
       setCurrentReader("");
     }
-  }, [isMainUser, readerCtx.currentReaderName]);
+  }, [isMainUser, readerCtx.currentReaderName, readerCtx.isUpdated]);
 
   return (
     <div>

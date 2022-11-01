@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
 const ReaderContext = React.createContext({
-  isUpdated: false,
+  isUpdated: 0,
   currentReaderId: "",
   currentReaderName: "",
   onChangeReaderId: () => {},
   onChangeReaderName: () => {},
-  onChangeIsUpdated: () => {},
+  onReaderIsUpdated: () => {},
 });
 
 export const ReaderContextProvider = (props) => {
@@ -23,8 +23,8 @@ export const ReaderContextProvider = (props) => {
     setChangeName(name);
   };
 
-  const changeIsUpdatedHandler = (bool) => {
-    setIsUpdated(bool);
+  const isUpdatedHandler = () => {
+    setIsUpdated((prevUpdated) => prevUpdated++);
   };
 
   return (
@@ -35,7 +35,7 @@ export const ReaderContextProvider = (props) => {
         currentReaderName: name,
         onChangeReaderId: changeReaderHandler,
         onChangeReaderName: changeReaderNameHandler,
-        onChangeIsUpdated: changeIsUpdatedHandler,
+        onReaderIsUpdated: isUpdatedHandler,
       }}
     >
       {props.children}
