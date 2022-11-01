@@ -34,10 +34,9 @@ const Session = (props) => {
       const url = `http://localhost:5000/reader/${props.readerId}/session/${props.id}/`;
       const res = await fetch(url, requestOptions);
       const resData = await res.json();
-
-      history.push(`/reader/${props.id}`);
+      props.onUpdate();
     } catch (err) {
-      console(err.msg);
+      console.log(err.msg);
     }
   };
 
@@ -68,6 +67,7 @@ const Session = (props) => {
     try {
       const res = await fetch(url, requestOptions);
       const resData = await res.json();
+      props.onUpdate();
     } catch (err) {
       console.log(err.msg);
     }

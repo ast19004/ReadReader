@@ -145,18 +145,26 @@ exports.putReaderSession = async (req, res, next) => {
     // throwErrIfNotAuthorized(userReaderIds, readerId);
 
     session.session_date = updatedReaderDate;
-    session.reading_duration = updatedReadingDuration;
+
+    const previousReadingDuration = +session.reading_duration;
+    session.reading_duration = +updatedReadingDuration;
 
     const updatedSession = await session.save();
 
     const reader = await Reader.findById(readerId);
-    reader.total_reading_duration -= session.reading_duration;
-    let updatedReaderCoins = reader.reading_coins - session.reading_duration;
+    //replace old reading duration in reader's total
+    reader.total_reading_duration +=
+      updatedReadingDuration - previousReadingDuration;
 
-    //If removing the session cause negative coins, set to 0
+    let updatedReaderCoins =
+      +reader.reading_coins +
+      +(updatedReadingDuration - previousReadingDuration);
+    //If removing the session causes negative coins, set to 0
     if (updatedReaderCoins < 0) {
       updatedReaderCoins = 0;
     }
+
+    reader.reading_coins = updatedReaderCoins;
 
     const updatedReader = await reader.save();
 
@@ -178,9 +186,9 @@ exports.putReaderSession = async (req, res, next) => {
 exports.deleteReaderSession = async (req, res, next) => {
   const readerId = req.params.readerId;
   const sessionId = req.params.sessionId;
-  const userReaderIds = req.userReaderIds;
+  // const userReaderIds = req.userReaderIds;
 
-  throwErrIfNotAuthorized(userReaderIds, readerId);
+  // throwErrIfNotAuthorized(userReaderIds, readerId);
 
   try {
     const reader = await Reader.findById(readerId);
@@ -204,15 +212,12 @@ exports.deleteReaderSession = async (req, res, next) => {
     const updatedReadingDuration =
       reader["total_reading_duration"] - sessionToDelete["reading_duration"];
 
-    const updatedReaderCoins =
-      reader["reading_coins"] - sessionToDelete["reading_duration"];
-    //If reader has already used coins associated with session: coins = 0 if coin update = -num
-    if (updatedReaderCoins < 0) {
-      updatedReaderCoins = 0;
-    }
+    sessionToDelete["reading_duration"] > reader["reading_coins"]
+      ? //if coin update = -num, coins = 0
+        (reader["reading_coins"] = 0)
+      : (reader["reading_coins"] -= sessionToDelete["reading_duration"]);
 
     reader["total_reading_duration"] = updatedReadingDuration;
-    reader["reading_coins"] = updatedReaderCoins;
 
     await reader.save();
 
