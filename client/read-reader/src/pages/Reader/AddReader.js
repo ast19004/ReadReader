@@ -43,7 +43,7 @@ function AddReader() {
     } catch (err) {
       setError(err.msg);
     }
-    readerCtx.onChangeIsUpdated(true);
+    readerCtx.onReaderIsUpdated();
     resetForm();
     history.push("/");
   };

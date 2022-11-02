@@ -106,10 +106,10 @@ const ReaderLogSession = (props) => {
       }
       //Allow parent component to react reading end.
       props.onStopLogging();
-
       fetchAddReaderSession(durationReadMinutes).catch((error) =>
         setError(error)
       );
+      readerCtx.onReaderIsUpdated();
     }
   };
 
@@ -117,9 +117,9 @@ const ReaderLogSession = (props) => {
     <>
       <LogReadingContainer>
         <ReaderBadge
-          minutesRead={props.minutesRead}
-          coinsEarned={props.coinsEarned}
-          readerName={props.readerName}
+          minutesRead={props.reader["total_reading_duration"]}
+          coinsEarned={props.reader["reading_coins"]}
+          readerName={props.reader["reader_name"]}
         />
         {!isRecordingReading ? (
           <Button

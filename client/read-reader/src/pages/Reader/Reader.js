@@ -91,9 +91,7 @@ const Reader = () => {
             <Route path={"/reader/:id/logReading/"} exact>
               <ReaderLogSession
                 onStopLogging={handleStopLogReading}
-                minutesRead={reader["total_reading_duration"]}
-                coinsEarned={reader["reading_coins"]}
-                readerName={reader["reader_name"]}
+                reader={reader}
               />
             </Route>
 

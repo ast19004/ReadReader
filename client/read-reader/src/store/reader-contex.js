@@ -24,7 +24,7 @@ export const ReaderContextProvider = (props) => {
   };
 
   const isUpdatedHandler = () => {
-    setIsUpdated((prevUpdated) => prevUpdated++);
+    setIsUpdated((prevUpdated) => (prevUpdated += 1));
   };
 
   return (
