@@ -1,4 +1,4 @@
-import { useContext, useState, useCallback } from "react";
+import { useContext, useState, useCallback, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Button } from "@mui/material";
 
@@ -25,6 +25,10 @@ const ReaderLogSession = (props) => {
   const [isRecordingReading, setIsRecordingReading] = useState(false);
   const [readingStart, setReadingStart] = useState(new Date());
 
+  const [minutesRead, setMinutesRead] = useState(
+    props.reader["total_reading_duration"]
+  );
+  const [coinsEarned, setCoinsEarned] = useState(props.reader["reading_coins"]);
   const [secondsCount, setSecondsCount] = useState(0);
   const [timer, setTimer] = useState();
 
@@ -117,8 +121,8 @@ const ReaderLogSession = (props) => {
     <>
       <LogReadingContainer>
         <ReaderBadge
-          minutesRead={props.reader["total_reading_duration"]}
-          coinsEarned={props.reader["reading_coins"]}
+          minutesRead={minutesRead}
+          coinsEarned={coinsEarned}
           readerName={props.reader["reader_name"]}
         />
         {!isRecordingReading ? (
