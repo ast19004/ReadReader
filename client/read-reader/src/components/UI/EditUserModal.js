@@ -13,7 +13,6 @@ const style = {
   boxShadow: 24,
   p: 4,
   "@media(min-width: 450px)": {
-    top: "25%",
     width: "400px",
   },
 };

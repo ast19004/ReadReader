@@ -87,13 +87,13 @@ const Prize = (props) => {
     props.id,
   ]);
 
-  const prizeNameHandler = (event) => {
-    setPrizeName(event.target.value);
-  };
-  const readingRequirementHandler = (event) => {
-    setReadingRequirement(event.target.value);
-  };
-  const readerHandler = (event) => {};
+  // const prizeNameHandler = (event) => {
+  //   setPrizeName(event.target.value);
+  // };
+  // const readingRequirementHandler = (event) => {
+  //   setReadingRequirement(event.target.value);
+  // };
+  // const readerHandler = (event) => {};
 
   const handleAddPrizeToReader = async (event) => {
     event.preventDefault();
@@ -242,11 +242,13 @@ const Prize = (props) => {
         </UnlockedStyle>
       )}
       {isMainUser && props.redeem && (
-        <Tooltip title="Remove Claimed Prize">
-          <Button onClick={handleDeletePrizeFromReader}>
-            <RedeemIcon />
-          </Button>
-        </Tooltip>
+        <UnlockedStyle>
+          <Tooltip title="Remove Claimed Prize">
+            <Button onClick={handleDeletePrizeFromReader}>
+              <RedeemIcon />
+            </Button>
+          </Tooltip>
+        </UnlockedStyle>
       )}
       <ul style={{ position: "absolute", zIndex: 1, padding: "10px" }}>
         <li>{props.prizeName}</li>

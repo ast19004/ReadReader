@@ -62,8 +62,8 @@ const SessionsList = styled.ul`
   justify-content: center;
   grid-gap: 1rem;
 
-  @media (min-width: 800px) {
+  /* @media (min-width: 800px) {
     grid-template-columns: auto auto;
     justify-content: space-evenly;
-  }
+  } */
 `;

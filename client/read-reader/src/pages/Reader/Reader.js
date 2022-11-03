@@ -2,7 +2,8 @@ import { useEffect, useContext, useState } from "react";
 import { useHistory, Route, Switch, useParams } from "react-router-dom";
 
 import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchievements";
-import SessionsHistory from "./Sessions/SessionsHistory";
+import ReaderHistoryModal from "../../components/UI/ReaderHistoryModal";
+import EarnedPrizesModal from "../../components/UI/EarnedPrizesModal";
 import EditUserModal from "../../components/UI/EditUserModal";
 import ReaderLogSession from "../../components/Reader/ReaderLogSession";
 import ReaderPrizeSelection from "../../components/Reader/ReaderPrizeSelection";
@@ -14,7 +15,6 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
-import RedeemPrizes from "../Prize/RedeemPrizes";
 
 const Reader = () => {
   const history = useHistory();
@@ -27,6 +27,8 @@ const Reader = () => {
   const [reader, setReader] = useState();
 
   const [editIsOpen, setEditIsOpen] = useState(false);
+  const [sessionHistoryIsOpen, setSessionHistoryIsOpen] = useState(false);
+  const [earnedPrizesIsOpen, setEarnedPrizesIsOpen] = useState(false);
 
   const params = useParams();
   const readerId = params.id;
@@ -76,10 +78,12 @@ const Reader = () => {
   };
 
   const handleDisplayLogHistory = () => {
+    setSessionHistoryIsOpen(true);
     history.push(`/reader/${readerId}/sessions`);
   };
 
   const handleDisplayEarnedPrizes = () => {
+    setEarnedPrizesIsOpen(true);
     history.push(`/reader/${readerId}/earnedPrizes`);
   };
 
@@ -102,7 +106,7 @@ const Reader = () => {
             <Route path={"/reader/:id/"}>
               <ReaderSummaryContainer>
                 <ReaderSummaryInfo>
-                  <div style={{ justifySelf: "center" }}>
+                  <div>
                     <Typography
                       variant="h2"
                       onClick={handleUpdateUser}
@@ -159,11 +163,22 @@ const Reader = () => {
               </Route>
 
               <Route path={`/reader/:id/sessions/`} exact>
-                <SessionsHistory token={authCtx.token} readerId={readerId} />
+                <ReaderHistoryModal
+                  open={sessionHistoryIsOpen}
+                  onClose={() => setSessionHistoryIsOpen(false)}
+                  token={authCtx.token}
+                  readerId={readerId}
+                  readerName={reader.reader_name}
+                />
               </Route>
 
               <Route path={`/reader/:id/earnedPrizes`} exact>
-                <RedeemPrizes readerId={readerId} />
+                <EarnedPrizesModal
+                  open={earnedPrizesIsOpen}
+                  onClose={() => setEarnedPrizesIsOpen(false)}
+                  readerId={readerId}
+                  readerName={reader.reader_name}
+                />
               </Route>
             </Route>
           </Switch>
@@ -187,7 +202,7 @@ const ReaderSummaryContainer = styled.div`
 
 const ReaderSummaryInfo = styled.div`
   margin-top: 2rem;
-  align-self: center;
+  align-self: end;
 `;
 
 const ReaderActionButtons = styled.div`
