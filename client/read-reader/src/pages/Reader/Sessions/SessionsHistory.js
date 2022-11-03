@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Typography } from "@mui/material";
 
 import Session from "./Session";
 
@@ -8,6 +9,10 @@ function SessionsHistory(props) {
   const [readerSessions, setReaderSessions] = useState([]);
   const [error, setError] = useState("");
   const [updateCount, setUpdateCount] = useState(0);
+
+  const [hasSessions, setHasSessions] = useState(false);
+
+  const hasNoSessionsText = "No history yet!";
 
   //Get all reader sessions from server using reader id
   useEffect(() => {
@@ -30,6 +35,7 @@ function SessionsHistory(props) {
       const loadedSessions = resData.sessions;
 
       setReaderSessions(loadedSessions);
+      setHasSessions(loadedSessions.length !== 0);
     };
     fetchReader().catch((err) => setError(err.msg));
   }, [props.token, props.readerId, updateCount]);
@@ -39,18 +45,31 @@ function SessionsHistory(props) {
   };
 
   return (
-    <SessionsList>
-      {readerSessions.map((session) => (
-        <Session
-          key={session._id}
-          id={session._id}
-          readerId={session["reader_id"]}
-          date={session["session_date"]}
-          minutesRead={session["reading_duration"]}
-          onUpdate={handleSessionUpdate}
-        />
-      ))}
-    </SessionsList>
+    <>
+      {hasSessions ? (
+        <SessionsList>
+          {readerSessions.map((session) => (
+            <Session
+              key={session._id}
+              id={session._id}
+              readerId={session["reader_id"]}
+              date={session["session_date"]}
+              minutesRead={session["reading_duration"]}
+              onUpdate={handleSessionUpdate}
+            />
+          ))}
+        </SessionsList>
+      ) : (
+        <Typography
+          align="center"
+          variant="h4"
+          component="p"
+          sx={{ color: "gray", marginTop: "2rem" }}
+        >
+          {hasNoSessionsText}
+        </Typography>
+      )}
+    </>
   );
 }
 

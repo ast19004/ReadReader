@@ -20,7 +20,7 @@ const RedeemPrizes = (props) => {
 
   const [hasPrizes, setHasPrizes] = useState(false);
 
-  const hasNoEarnedPrizeText = "No prizes earned.";
+  const hasNoEarnedPrizeText = "None";
 
   useEffect(() => {
     const url = `http://localhost:5000/reader/${readerId}/prizes/earned`;
