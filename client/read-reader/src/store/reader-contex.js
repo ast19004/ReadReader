@@ -13,7 +13,7 @@ export const ReaderContextProvider = (props) => {
   // currentReaderName & Id will be '' for an authUser
   const [id, setChangeId] = useState("");
   const [name, setChangeName] = useState("");
-  const [isUpdated, setIsUpdated] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(0);
 
   const changeReaderHandler = (id) => {
     setChangeId(id);

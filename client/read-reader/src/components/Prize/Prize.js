@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import ReaderContext from "../../store/reader-contex";
 import AuthContext from "../../store/auth-contex";
+import PrizeContext from "../../store/prize-context";
 
 import { Button, Tooltip } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
@@ -19,11 +20,17 @@ const Prize = (props) => {
 
   const readerCtx = useContext(ReaderContext);
   const authCtx = useContext(AuthContext);
+  const prizeCtx = useContext(PrizeContext);
 
   const isMainUser = !readerCtx.currentReaderId;
 
   const [isLocked, setIsLocked] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
+  const [edit, setEdit] = useState(false);
+
+  const [prizeName, setPrizeName] = useState();
+  const [readingRequirement, setReadingRequirement] = useState();
+  const [readers, setReaders] = useState([]);
 
   const listContainerStyle = {
     display: "grid",
@@ -72,7 +79,21 @@ const Prize = (props) => {
       }
     };
     fetchReaderPrizes().catch((err) => console.log(err.message));
-  }, [isMainUser, readerCtx.currentReaderId, authCtx.token, props.id]);
+  }, [
+    isMainUser,
+    readerCtx.currentReaderId,
+    authCtx.token,
+    prizeCtx.isUpdated,
+    props.id,
+  ]);
+
+  const prizeNameHandler = (event) => {
+    setPrizeName(event.target.value);
+  };
+  const readingRequirementHandler = (event) => {
+    setReadingRequirement(event.target.value);
+  };
+  const readerHandler = (event) => {};
 
   const handleAddPrizeToReader = async (event) => {
     event.preventDefault();
@@ -89,6 +110,7 @@ const Prize = (props) => {
 
     try {
       await fetch(url, requestOptions);
+      prizeCtx.onPrizeIsUpdated();
     } catch (err) {
       console.log(err);
     }
@@ -96,7 +118,27 @@ const Prize = (props) => {
     setIsLocked(false);
   };
 
-  const handleRemovePrizeFromReader = async (event) => {
+  const handleDeletePrize = async (event) => {
+    event.preventDefault();
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + authCtx.token,
+      },
+    };
+    const url = `http://localhost:5000/prize/${props.id}/`;
+
+    try {
+      await fetch(url, requestOptions);
+      prizeCtx.onPrizeIsUpdated();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDeletePrizeFromReader = async (event) => {
     event.preventDefault();
 
     const requestOptions = {
@@ -110,13 +152,38 @@ const Prize = (props) => {
 
     try {
       await fetch(url, requestOptions);
+      prizeCtx.onPrizeIsUpdated();
     } catch (err) {
       console.log(err);
     }
   };
-  const handleUpdatePrizeHandler = () => {
-    //TODO: change route
-    history.push(`/`);
+  const handleUpdatePrize = async (event) => {
+    event.preventDefault();
+
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + authCtx.token,
+      },
+      body: JSON.stringify({
+        prize_name: prizeName,
+        reading_requirement: readingRequirement,
+        readers: readers,
+      }),
+    };
+    const url = `http://localhost:5000/prize/${props.id}/${readerCtx.currentReaderId}`;
+
+    try {
+      await fetch(url, requestOptions);
+      prizeCtx.onPrizeIsUpdated();
+    } catch (err) {
+      console.log(err);
+    }
+    setIsSelected(true);
+    setIsLocked(false);
+    prizeCtx.onPrizeIsUpdated();
   };
 
   return (
@@ -163,12 +230,12 @@ const Prize = (props) => {
           >
             <Tooltip title="Delete Prize">
               <Button>
-                <DeleteIcon color="action" />
+                <DeleteIcon onClick={handleDeletePrize} color="action" />
               </Button>
             </Tooltip>
             <Tooltip title="Edit Prize">
               <Button>
-                <EditIcon onClick={handleUpdatePrizeHandler} color="action" />
+                <EditIcon onClick={handleUpdatePrize} color="action" />
               </Button>
             </Tooltip>
           </li>
@@ -176,7 +243,7 @@ const Prize = (props) => {
       )}
       {isMainUser && props.redeem && (
         <Tooltip title="Remove Claimed Prize">
-          <Button onClick={handleRemovePrizeFromReader}>
+          <Button onClick={handleDeletePrizeFromReader}>
             <RedeemIcon />
           </Button>
         </Tooltip>

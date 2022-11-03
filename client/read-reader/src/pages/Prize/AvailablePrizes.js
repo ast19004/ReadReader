@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
+import PrizeContext from "../../store/prize-context";
 
 import styled from "styled-components";
 import Prize from "../../components/Prize/Prize";
@@ -13,6 +14,7 @@ import AddPrizeIcon from "../../components/Prize/AddPrizeIcon";
 const AvailablePrizes = (props) => {
   const authCtx = useContext(AuthContext);
   const readerCtx = useContext(ReaderContext);
+  const prizeCtx = useContext(PrizeContext);
 
   const isMainUser = !readerCtx.currentReaderId;
 
@@ -50,7 +52,7 @@ const AvailablePrizes = (props) => {
     };
 
     fetchPrizesData().catch((err) => setError(err.message));
-  }, [authCtx.token, props.readerId, isMainUser]);
+  }, [authCtx.token, props.readerId, isMainUser, prizeCtx.isUpdated]);
 
   return (
     <>

@@ -1,17 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-import { BrowserRouter } from 'react-router-dom';
-import {AuthContextProvider} from './store/auth-contex';
-import {ReaderContextProvider} from './store/reader-contex'; 
+import { BrowserRouter } from "react-router-dom";
+import { AuthContextProvider } from "./store/auth-contex";
+import { ReaderContextProvider } from "./store/reader-contex";
+import { PrizeContextProvider } from "./store/prize-context";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AuthContextProvider><ReaderContextProvider><BrowserRouter><App /></BrowserRouter></ReaderContextProvider></AuthContextProvider>
+    <AuthContextProvider>
+      <ReaderContextProvider>
+        <PrizeContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </PrizeContextProvider>
+      </ReaderContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>
 );
 
