@@ -101,46 +101,54 @@ const Reader = () => {
 
             <Route path={"/reader/:id/"}>
               <ReaderSummaryContainer>
-                <div>
-                  <Typography
-                    variant="h2"
-                    onClick={handleUpdateUser}
+                <ReaderSummaryInfo>
+                  <div style={{ justifySelf: "center" }}>
+                    <Typography
+                      variant="h2"
+                      onClick={handleUpdateUser}
+                      sx={{
+                        display: "flex",
+                        cursor: "pointer",
+                        color: "gray",
+                        marginTop: "2rem",
+                      }}
+                    >
+                      {reader["reader_name"]}
+                      <EditIcon
+                        sx={{
+                          alignSelf: "start",
+                          padding: "2px",
+                          border: "1px solid rgba(153, 153, 153, .5)",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </Typography>
+                    <ReaderWeeklyAchievement />
+                  </div>
+                </ReaderSummaryInfo>
+                <ReaderActionButtons>
+                  <Button onClick={handleDisplayLogHistory} variant="outlined">
+                    Reading History
+                  </Button>
+                  <Button
+                    onClick={handleDisplayEarnedPrizes}
+                    variant="outlined"
+                  >
+                    Earned Prizes
+                  </Button>
+                  <Button
+                    onClick={handleStartLogReading}
+                    variant="outlined"
                     sx={{
-                      display: "flex",
-                      cursor: "pointer",
-                      color: "gray",
-                      marginTop: "2rem",
+                      fontSize: "24px",
+                      alignSelf: "center",
+                      gridRow: "2/3",
                     }}
                   >
-                    {reader["reader_name"]}
-                    <EditIcon
-                      sx={{
-                        alignSelf: "start",
-                        padding: "2px",
-                        border: "1px solid rgba(153, 153, 153, .5)",
-                        borderRadius: "50%",
-                      }}
-                    />
-                  </Typography>
-                  <ReaderWeeklyAchievement />
-                </div>
-                <Button
-                  onClick={handleStartLogReading}
-                  variant="outlined"
-                  sx={{ fontSize: "24px", alignSelf: "center" }}
-                >
-                  LOG Reading
-                </Button>
+                    START Reading
+                  </Button>
+                </ReaderActionButtons>
               </ReaderSummaryContainer>
-
-              <ReaderInfoButtons>
-                <Button onClick={handleDisplayLogHistory} variant="outlined">
-                  Log History
-                </Button>
-                <Button onClick={handleDisplayEarnedPrizes} variant="outlined">
-                  Earned Prizes
-                </Button>
-              </ReaderInfoButtons>
 
               <Route path={`/reader/:id/edit`}>
                 <EditUserModal
@@ -168,27 +176,24 @@ const Reader = () => {
 };
 
 export default Reader;
-
 const ReaderSummaryContainer = styled.div`
   display: grid;
-  grid-template-columns: auto;
-  grid-gap: 2rem;
+  grid-gap: 3rem;
   justify-content: center;
-  margin-top: 2rem;
-
   @media (min-width: 500px) {
     grid-template-columns: auto auto;
   }
 `;
 
-const ReaderInfoButtons = styled.div`
+const ReaderSummaryInfo = styled.div`
+  margin-top: 2rem;
+  align-self: center;
+`;
+
+const ReaderActionButtons = styled.div`
   display: grid;
   grid-gap: 2rem;
-  margin: 0 auto;
-  margin-top: 2rem;
-  max-width: 80%;
   @media (min-width: 500px) {
-    grid-template-columns: auto auto auto;
     margin-top: 6rem;
   }
 `;
