@@ -73,7 +73,7 @@ function EditUserForm(props) {
         <>
           <Typography
             id="modal-modal-title"
-            variant="h6"
+            variant="h4"
             component="h2"
             sx={{ textAlign: "center" }}
           >

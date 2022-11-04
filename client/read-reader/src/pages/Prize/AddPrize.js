@@ -205,7 +205,7 @@ export default AddPrize;
 
 const CustomForm = styled.form`
   display: grid;
-  grid-template-column: auto;
+  grid-template-columns: auto;
   justify-content: center;
   margin-top: 2rem;
 `;

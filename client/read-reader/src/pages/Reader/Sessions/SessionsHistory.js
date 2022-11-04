@@ -62,7 +62,7 @@ function SessionsHistory(props) {
       ) : (
         <Typography
           align="center"
-          variant="h4"
+          variant="h5"
           component="p"
           sx={{ color: "gray", marginTop: "2rem" }}
         >
