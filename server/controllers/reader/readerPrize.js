@@ -131,7 +131,29 @@ exports.postPrizeToReader = async (req, res, next) => {
 };
 
 /** Return a prize by id **/
-exports.getReaderPrize = async (req, res, next) => {};
+exports.getReaderPrize = async (req, res, next) => {
+  const prizeId = req.params.prizeId;
+
+  try {
+    const prize = await ReaderPrize.findById(prizeId);
+
+    if (!prize) {
+      const error = new Error("Prize not found.");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    res.status(200).json({
+      message: "Fetched Prize",
+      prize: prize,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
 
 /** Edit a reader prize in the Reader Prize database **/
 exports.putReaderPrize = async (req, res, next) => {
