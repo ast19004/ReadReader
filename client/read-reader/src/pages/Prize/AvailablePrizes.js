@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { Route, useHistory } from "react-router-dom";
 
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
@@ -10,6 +11,7 @@ import Prize from "../../components/Prize/Prize";
 import { Typography } from "@mui/material";
 import { Person, ArrowRightAlt } from "@mui/icons-material";
 import AddPrizeIcon from "../../components/Prize/AddPrizeIcon";
+import EditPrizeModal from "../../components/UI/EditPrizeModal";
 
 const AvailablePrizes = (props) => {
   const authCtx = useContext(AuthContext);
@@ -18,11 +20,14 @@ const AvailablePrizes = (props) => {
 
   const isMainUser = !readerCtx.currentReaderId;
 
+  const history = useHistory();
   const [error, setError] = useState("");
 
   const [prizes, setPrizes] = useState([]);
 
   const [hasPrizes, setHasPrizes] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [prizeEditId, setPrizeEditId] = useState(0);
 
   const hasNoPrizeText = isMainUser
     ? "You have not yet created any prizes."
@@ -54,8 +59,21 @@ const AvailablePrizes = (props) => {
     fetchPrizesData().catch((err) => setError(err.message));
   }, [authCtx.token, props.readerId, isMainUser, prizeCtx.isUpdated]);
 
+  const handleEditPrize = (prizeId) => {
+    setPrizeEditId(prizeId);
+    setEdit(true);
+  };
+  const handleCloseEditPrize = () => {
+    setEdit(false);
+  };
+
   return (
     <>
+      <EditPrizeModal
+        open={edit}
+        onClose={handleCloseEditPrize}
+        prizeId={prizeEditId}
+      />
       <Typography
         align="center"
         variant="h2"
@@ -74,6 +92,7 @@ const AvailablePrizes = (props) => {
                 prizeName={prize.prize_name}
                 readingRequirement={prize.reading_requirement}
                 earnedCoins={props.earnedCoins}
+                onEdit={handleEditPrize}
               />
             ))}
           </PrizesWrapper>

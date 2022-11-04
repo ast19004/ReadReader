@@ -26,11 +26,6 @@ const Prize = (props) => {
 
   const [isLocked, setIsLocked] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
-  const [edit, setEdit] = useState(false);
-
-  const [prizeName, setPrizeName] = useState();
-  const [readingRequirement, setReadingRequirement] = useState();
-  const [readers, setReaders] = useState([]);
 
   const listContainerStyle = {
     display: "grid",
@@ -87,14 +82,6 @@ const Prize = (props) => {
     props.id,
   ]);
 
-  // const prizeNameHandler = (event) => {
-  //   setPrizeName(event.target.value);
-  // };
-  // const readingRequirementHandler = (event) => {
-  //   setReadingRequirement(event.target.value);
-  // };
-  // const readerHandler = (event) => {};
-
   const handleAddPrizeToReader = async (event) => {
     event.preventDefault();
 
@@ -148,6 +135,7 @@ const Prize = (props) => {
         Authorization: "Bearer " + authCtx.token,
       },
     };
+
     const url = `http://localhost:5000/prize/${props.id}/${readerCtx.currentReaderId}/delete`;
 
     try {
@@ -156,34 +144,6 @@ const Prize = (props) => {
     } catch (err) {
       console.log(err);
     }
-  };
-  const handleUpdatePrize = async (event) => {
-    event.preventDefault();
-
-    const requestOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + authCtx.token,
-      },
-      body: JSON.stringify({
-        prize_name: prizeName,
-        reading_requirement: readingRequirement,
-        readers: readers,
-      }),
-    };
-    const url = `http://localhost:5000/prize/${props.id}/${readerCtx.currentReaderId}`;
-
-    try {
-      await fetch(url, requestOptions);
-      prizeCtx.onPrizeIsUpdated();
-    } catch (err) {
-      console.log(err);
-    }
-    setIsSelected(true);
-    setIsLocked(false);
-    prizeCtx.onPrizeIsUpdated();
   };
 
   return (
@@ -235,7 +195,12 @@ const Prize = (props) => {
             </Tooltip>
             <Tooltip title="Edit Prize">
               <Button>
-                <EditIcon onClick={handleUpdatePrize} color="action" />
+                <EditIcon
+                  onClick={() => {
+                    props.onEdit(props.id);
+                  }}
+                  color="action"
+                />
               </Button>
             </Tooltip>
           </li>

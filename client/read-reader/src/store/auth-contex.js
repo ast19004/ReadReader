@@ -26,7 +26,7 @@ export const AuthContextProvider = (props) => {
     setTimeoutId(
       setTimeout(() => {
         logoutHandler();
-      }, "14400000")
+      }, "14000000")
     );
   };
 
