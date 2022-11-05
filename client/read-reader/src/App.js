@@ -58,10 +58,6 @@ function App() {
             <AddPrize />
           </ProtectedRoute>
 
-          <ProtectedRoute path={"/settings"} redirectPath={"/"}>
-            <Settings />
-          </ProtectedRoute>
-
           <Route path={"*"}>
             <Redirect to="/" />
           </Route>

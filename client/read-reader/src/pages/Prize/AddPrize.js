@@ -18,7 +18,7 @@ import Prize from "../../components/Prize/Prize";
 
 function AddPrize() {
   const authCtx = useContext(AuthContext);
-  const prizeCtx = useContext(Prize);
+  const prizeCtx = useContext(PrizeContext);
   const history = useHistory();
 
   const [error, setError] = useState("");

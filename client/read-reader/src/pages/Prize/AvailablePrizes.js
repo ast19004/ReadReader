@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import { Route, useHistory } from "react-router-dom";
 
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
@@ -12,6 +11,7 @@ import { Typography } from "@mui/material";
 import { Person, ArrowRightAlt } from "@mui/icons-material";
 import AddPrizeIcon from "../../components/Prize/AddPrizeIcon";
 import EditPrizeModal from "../../components/UI/EditPrizeModal";
+import DeletePrizeModal from "../../components/UI/DeletePrizeModal";
 
 const AvailablePrizes = (props) => {
   const authCtx = useContext(AuthContext);
@@ -20,18 +20,21 @@ const AvailablePrizes = (props) => {
 
   const isMainUser = !readerCtx.currentReaderId;
 
-  const history = useHistory();
+  const hasNoPrizeText = isMainUser
+    ? "You have not yet created any prizes."
+    : "Ask your parent to create prizes you can earn.";
+
   const [error, setError] = useState("");
 
   const [prizes, setPrizes] = useState([]);
 
   const [hasPrizes, setHasPrizes] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [prizeEditId, setPrizeEditId] = useState(0);
 
-  const hasNoPrizeText = isMainUser
-    ? "You have not yet created any prizes."
-    : "Ask your parent to create prizes you can earn.";
+  const [prizeId, setPrizeId] = useState(0);
+  const [edit, setEdit] = useState(false);
+
+  const [deletePrize, setDeletePrize] = useState(false);
+  const [prizeName, setPrizeName] = useState("");
 
   useEffect(() => {
     const url = isMainUser
@@ -60,11 +63,20 @@ const AvailablePrizes = (props) => {
   }, [authCtx.token, props.readerId, isMainUser, prizeCtx.isUpdated]);
 
   const handleEditPrize = (prizeId) => {
-    setPrizeEditId(prizeId);
+    setPrizeId(prizeId);
     setEdit(true);
   };
   const handleCloseEditPrize = () => {
     setEdit(false);
+  };
+  const handleDeletePrize = (prizeId, prizeName) => {
+    setPrizeId(prizeId);
+    setPrizeName(prizeName);
+    setDeletePrize(true);
+  };
+
+  const handleCloseDeletePrize = () => {
+    setDeletePrize(false);
   };
 
   return (
@@ -72,7 +84,13 @@ const AvailablePrizes = (props) => {
       <EditPrizeModal
         open={edit}
         onClose={handleCloseEditPrize}
-        prizeId={prizeEditId}
+        prizeId={prizeId}
+      />
+      <DeletePrizeModal
+        open={deletePrize}
+        onClose={handleCloseDeletePrize}
+        prizeId={prizeId}
+        prizeName={prizeName}
       />
       <Typography
         align="center"
@@ -93,6 +111,7 @@ const AvailablePrizes = (props) => {
                 readingRequirement={prize.reading_requirement}
                 earnedCoins={props.earnedCoins}
                 onEdit={handleEditPrize}
+                onDelete={handleDeletePrize}
               />
             ))}
           </PrizesWrapper>

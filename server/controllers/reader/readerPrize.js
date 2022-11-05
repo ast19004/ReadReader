@@ -194,17 +194,16 @@ exports.putReaderPrize = async (req, res, next) => {
 };
 
 /** Delete a reader prize from Reader Prize database **/
-exports.deleteReaderPrize = async (req, res, next) => {};
+exports.deleteReaderPrize = async (req, res, next) => {
+  const prizeId = req.params.prizeId;
 
-//TODO: add delete verification - include "Reader 1 & Reader 2 have earned this prize. You sure you want to delete it?"
+  await ReaderPrize.findByIdAndDelete(prizeId);
+};
 
 /** Delete a reader prize from the reader prize list of a specified reader **/
 exports.deletePrizeFromReader = async (req, res, next) => {
   const readerId = req.params.readerId;
   const prizeId = req.params.sessionId;
-
-  console.log(`readerId: ${readerId}`);
-  console.log(`prizeId: ${prizeId}`);
 
   try {
     const reader = await Reader.findById(readerId);

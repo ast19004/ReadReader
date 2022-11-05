@@ -5,7 +5,7 @@ import { Typography, Button, TextField } from "@mui/material";
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
 
-const ConfirmDelete = (props) => {
+const ConfirmDeleteReader = (props) => {
   const history = useHistory();
   const params = useParams();
 
@@ -30,7 +30,7 @@ const ConfirmDelete = (props) => {
     try {
       const url = `http://localhost:5000/reader/${params.id}/`;
       const res = await fetch(url, requestOptions);
-      const resData = await res.json();
+      await res.json();
     } catch (err) {
       setError(err.msg);
     }
@@ -68,4 +68,4 @@ const ConfirmDelete = (props) => {
   );
 };
 
-export default ConfirmDelete;
+export default ConfirmDeleteReader;

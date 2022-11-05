@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 
 import ReaderContext from "../../store/reader-contex";
 import AuthContext from "../../store/auth-contex";
@@ -16,8 +15,6 @@ import RedeemIcon from "@mui/icons-material/Redeem";
 import styled from "styled-components";
 
 const Prize = (props) => {
-  const history = useHistory();
-
   const readerCtx = useContext(ReaderContext);
   const authCtx = useContext(AuthContext);
   const prizeCtx = useContext(PrizeContext);
@@ -105,26 +102,6 @@ const Prize = (props) => {
     setIsLocked(false);
   };
 
-  const handleDeletePrize = async (event) => {
-    event.preventDefault();
-
-    const requestOptions = {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        Authorization: "Bearer " + authCtx.token,
-      },
-    };
-    const url = `http://localhost:5000/prize/${props.id}/`;
-
-    try {
-      await fetch(url, requestOptions);
-      prizeCtx.onPrizeIsUpdated();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleDeletePrizeFromReader = async (event) => {
     event.preventDefault();
 
@@ -190,7 +167,12 @@ const Prize = (props) => {
           >
             <Tooltip title="Delete Prize">
               <Button>
-                <DeleteIcon onClick={handleDeletePrize} color="action" />
+                <DeleteIcon
+                  onClick={() => {
+                    props.onDelete(props.id, props.prizeName);
+                  }}
+                  color="action"
+                />
               </Button>
             </Tooltip>
             <Tooltip title="Edit Prize">

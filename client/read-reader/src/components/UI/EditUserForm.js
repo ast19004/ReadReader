@@ -9,7 +9,7 @@ import { TextField, Button, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "styled-components";
 
-import ConfirmDelete from "./ConfirmDelete";
+import ConfirmDeleteReader from "./ConfirmDeleteReader";
 
 function EditUserForm(props) {
   const params = useParams();
@@ -105,7 +105,7 @@ function EditUserForm(props) {
         </>
       )}
       <Route path={`/reader/:id/edit/confirmDelete`} exact>
-        <ConfirmDelete onClose={props.onClose} readerName={readerName} />
+        <ConfirmDeleteReader onClose={props.onClose} readerName={readerName} />
       </Route>
       {error && <p>{error}</p>}
     </>
@@ -116,7 +116,7 @@ export default EditUserForm;
 
 const CustomForm = styled.form`
   display: grid;
-  grid-template-column: auto;
+  grid-template-columns: auto;
   justify-content: center;
   margin-top: 2rem;
 `;
