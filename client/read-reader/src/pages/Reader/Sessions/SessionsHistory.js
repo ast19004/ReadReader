@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Typography } from "@mui/material";
 
 import Session from "./Session";
+import ReaderContext from "../../../store/reader-contex";
 
 import styled from "styled-components";
 
 function SessionsHistory(props) {
+  const readerCtx = useContext(ReaderContext);
   const [readerSessions, setReaderSessions] = useState([]);
   const [error, setError] = useState("");
   const [updateCount, setUpdateCount] = useState(0);
@@ -42,6 +44,7 @@ function SessionsHistory(props) {
 
   const handleSessionUpdate = () => {
     setUpdateCount((prevCount) => (prevCount += 1));
+    readerCtx.onReaderIsUpdated();
   };
 
   return (
