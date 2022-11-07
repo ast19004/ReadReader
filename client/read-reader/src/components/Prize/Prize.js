@@ -95,6 +95,7 @@ const Prize = (props) => {
     try {
       await fetch(url, requestOptions);
       prizeCtx.onPrizeIsUpdated();
+      readerCtx.onReaderIsUpdated();
     } catch (err) {
       console.log(err);
     }
@@ -117,7 +118,6 @@ const Prize = (props) => {
 
     try {
       await fetch(url, requestOptions);
-      prizeCtx.onPrizeIsUpdated();
     } catch (err) {
       console.log(err);
     }

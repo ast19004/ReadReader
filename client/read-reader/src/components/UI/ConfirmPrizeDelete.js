@@ -14,6 +14,7 @@ const ConfirmPrizeDelete = (props) => {
     props.onClose();
   };
   const handleDelete = async () => {
+    props.onClose();
     const requestOptions = {
       method: "DELETE",
       headers: {
@@ -29,7 +30,6 @@ const ConfirmPrizeDelete = (props) => {
     } catch (err) {
       setError(err.msg);
     }
-    props.onClose();
     prizeCtx.onPrizeIsUpdated();
   };
 

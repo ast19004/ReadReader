@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 
 import AuthContext from "../../store/auth-contex";
+import ReaderContext from "../../store/reader-contex";
 
 import { Typography } from "@mui/material";
 
@@ -8,6 +9,7 @@ import AvailablePrizes from "../../pages/Prize/AvailablePrizes";
 
 const ReaderPrizeSelection = (props) => {
   const authCtx = useContext(AuthContext);
+  const readerCtx = useContext(ReaderContext);
 
   const [error, setError] = useState("");
   const [earnedCoins, setEarnedCoins] = useState(0);
@@ -35,7 +37,7 @@ const ReaderPrizeSelection = (props) => {
       setEarnedCoins(loadedReader.reading_coins);
     };
     fetchReader().catch((err) => setError(err.msg));
-  }, [authCtx.token, props.readerId]);
+  }, [authCtx.token, props.readerId, readerCtx.isUpdated]);
 
   return (
     <AvailablePrizes readerId={props.readerId} earnedCoins={earnedCoins}>

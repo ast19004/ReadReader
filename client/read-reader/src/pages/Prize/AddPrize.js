@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import { Person, PersonAdd, ArrowRightAlt } from "@mui/icons-material";
 import styled from "styled-components";
-import Prize from "../../components/Prize/Prize";
 
 function AddPrize() {
   const authCtx = useContext(AuthContext);

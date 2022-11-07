@@ -62,14 +62,14 @@ const AvailablePrizes = (props) => {
     fetchPrizesData().catch((err) => setError(err.message));
   }, [authCtx.token, props.readerId, isMainUser, prizeCtx.isUpdated]);
 
-  const handleEditPrize = (prizeId) => {
+  const handleOpenEditPrize = (prizeId) => {
     setPrizeId(prizeId);
     setEdit(true);
   };
   const handleCloseEditPrize = () => {
     setEdit(false);
   };
-  const handleDeletePrize = (prizeId, prizeName) => {
+  const handleOpenDeletePrize = (prizeId, prizeName) => {
     setPrizeId(prizeId);
     setPrizeName(prizeName);
     setDeletePrize(true);
@@ -110,8 +110,8 @@ const AvailablePrizes = (props) => {
                 prizeName={prize.prize_name}
                 readingRequirement={prize.reading_requirement}
                 earnedCoins={props.earnedCoins}
-                onEdit={handleEditPrize}
-                onDelete={handleDeletePrize}
+                onEdit={handleOpenEditPrize}
+                onDelete={handleOpenDeletePrize}
               />
             ))}
           </PrizesWrapper>
