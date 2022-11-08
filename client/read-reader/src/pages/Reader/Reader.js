@@ -105,7 +105,7 @@ const Reader = () => {
               <ReaderSummary
                 reader={reader}
                 updateUser={handleUpdateUser}
-                updateHistory={handleDisplayLogHistory}
+                displayHistory={handleDisplayLogHistory}
                 displayPrizes={handleDisplayEarnedPrizes}
                 startReading={handleStartLogReading}
               />

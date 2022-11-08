@@ -135,8 +135,7 @@ function EditPrizeForm(props) {
     const url = `http://localhost:5000/prize/${props.prizeId}`;
 
     try {
-      const res = await fetch(url, requestOptions);
-      await res.json();
+      await fetch(url, requestOptions);
       prizeCtx.onPrizeIsUpdated();
       props.onClose();
     } catch (err) {
