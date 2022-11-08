@@ -19,6 +19,17 @@ const AuthWelcome = () => {
 
   const [userHasReader, setUserHasReaders] = useState(false);
 
+  //set readerCtx to mainUser
+  useEffect(() => {
+    if (
+      readerCtx.currentReaderId !== "" &&
+      readerCtx.currentReaderName !== ""
+    ) {
+      readerCtx.onChangeReaderId("");
+      readerCtx.onChangeReaderName("");
+    }
+  }, [readerCtx]);
+
   useEffect(() => {
     const url = "http://localhost:5000/readers";
     const requestOptions = {

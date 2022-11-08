@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
@@ -18,9 +18,11 @@ const AvailablePrizes = (props) => {
   const readerCtx = useContext(ReaderContext);
   const prizeCtx = useContext(PrizeContext);
 
-  const isMainUser = !readerCtx.currentReaderId;
+  const isMainUser = useCallback(() => {
+    return !readerCtx.currentReaderId;
+  }, [readerCtx.currentReaderId]);
 
-  const hasNoPrizeText = isMainUser
+  const hasNoPrizeText = isMainUser()
     ? "You have not yet created any prizes."
     : "Ask your parent to create prizes you can earn.";
 
@@ -35,6 +37,17 @@ const AvailablePrizes = (props) => {
 
   const [deletePrize, setDeletePrize] = useState(false);
   const [prizeName, setPrizeName] = useState("");
+
+  //set readerCtx to current user
+  useEffect(() => {
+    if (props.readerName) {
+      readerCtx.onChangeReaderId(props.readerId);
+      readerCtx.onChangeReaderName(props.readerName);
+    } else {
+      readerCtx.onChangeReaderId("");
+      readerCtx.onChangeReaderName("");
+    }
+  }, [props.readerId, props.readerName]);
 
   useEffect(() => {
     const url = isMainUser

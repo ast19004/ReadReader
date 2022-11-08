@@ -32,6 +32,17 @@ const ReaderLogSession = (props) => {
   const [secondsCount, setSecondsCount] = useState(0);
   const [timer, setTimer] = useState();
 
+  //set readerCtx to current Reader
+  useEffect(() => {
+    if (
+      readerCtx.currentReaderId !== props.reader["_id"] &&
+      readerCtx.currentReaderName !== props.reader["reader_name"]
+    ) {
+      readerCtx.onChangeReaderId(props.reader["_id"]);
+      readerCtx.onChangeReaderName(props.reader["reader_name"]);
+    }
+  }, [readerCtx, props.reader]);
+
   const startCounter = useCallback(() => {
     const timer = setInterval(() => {
       setSecondsCount((prevCount) => prevCount + 1);

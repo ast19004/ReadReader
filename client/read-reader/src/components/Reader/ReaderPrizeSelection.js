@@ -40,7 +40,11 @@ const ReaderPrizeSelection = (props) => {
   }, [authCtx.token, props.readerId, readerCtx.isUpdated]);
 
   return (
-    <AvailablePrizes readerId={props.readerId} earnedCoins={earnedCoins}>
+    <AvailablePrizes
+      readerId={props.readerId}
+      readerName={props.readerName}
+      earnedCoins={earnedCoins}
+    >
       <Typography align="center" variant="h5" component="p">
         Total Coins:{" "}
         <span

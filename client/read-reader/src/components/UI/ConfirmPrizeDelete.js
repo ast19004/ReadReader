@@ -27,10 +27,10 @@ const ConfirmPrizeDelete = (props) => {
       const url = `http://localhost:5000/prize/${props.prizeId}/`;
       const res = await fetch(url, requestOptions);
       await res.json();
+      prizeCtx.onPrizeIsUpdated();
     } catch (err) {
       setError(err.msg);
     }
-    prizeCtx.onPrizeIsUpdated();
   };
 
   return (

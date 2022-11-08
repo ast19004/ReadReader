@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import AuthContext from "../../store/auth-contex";
+import ReaderContext from "../../store/reader-contex";
 import PrizeContext from "../../store/prize-context";
 
 import {
@@ -18,6 +19,7 @@ import styled from "styled-components";
 function AddPrize() {
   const authCtx = useContext(AuthContext);
   const prizeCtx = useContext(PrizeContext);
+  const readerCtx = useContext(ReaderContext);
   const history = useHistory();
 
   const [error, setError] = useState("");
@@ -48,6 +50,16 @@ function AddPrize() {
       );
     }
   };
+  //set readerCtx to main user
+  useEffect(() => {
+    if (
+      readerCtx.currentReaderId !== "" &&
+      readerCtx.currentReaderName !== ""
+    ) {
+      readerCtx.onChangeReaderId("");
+      readerCtx.onChangeReaderName("");
+    }
+  }, []);
 
   useEffect(() => {
     const url = "http://localhost:5000/readers";
@@ -101,8 +113,7 @@ function AddPrize() {
     const url = "http://localhost:5000/prize";
 
     try {
-      const res = await fetch(url, requestOptions);
-      const resData = await res.json();
+      await fetch(url, requestOptions);
       prizeCtx.onPrizeIsUpdated();
     } catch (err) {
       setError(err);
