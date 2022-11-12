@@ -8,10 +8,6 @@ import ReaderContext from "../../store/reader-contex";
 const ReaderBadge = (props) => {
   const readerCtx = useContext(ReaderContext);
 
-  const initials = [...props.readerName].slice(0, 2).join("");
-  const capitalizedInitials =
-    initials.charAt(0).toUpperCase() + initials.slice(1);
-
   return (
     <ReaderBadgeContents>
       {readerCtx.currentReaderName === "" ? (
@@ -25,8 +21,8 @@ const ReaderBadge = (props) => {
         <>
           {" "}
           <Typography align="center">{props.minutesRead} Minutes</Typography>
-          <Typography align="center" variant="h2">
-            {capitalizedInitials}
+          <Typography align="center" variant="h4">
+            {props.readerName}
           </Typography>
           <Typography align="center">{props.coinsEarned} Coins</Typography>
         </>

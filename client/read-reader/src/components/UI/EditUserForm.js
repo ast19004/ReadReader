@@ -27,9 +27,6 @@ function EditUserForm(props) {
     setEnteredName(readerName);
   }, [readerName]);
 
-  const resetForm = () => {
-    setEnteredName("");
-  };
   const nameChangeHandler = (event) => {
     setEnteredName(event.target.value);
   };
@@ -50,16 +47,13 @@ function EditUserForm(props) {
     };
     try {
       const url = `http://localhost:5000/reader/${params.id}/`;
-      const res = await fetch(url, requestOptions);
-      const resData = await res.json();
-      const id = resData.updatedReader._id;
+      await fetch(url, requestOptions);
 
+      props.onClose();
       readerCtx.onReaderIsUpdated();
-      history.push(`/reader/${id}`);
     } catch (err) {
       setError(err.msg);
     }
-    resetForm();
   };
 
   const deleteReader = (event) => {
