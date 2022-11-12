@@ -1,32 +1,18 @@
-import { useContext } from "react";
 import { Typography } from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
 import styled from "styled-components";
 
-import ReaderContext from "../../store/reader-contex";
-
 const ReaderBadge = (props) => {
-  const readerCtx = useContext(ReaderContext);
-
   return (
     <ReaderBadgeContents>
-      {readerCtx.currentReaderName === "" ? (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Typography align="center" variant="h4">
-            {props.readerName}
-          </Typography>
-          <InfoIcon color="action" />
-        </div>
-      ) : (
-        <>
-          {" "}
-          <Typography align="center">{props.minutesRead} Minutes</Typography>
-          <Typography align="center" variant="h4">
-            {props.readerName}
-          </Typography>
-          <Typography align="center">{props.coinsEarned} Coins</Typography>
-        </>
-      )}
+      <Typography align="center" sx={{ color: "#555" }}>
+        {props.minutesRead} Minutes
+      </Typography>
+      <Typography align="center" variant="h4">
+        {props.readerName}
+      </Typography>
+      <Typography align="center" sx={{ color: "#555" }}>
+        {props.coinsEarned} Coins
+      </Typography>
     </ReaderBadgeContents>
   );
 };
