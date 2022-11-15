@@ -14,6 +14,7 @@ const ConfirmPrizeDelete = (props) => {
     props.onClose();
   };
   const handleDelete = async () => {
+    props.onClose(true);
     const requestOptions = {
       method: "DELETE",
       headers: {
@@ -25,8 +26,6 @@ const ConfirmPrizeDelete = (props) => {
     try {
       const url = `http://localhost:5000/prize/${props.prizeId}/`;
       await fetch(url, requestOptions);
-      prizeCtx.onPrizeIsUpdated();
-      props.onClose();
     } catch (err) {
       setError(err.msg);
     }

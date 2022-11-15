@@ -88,7 +88,10 @@ const AvailablePrizes = (props) => {
     setDeletePrize(true);
   };
 
-  const handleCloseDeletePrize = () => {
+  const handleCloseDeletePrize = (isUpdated = false) => {
+    if (isUpdated) {
+      prizeCtx.onPrizeIsUpdated();
+    }
     setDeletePrize(false);
   };
 
