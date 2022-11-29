@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -48,7 +49,7 @@ function AddReader() {
       }),
     };
     try {
-      const url = "http://localhost:5000/reader";
+      const url = `${domainPath}/reader`;
       await fetch(url, requestOptions);
     } catch (err) {
       setError(err.msg);

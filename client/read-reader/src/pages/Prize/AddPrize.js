@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -62,7 +63,7 @@ function AddPrize() {
   }, []);
 
   useEffect(() => {
-    const url = "http://localhost:5000/readers";
+    const url = `${domainPath}/readers`;
     const requestOptions = {
       method: "GET",
       headers: {
@@ -110,7 +111,7 @@ function AddPrize() {
         readers: selectedReaders,
       }),
     };
-    const url = "http://localhost:5000/prize";
+    const url = `${domainPath}/prize`;
 
     try {
       await fetch(url, requestOptions);

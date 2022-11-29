@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useEffect, useContext, useState, useCallback } from "react";
 import { useHistory, Route, Switch, useParams } from "react-router-dom";
 
@@ -38,7 +39,7 @@ const Reader = () => {
 
   //Get reader by readerId using id from url params
   useEffect(() => {
-    const url = "http://localhost:5000/reader/" + readerId;
+    const url = `${domainPath}/reader/${readerId}`;
     const requestOptions = {
       method: "GET",
       headers: {

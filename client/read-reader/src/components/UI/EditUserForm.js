@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useState, useContext, useEffect } from "react";
 
 import { useParams, useHistory, Route } from "react-router-dom";
@@ -46,7 +47,7 @@ function EditUserForm(props) {
       }),
     };
     try {
-      const url = `http://localhost:5000/reader/${params.id}/`;
+      const url = `${domainPath}/reader/${params.id}/`;
       await fetch(url, requestOptions);
 
       props.onClose();

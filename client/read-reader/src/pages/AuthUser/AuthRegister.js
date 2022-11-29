@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
@@ -44,7 +45,7 @@ function RegisterUser() {
   const registerUser = async (event) => {
     event.preventDefault();
 
-    const url = "http://localhost:5000/user/register";
+    const url = `${domainPath}/user/register`;
     const requestOptions = {
       method: "POST",
       headers: {

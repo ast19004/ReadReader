@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useState, useContext, useEffect } from "react";
 
 import AuthContext from "../../store/auth-contex";
@@ -31,7 +32,7 @@ const AuthWelcome = () => {
   }, [readerCtx]);
 
   useEffect(() => {
-    const url = "http://localhost:5000/readers";
+    const url = `${domainPath}/readers`;
     const requestOptions = {
       method: "GET",
       headers: {

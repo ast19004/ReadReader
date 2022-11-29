@@ -1,3 +1,4 @@
+import domainPath from "../../../domainPath";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -31,7 +32,7 @@ const Session = (props) => {
       },
     };
     try {
-      const url = `http://localhost:5000/reader/${props.readerId}/session/${props.id}/`;
+      const url = `${domainPath}/reader/${props.readerId}/session/${props.id}/`;
       const res = await fetch(url, requestOptions);
       const resData = await res.json();
       props.onUpdate();
@@ -63,7 +64,7 @@ const Session = (props) => {
         reading_duration: enteredDuration,
       }),
     };
-    const url = `http://localhost:5000/reader/session/${props.id}/`;
+    const url = `${domainPath}/reader/session/${props.id}/`;
     try {
       const res = await fetch(url, requestOptions);
       const resData = await res.json();

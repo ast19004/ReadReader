@@ -1,3 +1,5 @@
+import domainPath from "../../domainPath";
+
 import { useEffect, useState, useContext } from "react";
 
 import AuthContext from "../../store/auth-contex";
@@ -16,7 +18,7 @@ const ReaderPrizeSelection = (props) => {
 
   //get reader coins using readerId from props
   useEffect(() => {
-    const url = "http://localhost:5000/reader/" + props.readerId;
+    const url = `${domainPath}/reader/${props.readerId}`;
     const requestOptions = {
       method: "GET",
       headers: {

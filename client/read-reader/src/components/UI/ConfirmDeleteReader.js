@@ -1,3 +1,5 @@
+import domainPath from "../../domainPath";
+
 import { useState, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Typography, Button, TextField } from "@mui/material";
@@ -28,7 +30,7 @@ const ConfirmDeleteReader = (props) => {
       },
     };
     try {
-      const url = `http://localhost:5000/reader/${params.id}/`;
+      const url = `${domainPath}/reader/${params.id}/`;
       const res = await fetch(url, requestOptions);
       await res.json();
     } catch (err) {

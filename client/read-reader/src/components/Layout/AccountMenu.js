@@ -1,3 +1,5 @@
+import domainPath from "../../domainPath";
+
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -73,7 +75,7 @@ const AccountMenu = () => {
   };
 
   useEffect(() => {
-    const url = "http://localhost:5000/readers";
+    const url = `${domainPath}/readers`;
     const requestOptions = {
       method: "GET",
       headers: {

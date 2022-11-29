@@ -1,3 +1,5 @@
+import domainPath from "../../domainPath";
+
 import { useContext, useState, useCallback, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Button } from "@mui/material";
@@ -77,7 +79,7 @@ const ReaderLogSession = (props) => {
 
   const fetchAddReaderSession = useCallback(
     async (minutesRead) => {
-      const url = "http://localhost:5000/reader/session";
+      const url = `${domainPath}/reader/session`;
       const requestOptions = {
         method: "POST",
         headers: {

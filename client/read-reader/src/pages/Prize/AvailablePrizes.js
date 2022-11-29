@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useEffect, useState, useContext, useCallback } from "react";
 
 import AuthContext from "../../store/auth-contex";
@@ -51,8 +52,8 @@ const AvailablePrizes = (props) => {
 
   useEffect(() => {
     const url = isMainUser
-      ? `http://localhost:5000/prizes/`
-      : `http://localhost:5000/reader/${props.readerId}/prizes/available`;
+      ? `${domainPath}/prizes/`
+      : `${domainPath}/reader/${props.readerId}/prizes/available`;
     const requestOptions = {
       method: "GET",
       headers: {

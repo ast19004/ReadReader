@@ -1,3 +1,4 @@
+import domainPath from "../../../domainPath";
 import { useState, useEffect, useContext } from "react";
 import { Typography } from "@mui/material";
 
@@ -18,7 +19,7 @@ function SessionsHistory(props) {
 
   //Get all reader sessions from server using reader id
   useEffect(() => {
-    const url = "http://localhost:5000/reader/" + props.readerId + "/sessions";
+    const url = `${domainPath}/reader/${props.readerId}/sessions`;
     const requestOptions = {
       method: "GET",
       headers: {

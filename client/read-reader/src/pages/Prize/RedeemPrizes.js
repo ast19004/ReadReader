@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useEffect, useState, useContext } from "react";
 
 import AuthContext from "../../store/auth-contex";
@@ -23,7 +24,7 @@ const RedeemPrizes = (props) => {
   const hasNoEarnedPrizeText = "None";
 
   useEffect(() => {
-    const url = `http://localhost:5000/reader/${readerId}/prizes/earned`;
+    const url = `${domainPath}/reader/${readerId}/prizes/earned`;
     const requestOptions = {
       method: "GET",
       headers: {

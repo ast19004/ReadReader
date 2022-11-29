@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useState, useContext, useEffect } from "react";
 
 import AuthContext from "../../store/auth-contex";
@@ -37,7 +38,7 @@ function EditPrizeForm(props) {
 
   //Get original info from prize to be edited
   useEffect(() => {
-    const url = `http://localhost:5000/prize/${props.prizeId}`;
+    const url = `${domainPath}/prize/${props.prizeId}`;
     const requestOptions = {
       method: "GET",
       headers: {
@@ -70,7 +71,7 @@ function EditPrizeForm(props) {
 
   //Get all readers associated with this user
   useEffect(() => {
-    const url = "http://localhost:5000/readers";
+    const url = `${domainPath}/readers`;
     const requestOptions = {
       method: "GET",
       headers: {
@@ -132,7 +133,7 @@ function EditPrizeForm(props) {
         readers: selectedReaders,
       }),
     };
-    const url = `http://localhost:5000/prize/${props.prizeId}`;
+    const url = `${domainPath}/prize/${props.prizeId}`;
 
     try {
       await fetch(url, requestOptions);

@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useState, useContext, useEffect } from "react";
 
 import ReaderContext from "../../store/reader-contex";
@@ -47,7 +48,7 @@ const Prize = (props) => {
     if (isMainUser) {
       return;
     }
-    const url = "http://localhost:5000/reader/" + readerCtx.currentReaderId;
+    const url = `${domainPath}/reader/${readerCtx.currentReaderId}`;
     const requestOptions = {
       method: "GET",
       headers: {
@@ -90,7 +91,7 @@ const Prize = (props) => {
         Authorization: "Bearer " + authCtx.token,
       },
     };
-    const url = `http://localhost:5000/prize/${props.id}/${readerCtx.currentReaderId}`;
+    const url = `${domainPath}/prize/${props.id}/${readerCtx.currentReaderId}`;
 
     try {
       await fetch(url, requestOptions);
@@ -114,7 +115,7 @@ const Prize = (props) => {
       },
     };
 
-    const url = `http://localhost:5000/prize/${props.id}/${readerCtx.currentReaderId}/delete`;
+    const url = `${domainPath}/prize/${props.id}/${readerCtx.currentReaderId}/delete`;
 
     try {
       await fetch(url, requestOptions);

@@ -1,3 +1,4 @@
+import domainPath from "../../domainPath";
 import { useState, useContext } from "react";
 import { Typography, Button, TextField } from "@mui/material";
 
@@ -24,7 +25,7 @@ const ConfirmPrizeDelete = (props) => {
       },
     };
     try {
-      const url = `http://localhost:5000/prize/${props.prizeId}/`;
+      const url = `${domainPath}/prize/${props.prizeId}/`;
       await fetch(url, requestOptions);
     } catch (err) {
       setError(err.msg);
