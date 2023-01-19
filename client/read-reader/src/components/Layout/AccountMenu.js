@@ -134,15 +134,26 @@ const AccountMenu = () => {
         aria-haspopup="true"
         aria-expanded={userMenuOpen ? "true" : undefined}
       >
-        {!currentReader && <Person fontSize="medium" />}
+        {!currentReader && (
+          <Person
+            fontSize="medium"
+            sx={{
+              color: "white",
+              backgroundColor: "black",
+              padding: "5px",
+              borderRadius: "25px",
+            }}
+          />
+        )}
         {currentReader && (
           <Avatar
             sx={{
               width: 23,
               height: 23,
-              color: "black",
-              bgcolor: "white",
-              padding: "1px",
+              color: "white",
+              backgroundColor: "black",
+              padding: "5px",
+              borderRadius: "25px",
             }}
           >
             {currentReader}

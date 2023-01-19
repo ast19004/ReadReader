@@ -2,8 +2,11 @@ import domainPath from "../../domainPath";
 import { useState, useContext } from "react";
 
 import AuthContext from "../../store/auth-contex";
-import Button from "@mui/material/Button";
-import { TextField } from "@mui/material";
+
+import { TextField, Typography } from "@mui/material";
+
+import CustomButton from "../../components/UI/CustomButton";
+
 import styled from "styled-components";
 
 function AuthLogin() {
@@ -65,30 +68,48 @@ function AuthLogin() {
   };
 
   return (
-    <LoginForm onSubmit={handleLogin}>
-      <TextField
-        onChange={emailChangeHandler}
-        value={enteredEmail}
-        style={{ width: "200px", margin: "5px" }}
-        type="email"
-        label="Email"
-        variant="outlined"
-      />
-      <br />
-      <TextField
-        onChange={passwordChangeHandler}
-        value={enteredPassword}
-        style={{ width: "200px", margin: "5px" }}
-        type="password"
-        label="Password"
-        variant="outlined"
-      />
-      <br />
-      <Button type="submit" variant="contained" color="primary">
+    <>
+      <Typography
+        align="center"
+        variant="h4"
+        component={"h2"}
+        sx={{
+          color: "#FFC354",
+          marginTop: "2rem",
+
+          fontFamily: "Ultra",
+          fontStyle: "normal",
+          fontWeight: "800",
+          fontSize: "36px",
+        }}
+      >
         Login
-      </Button>
-      {error && <p>{error}</p>}
-    </LoginForm>
+      </Typography>
+      <LoginForm onSubmit={handleLogin}>
+        <TextField
+          onChange={emailChangeHandler}
+          value={enteredEmail}
+          style={{ width: "200px", margin: "5px" }}
+          type="email"
+          label="Email"
+          variant="outlined"
+        />
+        <br />
+        <TextField
+          onChange={passwordChangeHandler}
+          value={enteredPassword}
+          style={{ width: "200px", margin: "5px" }}
+          type="password"
+          label="Password"
+          variant="outlined"
+        />
+        <br />
+        <CustomButton type="submit" onClick={{}}>
+          Login
+        </CustomButton>
+        {error && <p>{error}</p>}
+      </LoginForm>
+    </>
   );
 }
 

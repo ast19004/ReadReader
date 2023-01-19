@@ -2,8 +2,17 @@ import domainPath from "../../domainPath";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-import { TextField, Button, Typography } from "@mui/material";
+import {
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Typography,
+} from "@mui/material";
+import CustomButton from "../../components/UI/CustomButton";
+
 import styled from "styled-components";
+
+import stackedBooksImg from "../../assets/Auth/stackedBooks.svg";
 
 function RegisterUser() {
   const history = useHistory();
@@ -69,25 +78,33 @@ function RegisterUser() {
     } catch (err) {
       setError(err);
     }
-    history.push("/");
+    history.push("/signup");
     resetForm();
   };
 
   return (
     <>
+      <img src={stackedBooksImg} alt="Stacked Books" />
       <Typography
         align="center"
         variant="h4"
         component={"h2"}
-        sx={{ color: "gray", marginTop: "2rem" }}
+        sx={{
+          color: "#FFC354",
+          marginTop: "2rem",
+
+          fontFamily: "Ultra",
+          fontStyle: "normal",
+          fontWeight: "800",
+          fontSize: "36px",
+        }}
       >
-        New Account
+        Sign Up
       </Typography>
       <RegisterForm onSubmit={registerUser}>
         <TextField
           onChange={firstNameChangeHandler}
           value={enteredFirstName}
-          style={{ width: "200px", margin: "5px" }}
           type="text"
           label="First Name"
           variant="outlined"
@@ -96,7 +113,6 @@ function RegisterUser() {
         <TextField
           onChange={lastNameChangeHandler}
           value={enteredLastName}
-          style={{ width: "200px", margin: "5px" }}
           type="text"
           label="Last Name"
           variant="outlined"
@@ -105,7 +121,6 @@ function RegisterUser() {
         <TextField
           onChange={emailChangeHandler}
           value={enteredEmail}
-          style={{ width: "200px", margin: "5px" }}
           type="email"
           label="Email"
           variant="outlined"
@@ -114,7 +129,6 @@ function RegisterUser() {
         <TextField
           onChange={passwordChangeHandler}
           value={enteredPassword}
-          style={{ width: "200px", margin: "5px" }}
           type="password"
           label="Password"
           variant="outlined"
@@ -123,22 +137,36 @@ function RegisterUser() {
         <TextField
           onChange={passwordConfirmChangeHandler}
           value={enteredPasswordConfirm}
-          style={{ width: "200px", margin: "5px" }}
           type="password"
           label="Confirm Password"
           variant="outlined"
         />
         <br />
-        <Button type="submit" variant="contained" color="primary">
-          Register
-        </Button>
+        <FormControlLabel
+          control={
+            <Checkbox
+            // checked={checked}
+            // onChange={handleChange}
+            />
+          }
+          label="I would like to receive your newsletter and other promotional information."
+        />
+        <br />
+        <CustomButton type="submit" variant="contained" color="primary">
+          Sign Up
+        </CustomButton>
         {error && <p>{error}</p>}
         <Link
-          to="/"
+          to="/login"
           variant="contained"
-          style={{ marginTop: "1rem", textAlign: "center" }}
+          style={{
+            marginTop: "1rem",
+            textAlign: "center",
+            color: "#5DB075",
+            textDecoration: "none",
+          }}
         >
-          Sign In Instead
+          <b>Sign In Instead</b>
         </Link>
       </RegisterForm>
     </>

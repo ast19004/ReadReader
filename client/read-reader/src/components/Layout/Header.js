@@ -43,16 +43,16 @@ const Header = () => {
             <IconWrapper>
               <Link to={homeLinkPath}>
                 {isMainUser ? (
-                  <HomeIcon fontSize="medium" />
+                  <HomeIcon fontSize="medium" sx={{ color: "black" }} />
                 ) : (
-                  <ReadIcon fontSize="medium" />
+                  <ReadIcon fontSize="medium" sx={{ color: "black" }} />
                 )}
               </Link>
             </IconWrapper>
             {!isMainUser && (
               <IconWrapper>
                 <Link to={prizeLinkPath}>
-                  <PrizesIcon fontSize="medium" />
+                  <PrizesIcon fontSize="medium" sx={{ color: "black" }} />
                 </Link>
               </IconWrapper>
             )}
@@ -74,7 +74,7 @@ const Header = () => {
 export default Header;
 
 const Wrapper = styled.header`
-  background-color: #888;
+  /* background-color: #888; */
 `;
 
 const IconsLeftWrapper = styled.li`
@@ -97,9 +97,7 @@ const AccountIconsWrapper = styled.li`
 
 const IconWrapper = styled.span`
   display: block;
-  background: white;
   border-radius: 50%;
   padding: 3px 4px;
   margin: auto;
-  color: #888;
 `;

@@ -26,11 +26,7 @@ function App() {
       {authCtx.isLoggedIn && <Header />}
       <main>
         <Switch>
-          <Route path={"/"} exact>
-            {!authCtx.isLoggedIn ? <Auth /> : <AuthWelcome />}
-          </Route>
-
-          {!authCtx.isLoggedIn && (
+          {/* {!authCtx.isLoggedIn && (
             <Route path={"/register"}>
               <AuthRegister />
             </Route>
@@ -40,7 +36,7 @@ function App() {
             <Route path={"/login"}>
               <AuthLogin />
             </Route>
-          )}
+          )} */}
 
           <ProtectedRoute path={"/reader"} exact redirectPath={"/"}>
             <AddReader />
@@ -57,6 +53,10 @@ function App() {
           <ProtectedRoute path={"/prize/"} exact redirectPath={"/"}>
             <AddPrize />
           </ProtectedRoute>
+
+          <Route path={"/"}>
+            {!authCtx.isLoggedIn ? <Auth /> : <AuthWelcome />}
+          </Route>
 
           <Route path={"*"}>
             <Redirect to="/" />
