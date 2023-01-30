@@ -1,5 +1,13 @@
 img {
-    display: block;
-    max-width: 100%;
-    margin: auto;
+  display: block;
+  max-width: 100%;
+  margin: auto;
 }
+/* input {
+  width: 92%;
+  height: 50px;
+  border-radius: 8px;
+  border-color: #e8e8e8;
+  background-color: #f6f6f6;
+  color: #e8e8e8;
+} */

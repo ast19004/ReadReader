@@ -74,7 +74,7 @@ function AuthLogin() {
         variant="h4"
         component={"h2"}
         sx={{
-          color: "#FFC354",
+          color: "#49C5B6",
           marginTop: "2rem",
 
           fontFamily: "Ultra",

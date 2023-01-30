@@ -90,7 +90,7 @@ function RegisterUser() {
         variant="h4"
         component={"h2"}
         sx={{
-          color: "#FFC354",
+          color: "#49C5B6",
           marginTop: "2rem",
 
           fontFamily: "Ultra",
@@ -162,7 +162,7 @@ function RegisterUser() {
           style={{
             marginTop: "1rem",
             textAlign: "center",
-            color: "#5DB075",
+            color: "#49C5B6",
             textDecoration: "none",
           }}
         >

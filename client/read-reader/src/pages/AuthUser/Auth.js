@@ -66,7 +66,7 @@ function Auth() {
           style={{
             display: "block",
             marginTop: "1rem",
-            color: "#5DB075",
+            color: "#49C5B6",
             textDecoration: "none",
             padding: "5px",
             margin: "5px 4%",

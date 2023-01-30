@@ -5,7 +5,9 @@ import { useHistory } from "react-router-dom";
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
 
-import { TextField, Button, Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
+import CustomButton from "../../components/UI/CustomButton";
+
 import styled from "styled-components";
 
 function AddReader() {
@@ -79,9 +81,7 @@ function AddReader() {
           required
         />
         <br />
-        <Button type="submit" variant="contained" color="primary">
-          Add Reader
-        </Button>
+        <CustomButton type="submit">Add Reader</CustomButton>
       </CustomForm>
       {error && <p>{error}</p>}
     </>
