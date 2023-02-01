@@ -18,6 +18,7 @@ function AddReader() {
 
   const [error, setError] = useState("");
   const [enteredName, setEnteredName] = useState("");
+  const [enteredTheme, setEnteredTheme] = useState("");
 
   //set readerCtx to main user
   useEffect(() => {
@@ -37,6 +38,10 @@ function AddReader() {
     setEnteredName(event.target.value);
   };
 
+  const themeChangeHandler = (event) => {
+    setEnteredTheme(event.target.value);
+  };
+
   const addReader = async (event) => {
     event.preventDefault();
 
@@ -49,6 +54,7 @@ function AddReader() {
       },
       body: JSON.stringify({
         reader_name: enteredName,
+        theme_color: enteredTheme,
       }),
     };
     try {
@@ -82,7 +88,7 @@ function AddReader() {
           required
         />
         <br />
-        <ThemeSelection />
+        <ThemeSelection onChange={themeChangeHandler} />
         <br />
         <CustomButton type="submit">Add Reader</CustomButton>
       </CustomForm>

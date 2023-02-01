@@ -7,17 +7,17 @@ const ThemeRadioControl = (props) => {
       value={themeColor}
       control={
         <Radio
+          onChange={props.onChange}
           sx={{
             color: themeColor,
             "&.Mui-checked": {
               color: themeColor,
-              //   fontSize: "30px",
             },
             "&.css-11zohuh-MuiSvgIcon-root": {
-              height: "2em",
-              width: "2em",
-              left: "-0.7rem",
-              right: "-0.7rem",
+              height: "2em !important",
+              width: "2em !important",
+              left: "-0.7rem !important",
+              right: "-0.7rem !important",
             },
           }}
         />

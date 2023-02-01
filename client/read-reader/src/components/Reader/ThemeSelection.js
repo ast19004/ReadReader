@@ -2,13 +2,14 @@ import { FormControl, RadioGroup } from "@mui/material";
 
 import ThemeRadioControl from "./ThemeRadioControl";
 
-const ThemeSelection = () => {
+const ThemeSelection = (props) => {
   return (
     <FormControl id="themeColor-label">
       <RadioGroup
         aria-labelledby="themeColor-label"
-        defaultValue="yellow"
+        defaultValue="#FFC354"
         name="theme_color"
+        onChange={props.onChange}
         sx={{
           display: "grid",
           gridTemplateColumns: "repeat(5, 1fr)",
