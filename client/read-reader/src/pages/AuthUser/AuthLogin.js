@@ -104,9 +104,7 @@ function AuthLogin() {
           variant="outlined"
         />
         <br />
-        <CustomButton type="submit" onClick={{}}>
-          Login
-        </CustomButton>
+        <CustomButton type="submit">Login</CustomButton>
         {error && <p>{error}</p>}
       </LoginForm>
     </>
