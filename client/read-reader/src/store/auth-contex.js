@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 
 const AuthContext = React.createContext({
   isLoggedIn: false,
@@ -10,7 +9,6 @@ const AuthContext = React.createContext({
 });
 
 export const AuthContextProvider = (props) => {
-  const history = useHistory();
   const [token, setToken] = useState(null);
   const [timeoutId, setTimeoutId] = useState(0);
   const userIsLoggedIn = !!token;
@@ -18,7 +16,6 @@ export const AuthContextProvider = (props) => {
   const logoutHandler = () => {
     setToken(null);
     clearTimeout(timeoutId);
-    history.push("/");
   };
 
   const loginHandler = (token) => {

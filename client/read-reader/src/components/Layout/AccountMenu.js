@@ -74,6 +74,11 @@ const AccountMenu = () => {
     return component;
   };
 
+  const handleLogout = () => {
+    authCtx.onLogout();
+    history.push("/");
+  };
+
   useEffect(() => {
     const url = `${domainPath}/readers`;
     const requestOptions = {
@@ -244,7 +249,7 @@ const AccountMenu = () => {
           )}
           {showIfMainUser(<Divider />)}
           {showIfMainUser(
-            <MenuItem onClick={authCtx.onLogout}>
+            <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <LogoutIcon fontSize="small" />
               </ListItemIcon>
