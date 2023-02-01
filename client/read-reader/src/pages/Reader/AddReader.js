@@ -6,6 +6,7 @@ import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
 
 import { TextField, Typography } from "@mui/material";
+import ThemeSelection from "../../components/Reader/ThemeSelection";
 import CustomButton from "../../components/UI/CustomButton";
 
 import styled from "styled-components";
@@ -66,7 +67,7 @@ function AddReader() {
       <Typography
         align="center"
         variant="h2"
-        sx={{ color: "gray", marginTop: "2rem" }}
+        sx={{ color: "#49C5B6", marginTop: "2rem" }}
       >
         Add Reader
       </Typography>
@@ -80,6 +81,8 @@ function AddReader() {
           variant="outlined"
           required
         />
+        <br />
+        <ThemeSelection />
         <br />
         <CustomButton type="submit">Add Reader</CustomButton>
       </CustomForm>

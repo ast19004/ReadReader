@@ -21,6 +21,7 @@ exports.getAllReaders = async (req, res, next) => {
  * & add reader_id to the logged-in user's readers list **/
 exports.postReader = async (req, res, next) => {
   const reader_name = req.body.reader_name;
+  const theme_color = req.body.theme_color;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -41,6 +42,7 @@ exports.postReader = async (req, res, next) => {
   const reader = new Reader({
     parent_id: req.userId,
     reader_name: reader_name,
+    theme_color: theme_color,
     total_reading_duration: 0,
     reading_coins: 0,
     reader_sessions: [],
@@ -53,6 +55,7 @@ exports.postReader = async (req, res, next) => {
       res.status(200).json({
         message: "Reader Added Successfully.",
         readerId: result._id,
+        themeColor: result.theme_color,
         newReader: reader,
       });
       //If Reader is successfully added, add readerId to logged in user's readers list
@@ -98,6 +101,7 @@ exports.getReader = async (req, res, next) => {
 exports.putReader = async (req, res, next) => {
   const readerId = req.params.readerId;
   const updatedName = req.body.reader_name;
+  const updatedTheme = req.body.theme_color;
 
   try {
     const reader = await Reader.findById(readerId)
@@ -111,6 +115,7 @@ exports.putReader = async (req, res, next) => {
     }
 
     reader.reader_name = updatedName;
+    reader.theme_color = updatedTheme;
     await reader.save();
 
     res.status(200).json({

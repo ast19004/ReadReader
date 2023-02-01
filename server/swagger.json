@@ -826,6 +826,7 @@
       "required": [
         "parent_id",
         "reader_name",
+        "theme_color",
         "total_reading_duration",
         "reading_coins",
         "reader_sessions",
@@ -836,6 +837,9 @@
           "type": "string"
         },
         "reader_name": {
+          "type": "string"
+        },
+        "theme_color": {
           "type": "string"
         },
         "total_reading_duration": {
@@ -859,9 +863,12 @@
       "$ref": "#definitions/Reader"
     },
     "UpdateReader": {
-      "required": ["reader_name"],
+      "required": ["reader_name", "theme_color"],
       "properties": {
         "reader_name": {
+          "type": "string"
+        },
+        "theme_color": {
           "type": "string"
         }
       }
