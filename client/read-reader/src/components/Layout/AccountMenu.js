@@ -103,6 +103,7 @@ const AccountMenu = () => {
           id: reader["_id"],
           name: reader["reader_name"],
           initials: initials.charAt(0).toUpperCase() + initials.slice(1),
+          theme: reader["theme_color"],
         };
       });
       setReaders(loadedReaders);
@@ -217,7 +218,9 @@ const AccountMenu = () => {
                 }}
               >
                 <ListItemIcon>
-                  <Avatar>{reader.initials}</Avatar>
+                  <Avatar sx={{ bgcolor: `${reader.theme}` }}>
+                    {reader.initials}
+                  </Avatar>
                 </ListItemIcon>
                 {reader.name}
               </MenuItem>
