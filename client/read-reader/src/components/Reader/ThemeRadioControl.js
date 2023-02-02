@@ -13,11 +13,15 @@ const ThemeRadioControl = (props) => {
             "&.Mui-checked": {
               color: themeColor,
             },
-            "&.css-11zohuh-MuiSvgIcon-root": {
-              height: "2em !important",
-              width: "2em !important",
-              left: "-0.7rem !important",
-              right: "-0.7rem !important",
+            "&.Mui-checked .css-11zohuh-MuiSvgIcon-root": {
+              height: "2em",
+              width: "2em",
+              left: "-0.7rem",
+              top: "-0.7rem",
+            },
+            "&.css-j204z7-MuiFormControlLabel-root": {
+              marginLeft: "0",
+              marginRight: "0",
             },
           }}
         />

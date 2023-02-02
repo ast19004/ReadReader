@@ -55,6 +55,7 @@ const AuthWelcome = () => {
           name: reader["reader_name"],
           minutesRead: reader["total_reading_duration"],
           coinsEarned: reader["reading_coins"],
+          themeColor: reader["theme_color"],
         };
       });
       setReaders(loadedReaders);
@@ -71,7 +72,7 @@ const AuthWelcome = () => {
       <Typography
         align="center"
         variant="h2"
-        sx={{ color: "gray", marginTop: "2rem" }}
+        sx={{ color: "#49C5B6", marginTop: "2rem" }}
       >
         Readers
       </Typography>
@@ -85,6 +86,7 @@ const AuthWelcome = () => {
                 minutesRead={reader.minutesRead}
                 coinsEarned={reader.coinsEarned}
                 readerName={reader.name}
+                themeColor={reader.themeColor}
               />
             );
           })}

@@ -1,31 +1,34 @@
-import { Typography } from "@mui/material";
-import styled from "styled-components";
+import { Box, Typography } from "@mui/material";
 
 const ReaderBadge = (props) => {
+  const themeColor = props.themeColor;
   return (
-    <ReaderBadgeContents>
-      <Typography align="center" sx={{ color: "#555" }}>
+    <Box
+      component="li"
+      sx={{
+        display: "grid",
+        alignItems: "center",
+        width: "140px",
+        height: "140px",
+        border: "10px solid white",
+        borderRadius: "50%",
+        padding: "2rem",
+        boxShadow: "0 5px 15px #666",
+        color: "white",
+        backgroundColor: `${themeColor}`,
+      }}
+    >
+      <Typography align="center" sx={{ color: "white" }}>
         {props.minutesRead} Minutes
       </Typography>
       <Typography align="center" variant="h4">
         {props.readerName}
       </Typography>
-      <Typography align="center" sx={{ color: "#555" }}>
+      <Typography align="center" sx={{ color: "white" }}>
         {props.coinsEarned} Coins
       </Typography>
-    </ReaderBadgeContents>
+    </Box>
   );
 };
 
 export default ReaderBadge;
-
-const ReaderBadgeContents = styled.li`
-  display: grid;
-  align-items: center;
-  width: 150px;
-  height: 150px;
-  // border: 1px solid #888;
-  border-radius: 50%;
-  padding: 2rem;
-  box-shadow: 3px 3px 10px #666;
-`;

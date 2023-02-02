@@ -18,7 +18,7 @@ function AddReader() {
 
   const [error, setError] = useState("");
   const [enteredName, setEnteredName] = useState("");
-  const [enteredTheme, setEnteredTheme] = useState("");
+  const [enteredTheme, setEnteredTheme] = useState("#FFC354");
 
   //set readerCtx to main user
   useEffect(() => {
@@ -81,7 +81,7 @@ function AddReader() {
         <TextField
           onChange={nameChangeHandler}
           value={enteredName}
-          style={{ width: "200px", margin: "5px" }}
+          style={{ width: "200px", margin: "5px", marginBottom: "2rem" }}
           type="text"
           label="Name"
           variant="outlined"

@@ -1,10 +1,13 @@
-import { FormControl, RadioGroup } from "@mui/material";
+import { FormControl, RadioGroup, Typography } from "@mui/material";
 
 import ThemeRadioControl from "./ThemeRadioControl";
 
 const ThemeSelection = (props) => {
   return (
     <FormControl id="themeColor-label">
+      <Typography align="center" variant="h6" component="span" color="#FFC354">
+        Select theme color
+      </Typography>
       <RadioGroup
         aria-labelledby="themeColor-label"
         defaultValue="#FFC354"
@@ -13,8 +16,7 @@ const ThemeSelection = (props) => {
         sx={{
           display: "grid",
           gridTemplateColumns: "repeat(5, 1fr)",
-          justifyContent: "center",
-          alignItems: "center",
+          justifyContent: "space-around",
         }}
       >
         <ThemeRadioControl value="#FFC354" />
