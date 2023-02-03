@@ -8,7 +8,12 @@ const ReaderBadge = (props) => {
   return (
     <Box
       component="li"
-      sx={{ display: "grid", alignItems: "center", gap: "25px" }}
+      sx={{
+        display: "grid",
+        alignItems: "center",
+        justifySelf: "center",
+        gap: "25px",
+      }}
     >
       <Box
         sx={{
@@ -19,7 +24,7 @@ const ReaderBadge = (props) => {
           border: "10px solid white",
           borderRadius: "50%",
           padding: "2rem",
-          boxShadow: "0 5px 15px #666",
+          boxShadow: "0px 11px 20px -1px rgba(0, 0, 0, 0.25)",
           color: "white",
           backgroundColor: `${themeColor}`,
         }}

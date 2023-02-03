@@ -15,7 +15,6 @@ const Header = () => {
   const readerCtx = useContext(ReaderContext);
   const [homeLinkPath, setHomeLinkPath] = useState("/");
   const [showAccountsMenu, setShowAccountsMenu] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState("");
 
   const isMainUser = !readerCtx.currentReaderId;
   const prizeLinkPath = `/reader/${readerCtx.currentReaderId}/prizes`;
@@ -36,10 +35,6 @@ const Header = () => {
     }
   }, [readerCtx.currentReaderId, readerCtx.currentReaderName]);
 
-  useEffect(() => {
-    setCurrentTheme(readerCtx.currentTheme);
-  }, [readerCtx.currentTheme]);
-
   return (
     <Wrapper>
       <nav
@@ -47,9 +42,9 @@ const Header = () => {
           isMainUser
             ? {}
             : {
-                background: currentTheme,
+                backgroundColor: readerCtx.currentTheme,
                 height: "225px",
-                marginBottom: "-225px",
+                marginBottom: "-185px",
               }
         }
       >
@@ -61,11 +56,11 @@ const Header = () => {
                   <HomeIcon
                     fontSize="medium"
                     sx={{
-                      color: "#49C5B6",
+                      color: "#999",
                       backgroundColor: "white",
-                      border: "1px solid #49C5B6",
+                      border: "1px solid #999",
                       borderRadius: "50%",
-                      padding: "5px",
+                      padding: "10px",
                     }}
                   />
                 ) : (

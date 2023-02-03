@@ -152,9 +152,9 @@ const AccountMenu = () => {
           <Person
             fontSize="medium"
             sx={{
-              color: "#49C5B6",
+              color: "#999",
               backgroundColor: "white",
-              border: "1px solid #49C5B6",
+              border: "1px solid #999",
               padding: "5px",
               borderRadius: "25px",
             }}

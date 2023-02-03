@@ -1,22 +1,21 @@
 import domainPath from "../../domainPath";
 
 import { useContext, useState, useCallback, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { Button } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { Button, Box } from "@mui/material";
 
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
-import CloseIcon from "@mui/icons-material/Close";
+// import CloseIcon from "@mui/icons-material/Close";
 
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
 
 import ReaderBadge from "./ReaderBadge";
 
-import styled from "styled-components";
+import styles from "./ReaderLogSession.module.css";
 
 const ReaderLogSession = (props) => {
-  const history = useHistory();
   const params = useParams();
   const readerId = params.id;
 
@@ -27,10 +26,10 @@ const ReaderLogSession = (props) => {
   const [isRecordingReading, setIsRecordingReading] = useState(false);
   const [readingStart, setReadingStart] = useState(new Date());
 
-  const [minutesRead, setMinutesRead] = useState(
-    props.reader["total_reading_duration"]
-  );
-  const [coinsEarned, setCoinsEarned] = useState(props.reader["reading_coins"]);
+  // const [minutesRead, setMinutesRead] = useState(
+  //   props.reader["total_reading_duration"]
+  // );
+  // const [coinsEarned, setCoinsEarned] = useState(props.reader["reading_coins"]);
   const [secondsCount, setSecondsCount] = useState(0);
   const [timer, setTimer] = useState();
 
@@ -70,10 +69,10 @@ const ReaderLogSession = (props) => {
       : secondsCount
   } s`;
 
-  const handleLogReadingCancel = () => {
-    readerCtx.onChangeReader("", "", "");
-    history.push(`/reader/${readerId}`);
-  };
+  // const handleLogReadingCancel = () => {
+  //   readerCtx.onChangeReader("", "", "");
+  //   history.push(`/reader/${readerId}`);
+  // };
 
   const fetchAddReaderSession = useCallback(
     async (minutesRead) => {
@@ -130,49 +129,51 @@ const ReaderLogSession = (props) => {
 
   return (
     <>
-      <LogReadingContainer>
+      <Box
+        sx={{
+          display: "grid",
+          gridGap: "2rem",
+          margin: "0 auto",
+          marginTop: "2rem",
+          maxWidth: "80%",
+
+          "@media (min-width: 500px)": {
+            gridTemplateColumns: "1fr 2fr",
+            justifyContent: "center",
+            marginTop: "6rem",
+            maxWidth: "300px",
+          },
+        }}
+      >
         <ReaderBadge
           // minutesRead={minutesRead}
           // coinsEarned={coinsEarned}
           readerName={props.reader["reader_name"]}
           themeColor={props.reader["theme_color"]}
         />
-        {isRecordingReading && <TimerBox>{currentReadingTime}</TimerBox>}
+        {isRecordingReading && (
+          <Box
+            sx={{ gridRow: "2/3", justifySelf: "center", alignSelf: "center" }}
+          >
+            {currentReadingTime}
+          </Box>
+        )}
         <Button
+          className={styles.readingStatusButton}
           onClick={handleReadingStatus}
           variant="outlined"
           sx={{
             gridRow: "3/4",
             color: `${readerCtx.currentTheme} `,
-            borderColor: `${readerCtx.currentTheme} `,
+            border: `3px solid ${readerCtx.currentTheme} `,
+            borderRadius: "25px",
           }}
         >
           {!isRecordingReading ? <PlayArrowIcon /> : <StopCircleIcon />}
         </Button>
-      </LogReadingContainer>
+      </Box>
     </>
   );
 };
 
 export default ReaderLogSession;
-
-const LogReadingContainer = styled.div`
-  display: grid;
-  grid-gap: 2rem;
-  margin: 0 auto;
-  margin-top: 2rem;
-  max-width: 80%;
-
-  @media (min-width: 500px) {
-    grid-template-columns: 1fr 2fr;
-    justify-content: center;
-    margin-top: 6rem;
-    max-width: 300px;
-  }
-`;
-
-const TimerBox = styled.div`
-  grid-row: 2/3;
-  justify-self: center;
-  align-self: center;
-`;

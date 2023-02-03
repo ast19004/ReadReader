@@ -68,13 +68,13 @@ const AuthWelcome = () => {
 
   return (
     <>
-      <Typography
+      {/* <Typography
         align="center"
         variant="h2"
         sx={{ color: "#49C5B6", marginTop: "2rem" }}
       >
         Readers
-      </Typography>
+      </Typography> */}
       {!error && userHasReader && (
         <ReaderBadgesContainer>
           {readers.map((reader) => {
