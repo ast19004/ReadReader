@@ -37,13 +37,32 @@ const Header = () => {
 
   return (
     <Wrapper>
-      <nav>
+      <nav
+        style={
+          isMainUser
+            ? {}
+            : {
+                background: "#49C5B6",
+                height: "225px",
+                marginBottom: "-225px",
+              }
+        }
+      >
         <IconsWrapper>
           <IconsLeftWrapper>
             <IconWrapper>
               <Link to={homeLinkPath}>
                 {isMainUser ? (
-                  <HomeIcon fontSize="medium" sx={{ color: "black" }} />
+                  <HomeIcon
+                    fontSize="medium"
+                    sx={{
+                      color: "#49C5B6",
+                      backgroundColor: "white",
+                      border: "1px solid #49C5B6",
+                      borderRadius: "50%",
+                      padding: "5px",
+                    }}
+                  />
                 ) : (
                   <ReadIcon fontSize="medium" sx={{ color: "black" }} />
                 )}

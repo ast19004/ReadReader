@@ -32,6 +32,8 @@ const AccountMenu = () => {
 
   // if "" user == mainUser
   const [currentReader, setCurrentReader] = useState("");
+  const [currentReaderData, setCurrentReaderData] = useState();
+
   const isMainUser = readerCtx.currentReaderName === "";
 
   const userMenuOpen = !!anchorEl;
@@ -120,6 +122,13 @@ const AccountMenu = () => {
       const capitalizedInitials =
         initials.charAt(0).toUpperCase() + initials.slice(1);
       setCurrentReader(capitalizedInitials);
+
+      setCurrentReaderData(
+        readers.find(
+          (reader) =>
+            reader.id.toString() === readerCtx.currentReaderId.toString()
+        )
+      );
     } else {
       setCurrentReader("");
     }
@@ -144,8 +153,9 @@ const AccountMenu = () => {
           <Person
             fontSize="medium"
             sx={{
-              color: "white",
-              backgroundColor: "black",
+              color: "#49C5B6",
+              backgroundColor: "white",
+              border: "1px solid #49C5B6",
               padding: "5px",
               borderRadius: "25px",
             }}
@@ -157,7 +167,7 @@ const AccountMenu = () => {
               width: 23,
               height: 23,
               color: "white",
-              backgroundColor: "black",
+              backgroundColor: `${currentReaderData.theme}`,
               padding: "5px",
               borderRadius: "25px",
             }}
@@ -206,7 +216,7 @@ const AccountMenu = () => {
             <Avatar />
             USER
           </MenuItem>
-          {readers && <Divider />}
+          {readers && <Divider sx={{ bgcolor: "#49C5B6" }} />}
           {readers &&
             readers.map((reader) => (
               <MenuItem
@@ -228,29 +238,29 @@ const AccountMenu = () => {
           {showIfMainUser(
             <MenuItem onClick={handleAddReader}>
               <ListItemIcon>
-                <PersonAdd fontSize="small" />
+                <PersonAdd fontSize="medium" />
               </ListItemIcon>
               Add reader
             </MenuItem>
           )}
-          {showIfMainUser(<Divider />)}
+          {showIfMainUser(<Divider sx={{ bgcolor: "#49C5B6" }} />)}
           {showIfMainUser(
             <MenuItem onClick={handleViewPrizes}>
               <ListItemIcon>
-                <PrizesIcon fontSize="small" />
+                <PrizesIcon fontSize="medium" />
               </ListItemIcon>
               Prizes
             </MenuItem>
           )}
           {showIfMainUser(
             <MenuItem onClick={handleAddPrize}>
-              <ListItemIcon>
-                <AddPrizeIcon />
+              <ListItemIcon sx={{ marginLeft: "-3px" }}>
+                <AddPrizeIcon fontSize="medium" />
               </ListItemIcon>
               Add prize
             </MenuItem>
           )}
-          {showIfMainUser(<Divider />)}
+          {showIfMainUser(<Divider sx={{ bgcolor: "#49C5B6" }} />)}
           {showIfMainUser(
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>

@@ -137,6 +137,7 @@ const ReaderLogSession = (props) => {
           minutesRead={minutesRead}
           coinsEarned={coinsEarned}
           readerName={props.reader["reader_name"]}
+          themeColor={props.reader["theme_color"]}
         />
         {!isRecordingReading ? (
           <Button
