@@ -2,30 +2,45 @@ import { Box, Typography } from "@mui/material";
 
 const ReaderBadge = (props) => {
   const themeColor = props.themeColor;
+  const initials = [...props.readerName].splice(0, 2).join("");
+  const capitalizedInitials =
+    initials.charAt(0).toUpperCase() + initials.slice(1);
   return (
     <Box
       component="li"
-      sx={{
-        display: "grid",
-        alignItems: "center",
-        width: "140px",
-        height: "140px",
-        border: "10px solid white",
-        borderRadius: "50%",
-        padding: "2rem",
-        boxShadow: "0 5px 15px #666",
-        color: "white",
-        backgroundColor: `${themeColor}`,
-      }}
+      sx={{ display: "grid", alignItems: "center", gap: "25px" }}
     >
-      <Typography align="center" sx={{ color: "white" }}>
+      <Box
+        sx={{
+          display: "grid",
+          alignItems: "center",
+          width: "140px",
+          height: "140px",
+          border: "10px solid white",
+          borderRadius: "50%",
+          padding: "2rem",
+          boxShadow: "0 5px 15px #666",
+          color: "white",
+          backgroundColor: `${themeColor}`,
+        }}
+      >
+        {/* <Typography align="center" sx={{ color: "white" }}>
         {props.minutesRead} Minutes
-      </Typography>
-      <Typography align="center" variant="h4">
-        {props.readerName}
-      </Typography>
-      <Typography align="center" sx={{ color: "white" }}>
+      </Typography> */}
+        <Typography align="center" component="span" variant="h1">
+          {capitalizedInitials}
+        </Typography>
+        {/* <Typography align="center" sx={{ color: "white" }}>
         {props.coinsEarned} Coins
+      </Typography> */}
+      </Box>
+      <Typography
+        align="center"
+        component="span"
+        variant="h4"
+        color={themeColor}
+      >
+        {props.readerName.toUpperCase()}
       </Typography>
     </Box>
   );

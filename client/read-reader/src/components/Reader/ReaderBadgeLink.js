@@ -13,8 +13,8 @@ const ReaderBadgeLink = (props) => {
   return (
     <Link to={linkPath} style={linkStyle}>
       <ReaderBadge
-        minutesRead={props.minutesRead}
-        coinsEarned={props.coinsEarned}
+        // minutesRead={props.minutesRead}
+        // coinsEarned={props.coinsEarned}
         readerName={props.readerName}
         themeColor={props.themeColor}
       />
