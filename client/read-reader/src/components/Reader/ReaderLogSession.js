@@ -132,26 +132,20 @@ const ReaderLogSession = (props) => {
     <>
       <LogReadingContainer>
         <ReaderBadge
-          minutesRead={minutesRead}
-          coinsEarned={coinsEarned}
+          // minutesRead={minutesRead}
+          // coinsEarned={coinsEarned}
           readerName={props.reader["reader_name"]}
           themeColor={props.reader["theme_color"]}
         />
-        {!isRecordingReading ? (
-          <Button
-            onClick={handleLogReadingCancel}
-            variant="outlined"
-            sx={{ gridRow: "2/3" }}
-          >
-            <CloseIcon />
-          </Button>
-        ) : (
-          <TimerBox>{currentReadingTime}</TimerBox>
-        )}
+        {isRecordingReading && <TimerBox>{currentReadingTime}</TimerBox>}
         <Button
           onClick={handleReadingStatus}
           variant="outlined"
-          sx={{ gridColumn: "2/-1", gridRow: "2/3" }}
+          sx={{
+            gridRow: "3/4",
+            color: `${readerCtx.currentTheme} `,
+            borderColor: `${readerCtx.currentTheme} `,
+          }}
         >
           {!isRecordingReading ? <PlayArrowIcon /> : <StopCircleIcon />}
         </Button>
