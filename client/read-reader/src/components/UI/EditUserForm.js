@@ -10,6 +10,8 @@ import { TextField, Button, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "styled-components";
 
+import CustomButton from "./CustomButton";
+import ThemeSelection from "../Reader/ThemeSelection";
 import ConfirmDeleteReader from "./ConfirmDeleteReader";
 
 function EditUserForm(props) {
@@ -20,6 +22,8 @@ function EditUserForm(props) {
 
   const [error, setError] = useState("");
   const [enteredName, setEnteredName] = useState("");
+  const [enteredTheme, setEnteredTheme] = useState("#FFC354");
+
   const [isConfirmDelete, setIsConfirmDelete] = useState(false);
 
   const readerName = props.reader.reader_name;
@@ -30,6 +34,10 @@ function EditUserForm(props) {
 
   const nameChangeHandler = (event) => {
     setEnteredName(event.target.value);
+  };
+
+  const themeChangeHandler = (event) => {
+    setEnteredTheme(event.target.value);
   };
 
   const updateReader = async (event) => {
@@ -44,6 +52,7 @@ function EditUserForm(props) {
       },
       body: JSON.stringify({
         reader_name: enteredName,
+        theme_color: enteredTheme,
       }),
     };
     try {
@@ -70,7 +79,7 @@ function EditUserForm(props) {
             id="modal-modal-title"
             variant="h4"
             component="h2"
-            sx={{ textAlign: "center" }}
+            sx={{ textAlign: "center", color: "#49C5B6" }}
           >
             Update Reader
           </Typography>
@@ -85,13 +94,13 @@ function EditUserForm(props) {
               required
             />
             <br />
-            <Button type="submit" variant="contained" color="primary">
-              Submit Changes
-            </Button>
+            <ThemeSelection onChange={themeChangeHandler} />
+            <br />
+            <CustomButton type="submit">Submit Changes</CustomButton>
           </CustomForm>
           <Button
             onClick={deleteReader}
-            variant="contained"
+            variant="outlined"
             color="error"
             sx={{ marginTop: "2rem", width: "24px", justifySelf: "center" }}
           >
