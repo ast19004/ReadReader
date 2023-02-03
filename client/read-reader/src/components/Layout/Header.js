@@ -64,14 +64,30 @@ const Header = () => {
                     }}
                   />
                 ) : (
-                  <ReadIcon fontSize="medium" sx={{ color: "black" }} />
+                  <ReadIcon
+                    fontSize="medium"
+                    sx={{
+                      color: "white",
+                      border: "4px solid white",
+                      borderRadius: "50%",
+                      padding: "4px",
+                    }}
+                  />
                 )}
               </Link>
             </IconWrapper>
             {!isMainUser && (
               <IconWrapper>
                 <Link to={prizeLinkPath}>
-                  <PrizesIcon fontSize="medium" sx={{ color: "black" }} />
+                  <PrizesIcon
+                    fontSize="medium"
+                    sx={{
+                      color: "white",
+                      border: "4px solid white",
+                      borderRadius: "50%",
+                      padding: "4px",
+                    }}
+                  />
                 </Link>
               </IconWrapper>
             )}
