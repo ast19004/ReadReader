@@ -4,8 +4,11 @@ const ReaderContext = React.createContext({
   isUpdated: 0,
   currentReaderId: "",
   currentReaderName: "",
+  currentTheme: "",
+  onChangeReader: () => {},
   onChangeReaderId: () => {},
   onChangeReaderName: () => {},
+  onChangeReaderTheme: () => {},
   onReaderIsUpdated: () => {},
 });
 
@@ -13,14 +16,25 @@ export const ReaderContextProvider = (props) => {
   // currentReaderName & Id will be '' for an authUser
   const [id, setChangeId] = useState("");
   const [name, setChangeName] = useState("");
+  const [theme, setChangeReaderTheme] = useState("");
   const [isUpdated, setIsUpdated] = useState(0);
 
-  const changeReaderHandler = (id) => {
+  const changeReaderIdHandler = (id) => {
     setChangeId(id);
   };
 
   const changeReaderNameHandler = (name) => {
     setChangeName(name);
+  };
+
+  const changeReaderThemeHandler = (theme) => {
+    setChangeReaderTheme(theme);
+  };
+
+  const changeReaderHandler = (id, name, theme) => {
+    setChangeId(id);
+    setChangeName(name);
+    setChangeReaderTheme(theme);
   };
 
   const isUpdatedHandler = () => {
@@ -33,8 +47,11 @@ export const ReaderContextProvider = (props) => {
         isUpdated: isUpdated,
         currentReaderId: id,
         currentReaderName: name,
-        onChangeReaderId: changeReaderHandler,
+        currentTheme: theme,
+        onChangeReader: changeReaderHandler,
+        onChangeReaderId: changeReaderIdHandler,
         onChangeReaderName: changeReaderNameHandler,
+        onChangeReaderTheme: changeReaderThemeHandler,
         onReaderIsUpdated: isUpdatedHandler,
       }}
     >

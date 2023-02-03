@@ -26,8 +26,7 @@ const AuthWelcome = () => {
       readerCtx.currentReaderId !== "" &&
       readerCtx.currentReaderName !== ""
     ) {
-      readerCtx.onChangeReaderId("");
-      readerCtx.onChangeReaderName("");
+      readerCtx.onChangeReader("", "", "");
     }
   }, [readerCtx]);
 

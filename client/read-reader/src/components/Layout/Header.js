@@ -15,6 +15,7 @@ const Header = () => {
   const readerCtx = useContext(ReaderContext);
   const [homeLinkPath, setHomeLinkPath] = useState("/");
   const [showAccountsMenu, setShowAccountsMenu] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState("");
 
   const isMainUser = !readerCtx.currentReaderId;
   const prizeLinkPath = `/reader/${readerCtx.currentReaderId}/prizes`;
@@ -35,6 +36,10 @@ const Header = () => {
     }
   }, [readerCtx.currentReaderId, readerCtx.currentReaderName]);
 
+  useEffect(() => {
+    setCurrentTheme(readerCtx.currentTheme);
+  }, [readerCtx.currentTheme]);
+
   return (
     <Wrapper>
       <nav
@@ -42,7 +47,7 @@ const Header = () => {
           isMainUser
             ? {}
             : {
-                background: "#49C5B6",
+                background: currentTheme,
                 height: "225px",
                 marginBottom: "-225px",
               }

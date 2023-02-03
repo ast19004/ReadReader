@@ -26,8 +26,7 @@ function AddReader() {
       readerCtx.currentReaderId !== "" &&
       readerCtx.currentReaderName !== ""
     ) {
-      readerCtx.onChangeReaderId("");
-      readerCtx.onChangeReaderName("");
+      readerCtx.onChangeReader("", "", "");
     }
   }, [readerCtx]);
 
@@ -73,7 +72,7 @@ function AddReader() {
       <Typography
         align="center"
         variant="h2"
-        sx={{ color: "#49C5B6", marginTop: "2rem" }}
+        sx={{ color: enteredTheme, marginTop: "2rem" }}
       >
         Add Reader
       </Typography>
@@ -88,9 +87,14 @@ function AddReader() {
           required
         />
         <br />
-        <ThemeSelection onChange={themeChangeHandler} />
+        <ThemeSelection onChange={themeChangeHandler} value={enteredTheme} />
         <br />
-        <CustomButton type="submit">Add Reader</CustomButton>
+        <CustomButton
+          type="submit"
+          sx={{ backgroundColor: `${enteredTheme} !important` }}
+        >
+          Add Reader
+        </CustomButton>
       </CustomForm>
       {error && <p>{error}</p>}
     </>

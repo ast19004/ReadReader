@@ -40,8 +40,11 @@ const ReaderLogSession = (props) => {
       readerCtx.currentReaderId !== props.reader["_id"] &&
       readerCtx.currentReaderName !== props.reader["reader_name"]
     ) {
-      readerCtx.onChangeReaderId(props.reader["_id"]);
-      readerCtx.onChangeReaderName(props.reader["reader_name"]);
+      readerCtx.onChangeReader(
+        props.reader["_id"],
+        props.reader["reader_name"],
+        props.reader["theme_color"]
+      );
     }
   }, [readerCtx, props.reader]);
 
@@ -67,13 +70,8 @@ const ReaderLogSession = (props) => {
       : secondsCount
   } s`;
 
-  const onChangeReader = (id, name) => {
-    readerCtx.onChangeReaderId(id);
-    readerCtx.onChangeReaderName(name);
-  };
-
   const handleLogReadingCancel = () => {
-    onChangeReader("", "");
+    readerCtx.onChangeReader("", "", "");
     history.push(`/reader/${readerId}`);
   };
 

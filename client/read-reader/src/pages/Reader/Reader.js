@@ -29,14 +29,6 @@ const Reader = () => {
   const params = useParams();
   const readerId = params.id;
 
-  const onChangeReader = useCallback(
-    () => (id, name) => {
-      readerCtx.onChangeReaderId(id);
-      readerCtx.onChangeReaderName(name);
-    },
-    []
-  );
-
   //Get reader by readerId using id from url params
   useEffect(() => {
     const url = `${domainPath}/reader/${readerId}`;
@@ -67,7 +59,11 @@ const Reader = () => {
   };
 
   const handleStartLogReading = () => {
-    onChangeReader(reader._id, reader.reader_name);
+    readerCtx.onChangeReader(
+      reader._id,
+      reader.reader_name,
+      reader.theme_color
+    );
     history.push(`/reader/${readerId}/logReading/`);
   };
 

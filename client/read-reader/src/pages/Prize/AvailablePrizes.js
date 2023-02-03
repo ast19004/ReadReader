@@ -42,11 +42,9 @@ const AvailablePrizes = (props) => {
   //set readerCtx to current user
   useEffect(() => {
     if (props.readerName) {
-      readerCtx.onChangeReaderId(props.readerId);
-      readerCtx.onChangeReaderName(props.readerName);
+      readerCtx.onChangeReader(props.readerId, props.readerName, props.theme);
     } else {
-      readerCtx.onChangeReaderId("");
-      readerCtx.onChangeReaderName("");
+      readerCtx.onChangeReader("", "", "");
     }
   }, [props.readerId, props.readerName]);
 

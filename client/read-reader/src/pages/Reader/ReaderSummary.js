@@ -17,8 +17,7 @@ const ReaderSummary = (props) => {
       readerCtx.currentReaderId !== "" &&
       readerCtx.currentReaderName !== ""
     ) {
-      readerCtx.onChangeReaderId("");
-      readerCtx.onChangeReaderName("");
+      readerCtx.onChangeReader("", "", "");
     }
   }, [readerCtx.currentReaderId, readerCtx.currentReaderName]);
 

@@ -27,10 +27,12 @@ function EditUserForm(props) {
   const [isConfirmDelete, setIsConfirmDelete] = useState(false);
 
   const readerName = props.reader.reader_name;
+  const theme = `${props.reader.theme_color}`;
 
   useEffect(() => {
     setEnteredName(readerName);
-  }, [readerName]);
+    setEnteredTheme(theme);
+  }, [readerName, theme]);
 
   const nameChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -79,7 +81,7 @@ function EditUserForm(props) {
             id="modal-modal-title"
             variant="h4"
             component="h2"
-            sx={{ textAlign: "center", color: "#49C5B6" }}
+            sx={{ textAlign: "center", color: enteredTheme }}
           >
             Update Reader
           </Typography>
@@ -94,9 +96,17 @@ function EditUserForm(props) {
               required
             />
             <br />
-            <ThemeSelection onChange={themeChangeHandler} />
+            <ThemeSelection
+              onChange={themeChangeHandler}
+              value={enteredTheme}
+            />
             <br />
-            <CustomButton type="submit">Submit Changes</CustomButton>
+            <CustomButton
+              type="submit"
+              sx={{ backgroundColor: `${enteredTheme} !important` }}
+            >
+              Submit Changes
+            </CustomButton>
           </CustomForm>
           <Button
             onClick={deleteReader}

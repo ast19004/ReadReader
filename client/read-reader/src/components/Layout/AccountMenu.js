@@ -45,8 +45,7 @@ const AccountMenu = () => {
     setAnchorEl(null);
   };
   const returnToMainUser = () => {
-    readerCtx.onChangeReaderName("");
-    readerCtx.onChangeReaderId("");
+    readerCtx.onChangeReader("", "", "");
   };
 
   const handleAddReader = () => {
@@ -222,8 +221,11 @@ const AccountMenu = () => {
               <MenuItem
                 key={reader.id}
                 onClick={() => {
-                  readerCtx.onChangeReaderName(reader.name);
-                  readerCtx.onChangeReaderId(reader.id);
+                  readerCtx.onChangeReader(
+                    reader.id,
+                    reader.name,
+                    reader.theme
+                  );
                   history.push(`/reader/${reader.id}/logReading/`);
                 }}
               >
