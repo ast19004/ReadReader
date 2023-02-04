@@ -44,7 +44,6 @@ const Header = () => {
             : {
                 backgroundColor: readerCtx.currentTheme,
                 height: "225px",
-                marginBottom: "-185px",
               }
         }
       >

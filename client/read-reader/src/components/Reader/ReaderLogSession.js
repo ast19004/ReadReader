@@ -134,13 +134,13 @@ const ReaderLogSession = (props) => {
           display: "grid",
           gridGap: "2rem",
           margin: "0 auto",
-          marginTop: "2rem",
+          marginTop: "-85px",
           maxWidth: "80%",
 
           "@media (min-width: 500px)": {
             gridTemplateColumns: "1fr 2fr",
             justifyContent: "center",
-            marginTop: "6rem",
+            marginTop: "-155px",
             maxWidth: "300px",
           },
         }}
