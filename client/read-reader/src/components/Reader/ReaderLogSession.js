@@ -36,8 +36,9 @@ const ReaderLogSession = (props) => {
   //set readerCtx to current Reader
   useEffect(() => {
     if (
-      readerCtx.currentReaderId !== props.reader["_id"] &&
-      readerCtx.currentReaderName !== props.reader["reader_name"]
+      readerCtx.currentReaderId !== props.reader["_id"] ||
+      readerCtx.currentReaderName !== props.reader["reader_name"] ||
+      readerCtx.currentTheme !== props.reader["theme_color"]
     ) {
       readerCtx.onChangeReader(
         props.reader["_id"],

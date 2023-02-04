@@ -35,6 +35,7 @@ export const ReaderContextProvider = (props) => {
     setChangeId(id);
     setChangeName(name);
     setChangeReaderTheme(theme);
+    console.log(`theme: ${theme}`);
   };
 
   const isUpdatedHandler = () => {

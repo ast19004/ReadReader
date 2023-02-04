@@ -36,7 +36,7 @@ const Header = () => {
   }, [readerCtx.currentReaderId, readerCtx.currentReaderName]);
 
   return (
-    <Wrapper>
+    <header>
       <nav
         style={
           isMainUser
@@ -101,15 +101,11 @@ const Header = () => {
           </AccountIconsWrapper>
         </IconsWrapper>
       </nav>
-    </Wrapper>
+    </header>
   );
 };
 
 export default Header;
-
-const Wrapper = styled.header`
-  /* background-color: #888; */
-`;
 
 const IconsLeftWrapper = styled.li`
   display: grid;

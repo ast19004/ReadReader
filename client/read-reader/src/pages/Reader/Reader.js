@@ -30,6 +30,7 @@ const Reader = () => {
   const readerId = params.id;
 
   //Get reader by readerId using id from url params
+  //set readerCtx to current Reader
   useEffect(() => {
     const url = `${domainPath}/reader/${readerId}`;
     const requestOptions = {
@@ -59,11 +60,6 @@ const Reader = () => {
   };
 
   const handleStartLogReading = () => {
-    readerCtx.onChangeReader(
-      reader._id,
-      reader.reader_name,
-      reader.theme_color
-    );
     history.push(`/reader/${readerId}/logReading/`);
   };
 
@@ -95,6 +91,7 @@ const Reader = () => {
               <ReaderPrizeSelection
                 readerId={readerId}
                 readerName={reader["reader_name"]}
+                theme={reader["theme_color"]}
               />
             </Route>
 

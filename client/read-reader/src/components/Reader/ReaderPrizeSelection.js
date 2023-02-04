@@ -45,6 +45,7 @@ const ReaderPrizeSelection = (props) => {
     <AvailablePrizes
       readerId={props.readerId}
       readerName={props.readerName}
+      theme={props.theme}
       earnedCoins={earnedCoins}
     >
       <Typography align="center" variant="h5" component="p">

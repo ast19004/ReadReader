@@ -46,7 +46,7 @@ const AvailablePrizes = (props) => {
     } else {
       readerCtx.onChangeReader("", "", "");
     }
-  }, [props.readerId, props.readerName]);
+  }, [props.readerId, props.readerName, props.theme]);
 
   useEffect(() => {
     const url = isMainUser

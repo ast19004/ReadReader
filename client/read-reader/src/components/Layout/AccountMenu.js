@@ -221,11 +221,6 @@ const AccountMenu = () => {
               <MenuItem
                 key={reader.id}
                 onClick={() => {
-                  readerCtx.onChangeReader(
-                    reader.id,
-                    reader.name,
-                    reader.theme
-                  );
                   history.push(`/reader/${reader.id}/logReading/`);
                 }}
               >
