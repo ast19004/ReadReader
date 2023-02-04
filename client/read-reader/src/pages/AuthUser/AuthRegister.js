@@ -12,8 +12,6 @@ import CustomButton from "../../components/UI/CustomButton";
 
 import styled from "styled-components";
 
-import stackedBooksImg from "../../assets/Auth/stackedBooks.svg";
-
 function RegisterUser() {
   const history = useHistory();
   const [error, setError] = useState("");
@@ -84,7 +82,6 @@ function RegisterUser() {
 
   return (
     <>
-      <img src={stackedBooksImg} alt="Stacked Books" />
       <Typography
         align="center"
         variant="h4"

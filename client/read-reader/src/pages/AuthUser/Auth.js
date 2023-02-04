@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import AuthLogin from "./AuthLogin";
 import AuthRegister from "./AuthRegister";
 
-import readerImg from "../../assets/Auth/reader.svg";
+import stackedBooksImg from "../../assets/Auth/stackedBooks.svg";
 import CustomButton from "../../components/UI/CustomButton";
 
 function Auth() {
@@ -19,6 +19,14 @@ function Auth() {
           height: "25px",
           backgroundColor: "black",
           borderRadius: "0 0 25px 25px",
+        }}
+      />
+      <img
+        src={stackedBooksImg}
+        alt="Stacked Books"
+        style={{
+          maxHeight: "80vh",
+          margin: "25px auto",
         }}
       />
       <Route path={"/signup"} exact>
@@ -42,14 +50,6 @@ function Auth() {
         </Link>
       </Route>
       <Route path={"/"} exact>
-        <img
-          src={readerImg}
-          alt="Girl reading"
-          style={{
-            maxHeight: "80vh",
-            margin: "4%",
-          }}
-        />
         <CustomButton
           sx={{
             margin: "0 4%",
