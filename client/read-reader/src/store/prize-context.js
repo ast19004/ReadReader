@@ -11,7 +11,6 @@ export const PrizeContextProvider = (props) => {
 
   const isUpdatedHandler = () => {
     setIsUpdated((prevUpdated) => (prevUpdated += 1));
-    console.log("Prize store update");
   };
 
   return (

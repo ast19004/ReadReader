@@ -19,7 +19,7 @@ import CustomButton from "../../components/UI/CustomButton";
 
 import prizeSvg from "../../assets/Prize/prize.svg";
 
-import styled from "styled-components";
+import styles from "./AddPrize.module.css";
 
 function AddPrize() {
   const authCtx = useContext(AuthContext);
@@ -33,6 +33,7 @@ function AddPrize() {
   const [enteredReadingRequirement, setEnteredReadingRequirement] =
     useState("");
   const [selectedReaders, setSelectedReaders] = useState([]);
+  const [enteredImagePath, setEnteredImagePath] = useState("");
 
   const [userHasReader, setUserHasReaders] = useState(false);
 
@@ -55,6 +56,12 @@ function AddPrize() {
       );
     }
   };
+
+  const imagePathChangeHandler = (event) => {
+    const imagePath = event.target.value.substr(12);
+    setEnteredImagePath(imagePath);
+  };
+
   //set readerCtx to main user
   useEffect(() => {
     if (
@@ -137,7 +144,7 @@ function AddPrize() {
         Add a prize
       </Typography>
       {userHasReader ? (
-        <CustomForm onSubmit={addPrize}>
+        <form id={styles["addPrize-form"]} onSubmit={addPrize}>
           <TextField
             multiline
             onChange={nameChangeHandler}
@@ -160,6 +167,36 @@ function AddPrize() {
             required
           />
           <br />
+          <Typography
+            sx={{
+              paddingBottom: ".2rem",
+              textAlign: "center",
+              backgroundColor: "rgb(245, 245,245)",
+              borderRadius: "25px",
+            }}
+          >
+            {enteredImagePath}
+          </Typography>
+          <TextField
+            id="input_image"
+            onChange={imagePathChangeHandler}
+            style={{ display: "none" }}
+            type="file"
+            accept="image/png, image/jpg"
+            variant="outlined"
+          />
+
+          <CustomButton
+            type="button"
+            variant="outlined"
+            color="#1976d2"
+            onClick={() => {
+              document.getElementById("input_image").click();
+            }}
+          >
+            Upload Image
+          </CustomButton>
+          <br />
           <>
             <FormGroup
               sx={{
@@ -181,13 +218,12 @@ function AddPrize() {
                 />
               ))}
             </FormGroup>
-            <br />
-            <input type="file" id="image_input" accept="image/png, image/jpg" />
+
             <br />
           </>
           <CustomButton type="submit">Add Prize</CustomButton>
           {error && <p>{error.message}</p>}
-        </CustomForm>
+        </form>
       ) : (
         <>
           <Typography
@@ -218,10 +254,3 @@ function AddPrize() {
 }
 
 export default AddPrize;
-
-const CustomForm = styled.form`
-  display: grid;
-  grid-template-columns: auto;
-  justify-content: center;
-  margin-top: 2rem;
-`;
