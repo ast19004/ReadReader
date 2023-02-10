@@ -6,13 +6,14 @@ const CustomButton = (props) => {
   const classes = props.className
     ? styles.customButton + props.className
     : styles.customButton;
+  const variant = props.variant ? props.variant : "contained";
 
   return (
     <Button
       className={classes}
       href={props.href}
       onClick={props.onClick}
-      variant="contained"
+      variant={variant}
       type={props.type}
       sx={props.sx}
     >

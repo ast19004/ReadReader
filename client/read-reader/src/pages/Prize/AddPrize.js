@@ -12,9 +12,13 @@ import {
   FormControlLabel,
   Checkbox,
   TextField,
-  Button,
 } from "@mui/material";
 import { Person, PersonAdd, ArrowRightAlt } from "@mui/icons-material";
+
+import CustomButton from "../../components/UI/CustomButton";
+
+import prizeSvg from "../../assets/Prize/prize.svg";
+
 import styled from "styled-components";
 
 function AddPrize() {
@@ -124,12 +128,13 @@ function AddPrize() {
 
   return (
     <>
+      <img src={prizeSvg} alt="Gift wrapped with a bow" />
       <Typography
         align="center"
         variant="h2"
         sx={{ color: "gray", marginTop: "2rem" }}
       >
-        Add Prize
+        Add a prize
       </Typography>
       {userHasReader ? (
         <CustomForm onSubmit={addPrize}>
@@ -177,10 +182,10 @@ function AddPrize() {
               ))}
             </FormGroup>
             <br />
+            <input type="file" id="image_input" accept="image/png, image/jpg" />
+            <br />
           </>
-          <Button type="submit" variant="contained" color="primary">
-            Add Prize
-          </Button>
+          <CustomButton type="submit">Add Prize</CustomButton>
           {error && <p>{error.message}</p>}
         </CustomForm>
       ) : (

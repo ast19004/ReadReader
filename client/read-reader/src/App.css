@@ -3,11 +3,15 @@ img {
   max-width: 100%;
   margin: auto;
 }
-/* input {
-  width: 92%;
-  height: 50px;
-  border-radius: 8px;
-  border-color: #e8e8e8;
-  background-color: #f6f6f6;
-  color: #e8e8e8;
-} */
+input,
+.css-dpjnhs-MuiInputBase-root-MuiOutlinedInput-root {
+  /* Gray/01 */
+
+  background: #f6f6f6 !important;
+  /* Gray/02 */
+
+  color: "#BDBDBD";
+
+  border: 1px solid #e8e8e8 !important;
+  border-radius: 8px !important;
+}
