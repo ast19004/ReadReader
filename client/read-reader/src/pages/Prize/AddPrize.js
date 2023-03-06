@@ -120,6 +120,7 @@ function AddPrize() {
         prize_name: enteredName,
         reading_requirement: +enteredReadingRequirement,
         readers: selectedReaders,
+        prize_image: enteredImagePath,
       }),
     };
     const url = `${domainPath}/prize`;
@@ -144,7 +145,11 @@ function AddPrize() {
         Add a prize
       </Typography>
       {userHasReader ? (
-        <form id={styles["addPrize-form"]} onSubmit={addPrize}>
+        <form
+          id={styles["addPrize-form"]}
+          onSubmit={addPrize}
+          encType="multipart/form-data"
+        >
           <TextField
             multiline
             onChange={nameChangeHandler}
@@ -179,6 +184,7 @@ function AddPrize() {
           </Typography>
           <TextField
             id="input_image"
+            name="prize_image"
             onChange={imagePathChangeHandler}
             style={{ display: "none" }}
             type="file"
