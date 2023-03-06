@@ -917,6 +917,7 @@
       "required": [
         "creator_id",
         "prize_name",
+        "prize_image",
         "reading_requirement",
         "readers"
       ],
@@ -925,6 +926,9 @@
           "type": "string"
         },
         "prize_name": {
+          "type": "string"
+        },
+        "prize_image": {
           "type": "string"
         },
         "reading_requirement": {
