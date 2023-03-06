@@ -3,6 +3,8 @@ const { validationResult } = require("express-validator");
 const ReaderPrize = require("../../models/readerPrize");
 const Reader = require("../../models/reader");
 
+const imgModel = require("../../models/prizeImage");
+
 /** Return all reader prizes **/
 exports.getAllReaderPrizes = async (req, res, next) => {
   const allPrizes = await ReaderPrize.find({ creator_id: req.userId });
@@ -53,6 +55,7 @@ exports.getEarnedReaderPrizes = async (req, res, next) => {
 exports.postReaderPrize = async (req, res, next) => {
   const prizeName = req.body.prize_name;
   const readingRequirement = req.body.reading_requirement;
+  const prizeImagePath = req.body.prize_image || "";
   const readerIds = req.body.readers;
 
   const errors = validationResult(req);
@@ -67,6 +70,7 @@ exports.postReaderPrize = async (req, res, next) => {
   const newPrize = new ReaderPrize({
     creator_id: req.userId,
     prize_name: prizeName,
+    prize_image: prizeImagePath,
     reading_requirement: readingRequirement,
     readers: [],
   });
