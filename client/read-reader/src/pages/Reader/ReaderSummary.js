@@ -1,15 +1,29 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 
 import ReaderContext from "../../store/reader-contex";
-import ReaderWeeklyAchievement from "../../components/Reader/ReaderWeeklyAchievements";
 
 import styled from "styled-components";
 
-import { Button, Typography } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import ReaderBadge from "../../components/Reader/ReaderBadge";
+import DataSwitch from "../../components/Reader/DataSwitch";
 
 const ReaderSummary = (props) => {
   const readerCtx = useContext(ReaderContext);
+
+  const [dataDisplay, setDataDisplay] = useState(true);
+
+  const toggleDisplay = () => {
+    setDataDisplay((prevState) => !prevState);
+  };
+
+  //Handle data display based on boolean toggled by Switch component
+  useEffect(() => {
+    if (dataDisplay) {
+      props.displayHistory();
+    } else {
+      props.displayPrizes();
+    }
+  }, [dataDisplay]);
 
   //initially set to mainUser before routing off to reader
   useEffect(() => {
@@ -23,49 +37,19 @@ const ReaderSummary = (props) => {
 
   return (
     <ReaderSummaryContainer>
-      <ReaderSummaryInfo>
+      <ReaderSummaryInfo onClick={props.updateUser}>
         <div>
-          <Typography
-            variant="h2"
-            onClick={props.updateUser}
-            sx={{
-              display: "flex",
-              cursor: "pointer",
-              color: "gray",
-              marginTop: "2rem",
-            }}
-          >
-            {props.reader["reader_name"]}
-            <EditIcon
-              sx={{
-                alignSelf: "start",
-                padding: "2px",
-                border: "1px solid rgba(153, 153, 153, .5)",
-                borderRadius: "50%",
-              }}
-            />
-          </Typography>
-          <ReaderWeeklyAchievement />
+          <ReaderBadge
+            readerName={props.reader["reader_name"]}
+            themeColor={props.reader["theme_color"]}
+            onEdit={props.updateUser}
+          />
         </div>
       </ReaderSummaryInfo>
       <ReaderActionButtons>
-        <Button onClick={props.displayHistory} variant="outlined">
-          Reading History
-        </Button>
-        <Button onClick={props.displayPrizes} variant="outlined">
-          Earned Prizes
-        </Button>
-        <Button
-          onClick={props.startReading}
-          variant="outlined"
-          sx={{
-            fontSize: "24px",
-            alignSelf: "center",
-            gridRow: "2/3",
-          }}
-        >
-          START Reading
-        </Button>
+        <DataSwitch onClick={toggleDisplay} />
+        {/* <button onClick={props.displayHistory}>History</button>
+        <button onClick={props.displayPrizes}>Prizes</button> */}
       </ReaderActionButtons>
     </ReaderSummaryContainer>
   );
@@ -74,22 +58,15 @@ export default ReaderSummary;
 
 const ReaderSummaryContainer = styled.div`
   display: grid;
-  grid-gap: 3rem;
   justify-content: center;
-  @media (min-width: 500px) {
-    grid-template-columns: auto auto;
-  }
 `;
 
 const ReaderSummaryInfo = styled.div`
   margin-top: 2rem;
-  align-self: end;
 `;
 
 const ReaderActionButtons = styled.div`
-  display: grid;
-  grid-gap: 2rem;
-  @media (min-width: 500px) {
-    margin-top: 6rem;
-  }
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
 `;

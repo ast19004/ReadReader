@@ -1,10 +1,14 @@
 import { Box, Typography } from "@mui/material";
 
+import EditIcon from "@mui/icons-material/Edit";
+
 const ReaderBadge = (props) => {
   const themeColor = props.themeColor;
   const initials = [...props.readerName].splice(0, 2).join("");
   const capitalizedInitials =
     initials.charAt(0).toUpperCase() + initials.slice(1);
+
+  const editReader = props.onEdit ? props.onEdit : () => {};
   return (
     <Box
       component="li"
@@ -28,6 +32,7 @@ const ReaderBadge = (props) => {
           color: "white",
           backgroundColor: `${themeColor}`,
         }}
+        onClick={editReader}
       >
         {/* <Typography align="center" sx={{ color: "white" }}>
         {props.minutesRead} Minutes
@@ -46,6 +51,15 @@ const ReaderBadge = (props) => {
         color={themeColor}
       >
         {props.readerName.toUpperCase()}
+        {props.onEdit && (
+          <EditIcon
+            sx={{
+              padding: "2px",
+              border: "1px solid rgba(153, 153, 153, .5)",
+              borderRadius: "50%",
+            }}
+          />
+        )}
       </Typography>
     </Box>
   );
