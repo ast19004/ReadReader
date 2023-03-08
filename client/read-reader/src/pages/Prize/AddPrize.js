@@ -13,7 +13,12 @@ import {
   Checkbox,
   TextField,
 } from "@mui/material";
-import { Person, PersonAdd, ArrowRightAlt } from "@mui/icons-material";
+import {
+  Person,
+  PersonAdd,
+  ArrowRightAlt,
+  ArrowBack,
+} from "@mui/icons-material";
 
 import CustomButton from "../../components/UI/CustomButton";
 
@@ -36,6 +41,8 @@ function AddPrize() {
   const [enteredImagePath, setEnteredImagePath] = useState("");
 
   const [userHasReader, setUserHasReaders] = useState(false);
+
+  const [continueForm, setContinueForm] = useState(false);
 
   const nameChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -136,7 +143,6 @@ function AddPrize() {
 
   return (
     <>
-      <img src={prizeSvg} alt="Gift wrapped with a bow" />
       <Typography
         align="center"
         variant="h2"
@@ -150,84 +156,123 @@ function AddPrize() {
           onSubmit={addPrize}
           encType="multipart/form-data"
         >
-          <TextField
-            multiline
-            onChange={nameChangeHandler}
-            value={enteredName}
-            style={{ width: "300px", margin: "5px" }}
-            type="text"
-            label="Prize Name/ Description"
-            variant="outlined"
-            required
-          />
-          <br />
-          <TextField
-            onChange={readingRequirementChangeHandler}
-            value={enteredReadingRequirement}
-            style={{ width: "300px", margin: "5px" }}
-            type="number"
-            inputProps={{ min: 1 }}
-            label="Reading Requirement (minutes)"
-            variant="outlined"
-            required
-          />
-          <br />
-          <Typography
-            sx={{
-              paddingBottom: ".2rem",
-              textAlign: "center",
-              backgroundColor: "rgb(245, 245,245)",
-              borderRadius: "25px",
-            }}
-          >
-            {enteredImagePath}
-          </Typography>
-          <TextField
-            id="input_image"
-            name="prize_image"
-            onChange={imagePathChangeHandler}
-            style={{ display: "none" }}
-            type="file"
-            accept="image/png, image/jpg"
-            variant="outlined"
-          />
-
-          <CustomButton
-            type="button"
-            variant="outlined"
-            color="#1976d2"
-            onClick={() => {
-              document.getElementById("input_image").click();
-            }}
-          >
-            Upload Image
-          </CustomButton>
-          <br />
-          <>
-            <FormGroup
-              sx={{
-                border: "1px solid rgba(136, 136, 136, 0.5)",
-                padding: "1rem",
-                borderRadius: "5px",
-              }}
-            >
-              <Typography sx={{ marginBottom: "1rem" }}>
-                Add prize to these readers:
+          {!continueForm ? (
+            <>
+              <TextField
+                multiline
+                onChange={nameChangeHandler}
+                value={enteredName}
+                style={{ width: "300px", margin: "5px" }}
+                type="text"
+                label="Prize Name/ Description"
+                variant="outlined"
+                required
+              />
+              <br />
+              <TextField
+                onChange={readingRequirementChangeHandler}
+                value={enteredReadingRequirement}
+                style={{ width: "300px", margin: "5px" }}
+                type="number"
+                inputProps={{ min: 1 }}
+                label="Reading Requirement (minutes)"
+                variant="outlined"
+                required
+              />
+              <br />
+              <Typography
+                sx={{
+                  paddingBottom: ".2rem",
+                  textAlign: "center",
+                  backgroundColor: "rgb(245, 245,245)",
+                  borderRadius: "25px",
+                }}
+              >
+                {enteredImagePath}
               </Typography>
-              {readers.map((reader) => (
-                <FormControlLabel
-                  key={reader.id}
-                  control={
-                    <Checkbox id={reader.id} onChange={handleReaderSelection} />
-                  }
-                  label={reader.name}
-                />
-              ))}
-            </FormGroup>
+              <TextField
+                id="input_image"
+                name="prize_image"
+                onChange={imagePathChangeHandler}
+                style={{ display: "none" }}
+                type="file"
+                accept="image/png, image/jpg"
+                variant="outlined"
+              />
+              <img
+                src={prizeSvg}
+                alt="Gift wrapped with a bow"
+                style={{ marginBottom: "2rem" }}
+              />
+              <CustomButton
+                type="button"
+                variant="outlined"
+                color="#1976d2"
+                onClick={() => {
+                  document.getElementById("input_image").click();
+                }}
+              >
+                Upload Image
+              </CustomButton>
+              <CustomButton
+                type="button"
+                onClick={() => {
+                  setContinueForm(true);
+                }}
+                sx={{ marginTop: "2rem" }}
+              >
+                Continue
+              </CustomButton>
+              <br />
+            </>
+          ) : (
+            <>
+              <>
+                <img src={prizeSvg} alt="Gift wrapped with a bow" />
+                <CustomButton
+                  type="button"
+                  variant="outlined"
+                  color="#1976d2"
+                  onClick={() => {
+                    setContinueForm(false);
+                  }}
+                  sx={{
+                    margin: " 2rem auto 0 auto",
+                    width: "fit-content",
+                  }}
+                >
+                  <ArrowBack />
+                </CustomButton>
+                <FormGroup
+                  sx={{
+                    marginTop: "1rem",
+                    // border: "1px solid rgba(136, 136, 136, 0.5)",
+                    padding: "1rem",
+                    // borderRadius: "5px",
+                  }}
+                >
+                  <Typography sx={{ marginBottom: "1rem" }}>
+                    Add prize to these readers:
+                  </Typography>
+                  {readers.map((reader) => (
+                    <FormControlLabel
+                      key={reader.id}
+                      control={
+                        <Checkbox
+                          id={reader.id}
+                          onChange={handleReaderSelection}
+                        />
+                      }
+                      label={reader.name}
+                    />
+                  ))}
+                </FormGroup>
 
-            <br />
-          </>
-          <CustomButton type="submit">Add Prize</CustomButton>
+                <br />
+              </>
+              <CustomButton type="submit">Add Prize</CustomButton>
+            </>
+          )}
           {error && <p>{error.message}</p>}
         </form>
       ) : (
