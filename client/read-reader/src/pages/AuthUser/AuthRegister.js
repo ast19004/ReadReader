@@ -11,6 +11,7 @@ import {
 import CustomButton from "../../components/UI/CustomButton";
 
 import styled from "styled-components";
+import { ArrowBack } from "@mui/icons-material";
 
 function RegisterUser() {
   const history = useHistory();
@@ -21,6 +22,8 @@ function RegisterUser() {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [enteredPasswordConfirm, setEnteredPasswordConfirm] = useState("");
+
+  const [continueForm, setContinueForm] = useState(false);
 
   const resetForm = () => {
     setEnteredFirstName("");
@@ -99,59 +102,91 @@ function RegisterUser() {
         Sign Up
       </Typography>
       <RegisterForm onSubmit={registerUser}>
-        <TextField
-          onChange={firstNameChangeHandler}
-          value={enteredFirstName}
-          type="text"
-          label="First Name"
-          variant="outlined"
-        />
-        <br />
-        <TextField
-          onChange={lastNameChangeHandler}
-          value={enteredLastName}
-          type="text"
-          label="Last Name"
-          variant="outlined"
-        />
-        <br />
-        <TextField
-          onChange={emailChangeHandler}
-          value={enteredEmail}
-          type="email"
-          label="Email"
-          variant="outlined"
-        />
-        <br />
-        <TextField
-          onChange={passwordChangeHandler}
-          value={enteredPassword}
-          type="password"
-          label="Password"
-          variant="outlined"
-        />
-        <br />
-        <TextField
-          onChange={passwordConfirmChangeHandler}
-          value={enteredPasswordConfirm}
-          type="password"
-          label="Confirm Password"
-          variant="outlined"
-        />
-        <br />
-        <FormControlLabel
-          control={
-            <Checkbox
-            // checked={checked}
-            // onChange={handleChange}
+        {!continueForm && (
+          <>
+            <TextField
+              onChange={firstNameChangeHandler}
+              value={enteredFirstName}
+              type="text"
+              label="First Name"
+              variant="outlined"
             />
-          }
-          label="I would like to receive your newsletter and other promotional information."
-        />
-        <br />
-        <CustomButton type="submit" variant="contained" color="primary">
-          Sign Up
-        </CustomButton>
+            <br />
+            <TextField
+              onChange={lastNameChangeHandler}
+              value={enteredLastName}
+              type="text"
+              label="Last Name"
+              variant="outlined"
+            />
+            <br />
+            <TextField
+              onChange={emailChangeHandler}
+              value={enteredEmail}
+              type="email"
+              label="Email"
+              variant="outlined"
+            />
+            <br />
+            <CustomButton
+              type="button"
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                setContinueForm(true);
+              }}
+            >
+              Continue
+            </CustomButton>
+          </>
+        )}
+        {continueForm && (
+          <>
+            <CustomButton
+              type="button"
+              variant="outlined"
+              color="#1976d2"
+              onClick={() => {
+                setContinueForm(false);
+              }}
+              sx={{
+                margin: " 0 auto 1.5rem auto",
+                width: "fit-content",
+              }}
+            >
+              <ArrowBack />
+            </CustomButton>
+            <TextField
+              onChange={passwordChangeHandler}
+              value={enteredPassword}
+              type="password"
+              label="Password"
+              variant="outlined"
+            />
+            <br />
+            <TextField
+              onChange={passwordConfirmChangeHandler}
+              value={enteredPasswordConfirm}
+              type="password"
+              label="Confirm Password"
+              variant="outlined"
+            />
+            <br />
+            <FormControlLabel
+              control={
+                <Checkbox
+                // checked={checked}
+                // onChange={handleChange}
+                />
+              }
+              label="I would like to receive your newsletter and other promotional information."
+            />
+            <br />
+            <CustomButton type="submit" variant="contained" color="primary">
+              Sign Up
+            </CustomButton>
+          </>
+        )}
         {error && <p>{error}</p>}
         <Link
           to="/login"
