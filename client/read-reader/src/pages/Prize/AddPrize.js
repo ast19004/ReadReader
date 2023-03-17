@@ -38,7 +38,7 @@ function AddPrize() {
   const [enteredReadingRequirement, setEnteredReadingRequirement] =
     useState("");
   const [selectedReaders, setSelectedReaders] = useState([]);
-  const [enteredImagePath, setEnteredImagePath] = useState("");
+  const [file, setfile] = useState(null);
 
   const [userHasReader, setUserHasReaders] = useState(false);
 
@@ -64,9 +64,8 @@ function AddPrize() {
     }
   };
 
-  const imagePathChangeHandler = (event) => {
-    const imagePath = event.target.value.substr(12);
-    setEnteredImagePath(imagePath);
+  const fileChangeHandler = (event) => {
+    setfile(event.target.files[0]);
   };
 
   //set readerCtx to main user
@@ -127,13 +126,22 @@ function AddPrize() {
         prize_name: enteredName,
         reading_requirement: +enteredReadingRequirement,
         readers: selectedReaders,
-        prize_image: enteredImagePath,
+        prize_image: file.originalname,
       }),
     };
+
+    const uploadData = new FormData();
+    uploadData.append("prize_image", file);
+    const uploadRequestOptions = {
+      method: "POST",
+      body: uploadData,
+    };
+
     const url = `${domainPath}/prize`;
 
     try {
       await fetch(url, requestOptions);
+      fetch("/upload", uploadRequestOptions);
       prizeCtx.onPrizeIsUpdated();
     } catch (err) {
       setError(err);
@@ -188,12 +196,12 @@ function AddPrize() {
                   borderRadius: "25px",
                 }}
               >
-                {enteredImagePath}
+                {JSON.stringify(file)}
               </Typography>
               <TextField
                 id="input_image"
                 name="prize_image"
-                onChange={imagePathChangeHandler}
+                onChange={fileChangeHandler}
                 style={{ display: "none" }}
                 type="file"
                 accept="image/png, image/jpg"

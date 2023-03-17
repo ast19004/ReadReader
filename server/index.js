@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const path = require("path");
+
 const PORT = process.env.PORT || 5000;
 const MONGODB_URL =
   process.env.MONGODB_URL ||
@@ -19,11 +20,13 @@ const userRoutes = require("./routes/user");
 const readerRoutes = require("./routes/reader/reader");
 const readerSessionRoutes = require("./routes/reader/readerSession");
 const readerPrizeRoutes = require("./routes/reader/readerPrize");
+const { upload, uploadImage } = require("./middleware/upload");
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.text({ type: "text/plain" }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname + "/public")));
 
@@ -33,6 +36,8 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
+
+app.use("/upload", uploadImage, upload);
 app.use(userRoutes);
 app.use(readerRoutes);
 app.use(readerSessionRoutes);
