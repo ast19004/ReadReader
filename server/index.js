@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/upload", uploadImage, upload);
+app.post("/upload", uploadImage, upload);
 app.use(userRoutes);
 app.use(readerRoutes);
 app.use(readerSessionRoutes);

@@ -24,15 +24,8 @@ const upload = multer({
 
 exports.uploadImage = upload.single("prize_image");
 
-exports.upload = (req, res) => {
-  console.log(req.file);
-  if (req.file) {
-    res.status(200).json({
-      status: "Success",
-    });
-  } else {
-    res.status(404).json({
-      status: "Missing File",
-    });
-  }
+exports.upload = (req, res, next) => {
+  res.status(200).json({
+    filename: req.file ? req.file.filename : "",
+  });
 };

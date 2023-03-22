@@ -125,7 +125,9 @@ function AddPrize() {
     const url = `${domainPath}/prize`;
 
     try {
-      const uploadedFile = await fetch("/upload", uploadRequestOptions);
+      const res = await fetch("/upload", uploadRequestOptions);
+      const uploadedFile = await res.json();
+      console.log(`uploadedFile : ${uploadedFile.filename}`);
 
       const requestOptions = {
         method: "POST",

@@ -164,7 +164,7 @@ const Prize = (props) => {
               gridTemplateColumns: "auto auto",
               gridGap: "70px",
               gridColumn: 2 / -1,
-              alignSelf: "end",
+              alignSelf: "start",
               marginBottom: "1rem",
             }}
           >
@@ -201,10 +201,14 @@ const Prize = (props) => {
         </UnlockedStyle>
       )}
       <ul style={{ position: "absolute", zIndex: 1, padding: "10px" }}>
-        <li>{props.prize.prize_name}</li>
         <li>
-          <img src={prizeImagePath} alt={props.prize.prize_name} />
+          <img
+            src={prizeImagePath}
+            alt={props.prize.prize_name}
+            style={{ width: "180px" }}
+          />
         </li>
+        <li>{props.prize.prize_name}</li>
         <li>{props.prize.reading_requirement} minutes</li>
       </ul>
     </li>
