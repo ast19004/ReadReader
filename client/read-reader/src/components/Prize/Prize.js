@@ -14,6 +14,7 @@ import SelectedIcon from "@mui/icons-material/CheckBox";
 import RedeemIcon from "@mui/icons-material/Redeem";
 
 import styled from "styled-components";
+import defaultPrizeImg from "../../assets/Prize/prize.svg";
 
 const Prize = (props) => {
   const readerCtx = useContext(ReaderContext);
@@ -25,7 +26,10 @@ const Prize = (props) => {
   const [isLocked, setIsLocked] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
 
-  const prizeImagePath = `/images/uploads/${props.prize.prize_image}`;
+  const prizeImagePath =
+    props.prize.prize_image === ""
+      ? defaultPrizeImg
+      : `/images/uploads/${props.prize.prize_image}`;
 
   const listContainerStyle = {
     display: "grid",
