@@ -25,6 +25,8 @@ const Prize = (props) => {
   const [isLocked, setIsLocked] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
 
+  const prizeImagePath = `/images/uploads/${props.prize.prize_image}`;
+
   const listContainerStyle = {
     display: "grid",
     height: "150px",
@@ -170,7 +172,7 @@ const Prize = (props) => {
               <Button>
                 <DeleteIcon
                   onClick={() => {
-                    props.onDelete(props.id, props.prizeName);
+                    props.onDelete(props.id, props.prize.prize_name);
                   }}
                   color="action"
                 />
@@ -199,8 +201,11 @@ const Prize = (props) => {
         </UnlockedStyle>
       )}
       <ul style={{ position: "absolute", zIndex: 1, padding: "10px" }}>
-        <li>{props.prizeName}</li>
-        <li>{props.readingRequirement}</li>
+        <li>{props.prize.prize_name}</li>
+        <li>
+          <img src={prizeImagePath} alt={props.prize.prize_name} />
+        </li>
+        <li>{props.prize.reading_requirement} minutes</li>
       </ul>
     </li>
   );

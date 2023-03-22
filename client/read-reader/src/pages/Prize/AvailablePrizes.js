@@ -122,8 +122,7 @@ const AvailablePrizes = (props) => {
               <Prize
                 key={prize._id}
                 id={prize._id}
-                prizeName={prize.prize_name}
-                readingRequirement={prize.reading_requirement}
+                prize={prize}
                 earnedCoins={props.earnedCoins}
                 onEdit={handleOpenEditPrize}
                 onDelete={handleOpenDeletePrize}

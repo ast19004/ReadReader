@@ -115,21 +115,6 @@ function AddPrize() {
   const addPrize = async (event) => {
     event.preventDefault();
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + authCtx.token,
-      },
-      body: JSON.stringify({
-        prize_name: enteredName,
-        reading_requirement: +enteredReadingRequirement,
-        readers: selectedReaders,
-        prize_image: file.originalname,
-      }),
-    };
-
     const uploadData = new FormData();
     uploadData.append("prize_image", file);
     const uploadRequestOptions = {
@@ -140,8 +125,24 @@ function AddPrize() {
     const url = `${domainPath}/prize`;
 
     try {
+      const uploadedFile = await fetch("/upload", uploadRequestOptions);
+
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Bearer " + authCtx.token,
+        },
+        body: JSON.stringify({
+          prize_name: enteredName,
+          reading_requirement: +enteredReadingRequirement,
+          readers: selectedReaders,
+          prize_image: uploadedFile.filename,
+        }),
+      };
       await fetch(url, requestOptions);
-      fetch("/upload", uploadRequestOptions);
+
       prizeCtx.onPrizeIsUpdated();
     } catch (err) {
       setError(err);
