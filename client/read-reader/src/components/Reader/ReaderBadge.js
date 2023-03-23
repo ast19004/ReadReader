@@ -9,6 +9,7 @@ const ReaderBadge = (props) => {
     initials.charAt(0).toUpperCase() + initials.slice(1);
 
   const editReader = props.onEdit ? props.onEdit : () => {};
+  const customCursor = props.onEdit ? "pointer" : "default";
   return (
     <Box
       component="li"
@@ -17,6 +18,7 @@ const ReaderBadge = (props) => {
         alignItems: "center",
         justifySelf: "center",
         gap: "25px",
+        cursor: customCursor,
       }}
     >
       <Box
@@ -50,7 +52,6 @@ const ReaderBadge = (props) => {
         variant="h4"
         color={themeColor}
       >
-        {props.readerName.toUpperCase()}
         {props.onEdit && (
           <EditIcon
             sx={{
@@ -60,6 +61,7 @@ const ReaderBadge = (props) => {
             }}
           />
         )}
+        <span>{props.readerName.toUpperCase()}</span>
       </Typography>
     </Box>
   );
