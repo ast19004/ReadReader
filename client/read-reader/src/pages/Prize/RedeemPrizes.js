@@ -21,7 +21,7 @@ const RedeemPrizes = (props) => {
 
   const [hasPrizes, setHasPrizes] = useState(false);
 
-  const hasNoEarnedPrizeText = "None";
+  const hasNoEarnedPrizeText = "Still earning those prizes!";
 
   useEffect(() => {
     const url = `${domainPath}/reader/${readerId}/prizes/earned`;
@@ -55,8 +55,7 @@ const RedeemPrizes = (props) => {
             <Prize
               key={prize._id}
               id={prize._id}
-              prizeName={prize.prize_name}
-              readingRequirement={prize.reading_requirement}
+              prize={prize}
               earnedCoins={props.earnedCoins}
               redeem={true}
             />

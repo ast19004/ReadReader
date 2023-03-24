@@ -4,6 +4,8 @@ import { useHistory, Route, Switch, useParams } from "react-router-dom";
 
 import ReaderHistoryModal from "../../components/UI/ReaderHistoryModal";
 import EarnedPrizesModal from "../../components/UI/EarnedPrizesModal";
+import RedeemPrizes from "../Prize/RedeemPrizes";
+import SessionsHistory from "./Sessions/SessionsHistory";
 import EditUserModal from "../../components/UI/EditUserModal";
 import ReaderLogSession from "../../components/Reader/ReaderLogSession";
 import ReaderPrizeSelection from "../../components/Reader/ReaderPrizeSelection";
@@ -68,10 +70,12 @@ const Reader = () => {
   };
 
   const handleDisplayLogHistory = () => {
+    setEarnedPrizesIsOpen(false);
     setSessionHistoryIsOpen(true);
   };
 
   const handleDisplayEarnedPrizes = () => {
+    setSessionHistoryIsOpen(false);
     setEarnedPrizesIsOpen(true);
   };
 
@@ -103,6 +107,14 @@ const Reader = () => {
                 displayPrizes={handleDisplayEarnedPrizes}
                 startReading={handleStartLogReading}
               />
+              {sessionHistoryIsOpen && (
+                <SessionsHistory
+                  token={authCtx.token}
+                  readerId={readerId}
+                  readerName={reader.reader_name}
+                />
+              )}
+              {earnedPrizesIsOpen && <RedeemPrizes readerId={readerId} />}
             </Route>
           </Switch>
 
@@ -111,7 +123,7 @@ const Reader = () => {
             onClose={() => setEditIsOpen(false)}
             reader={reader}
           />
-          <ReaderHistoryModal
+          {/* <ReaderHistoryModal
             open={sessionHistoryIsOpen}
             onClose={() => setSessionHistoryIsOpen(false)}
             token={authCtx.token}
@@ -124,7 +136,7 @@ const Reader = () => {
             onClose={() => setEarnedPrizesIsOpen(false)}
             readerId={readerId}
             readerName={reader.reader_name}
-          />
+          /> */}
 
           {error && <p>{error}</p>}
         </div>
