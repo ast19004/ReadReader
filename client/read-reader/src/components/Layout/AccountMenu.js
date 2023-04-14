@@ -252,15 +252,13 @@ const AccountMenu = () => {
               Add prize
             </MenuItem>
           )}
-          {showIfMainUser(<Divider sx={{ bgcolor: "#49C5B6" }} />)}
-          {showIfMainUser(
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
-                <LogoutIcon fontSize="small" />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
-          )}
+          <Divider sx={{ bgcolor: "#49C5B6" }} />
+          <MenuItem onClick={handleLogout}>
+            <ListItemIcon>
+              <LogoutIcon fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
         </Menu>
       </MenuWrapper>
     </div>
