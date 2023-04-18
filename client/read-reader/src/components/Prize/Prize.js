@@ -5,7 +5,7 @@ import ReaderContext from "../../store/reader-contex";
 import AuthContext from "../../store/auth-contex";
 import PrizeContext from "../../store/prize-context";
 
-import { Button, Tooltip } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
@@ -25,6 +25,7 @@ const Prize = (props) => {
 
   const [isLocked, setIsLocked] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
+  const [percentage, setPercentage] = useState(0);
 
   const prizeImagePath =
     props.prize.prize_image === ""
@@ -33,21 +34,35 @@ const Prize = (props) => {
 
   const listContainerStyle = {
     display: "grid",
-    height: "150px",
-    width: "200px",
+    height: "350px",
+    width: "350px",
     listStyle: "none",
     padding: "5px",
+    border: "1px solid rgba(230, 230, 230)",
+    borderRadius: "15px",
   };
   isMainUser && !isLocked
     ? (listContainerStyle.cursor = "pointer")
     : (listContainerStyle.cursor = "default");
 
   //If reader coins < prize, prize is locked
+  //Set prize % bars based on earned points
   useEffect(() => {
     if (props.earnedCoins) {
-      setIsLocked(props.earnedCoins < props.readingRequirement);
+      setIsLocked(props.earnedCoins < props.prize["reading_requirement"]);
     }
-  }, [props.earnedCoins, props.readingRequirement]);
+    if (props.earnedCoins === 0) {
+      setPercentage(0);
+    } else if (props.earnedCoins < props.prize["reading_requirement"]) {
+      setPercentage(
+        Math.floor(
+          (props.earnedCoins / props.prize["reading_requirement"]) * 100
+        )
+      );
+    } else {
+      setPercentage(100);
+    }
+  }, [props.earnedCoins, props.prize]);
 
   //If prize in one reader has earned set as selected
   useEffect(() => {
@@ -166,7 +181,7 @@ const Prize = (props) => {
             style={{
               display: "grid",
               gridTemplateColumns: "auto auto",
-              gridGap: "70px",
+              gridGap: "25px",
               gridColumn: 2 / -1,
               alignSelf: "start",
               marginBottom: "1rem",
@@ -204,16 +219,45 @@ const Prize = (props) => {
           </Tooltip>
         </UnlockedStyle>
       )}
-      <ul style={{ position: "absolute", zIndex: 1, padding: "10px" }}>
+      <ul
+        style={{
+          position: "relative",
+          zIndex: 1,
+          padding: "10px",
+          display: "grid",
+          alignContent: "space-between",
+        }}
+      >
+        <li>
+          <b>{props.prize.prize_name}</b>
+        </li>
         <li>
           <img
             src={prizeImagePath}
             alt={props.prize.prize_name}
-            style={{ width: "180px" }}
+            style={{ maxWidth: "100%" }}
           />
         </li>
-        <li>{props.prize.prize_name}</li>
-        <li>{props.prize.reading_requirement} minutes</li>
+        {!isMainUser && (
+          <li>
+            <ul style={{ display: "grid", gridTemplateRows: "25px 25px" }}>
+              <Box sx={{ position: "relative" }}>
+                <TimeBar />
+                {percentage !== 0 && (
+                  <TimeBar
+                    style={{
+                      backgroundColor: "blue",
+                      width: isSelected ? "100%" : `${percentage}%`,
+                    }}
+                  />
+                )}
+              </Box>
+              <li style={{ justifySelf: "end" }}>
+                <b>{props.prize.reading_requirement}</b> points
+              </li>
+            </ul>
+          </li>
+        )}
       </ul>
     </li>
   );
@@ -227,13 +271,19 @@ const LockedStyle = styled.ul`
   justify-content: center;
   align-items: center;
   z-index: 2;
-  height: 150px;
-  width: 200px;
-  background-color: rgba(125, 125, 125, 0.3);
+  height: 350px;
+  width: 350px;
   border-radius: 5px;
 `;
 
 const UnlockedStyle = styled(LockedStyle)`
-  background-color: rgba(200, 200, 200, 0.2);
-  border: 1px solid rgba(125, 125, 125, 0.3);
+  /* border: 1px solid rgba(125, 125, 125, 0.3); */
+`;
+const TimeBar = styled.li`
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  background-color: rgb(175, 175, 175, 0.4);
+  border: 1px solid rgb(175, 175, 175, 0.8);
+  border-radius: 15px;
 `;
