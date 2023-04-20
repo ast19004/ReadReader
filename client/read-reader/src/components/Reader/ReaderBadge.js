@@ -63,6 +63,21 @@ const ReaderBadge = (props) => {
         )}
         <span>{props.readerName.toUpperCase()}</span>
       </Typography>
+      {props.badgeData && (
+        <Box
+          sx={{
+            justifySelf: "center",
+            display: "grid",
+            gridTemplateRows: "1fr",
+            justifyContent: "space-between",
+            color: themeColor,
+            fontSize: "1.4rem",
+          }}
+        >
+          <span>{props.minutesRead} minutes</span>
+          <span>{props.coinsEarned} points</span>
+        </Box>
+      )}
     </Box>
   );
 };

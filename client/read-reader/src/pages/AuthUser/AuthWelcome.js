@@ -82,9 +82,9 @@ const AuthWelcome = () => {
               <ReaderBadgeLink
                 key={reader.id}
                 id={reader.id}
+                readerName={reader.name}
                 minutesRead={reader.minutesRead}
                 coinsEarned={reader.coinsEarned}
-                readerName={reader.name}
                 themeColor={reader.themeColor}
               />
             );
