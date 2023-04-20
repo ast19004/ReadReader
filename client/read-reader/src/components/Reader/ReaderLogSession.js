@@ -12,6 +12,7 @@ import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
 
 import ReaderBadge from "./ReaderBadge";
+import AvailablePrizes from "../../pages/Prize/AvailablePrizes";
 
 import styles from "./ReaderLogSession.module.css";
 
@@ -141,7 +142,6 @@ const ReaderLogSession = (props) => {
           maxWidth: "80%",
 
           "@media (min-width: 500px)": {
-            gridTemplateColumns: "1fr 2fr",
             justifyContent: "center",
             marginTop: "-155px",
             maxWidth: "300px",
@@ -155,6 +155,7 @@ const ReaderLogSession = (props) => {
           readerName={props.reader["reader_name"]}
           themeColor={props.reader["theme_color"]}
         />
+        <AvailablePrizes />
         {/* {isRecordingReading && (
           <Box
             sx={{ gridRow: "2/3", justifySelf: "center", alignSelf: "center" }}
@@ -182,9 +183,10 @@ const ReaderLogSession = (props) => {
         variant="outlined"
         sx={{
           position: "fixed",
+          zIndex: "10000",
           bottom: "-5px",
-          left: `calc(50vw - 75px)`,
-          width: "75px",
+          left: `calc(50vw - 32.5px)`,
+          width: "80px",
           height: "80px",
           color: "white",
           backgroundColor: `${readerCtx.currentTheme} `,

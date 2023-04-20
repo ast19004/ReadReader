@@ -13,6 +13,7 @@ import ReaderPrizeSelection from "../../components/Reader/ReaderPrizeSelection";
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
 import ReaderSummary from "./ReaderSummary";
+import ProtectedRoute from "../../components/Auth/ProtectedRoute";
 
 const Reader = () => {
   const history = useHistory();
@@ -84,12 +85,12 @@ const Reader = () => {
       {!error && reader && (
         <div>
           <Switch>
-            <Route path={"/reader/:id/logReading/"} exact>
+            <ProtectedRoute path={"/reader/:id/logReading/"} exact>
               <ReaderLogSession
                 onStopLogging={handleStopLogReading}
                 reader={reader}
               />
-            </Route>
+            </ProtectedRoute>
 
             <Route path={"/reader/:id/prizes/"} exact>
               <ReaderPrizeSelection

@@ -107,13 +107,13 @@ const AvailablePrizes = (props) => {
         prizeId={prizeId}
         prizeName={prizeName}
       />
-      <Typography
+      {/* <Typography
         align="center"
         variant="h2"
         sx={{ color: "gray", marginTop: "2rem" }}
       >
         Prizes
-      </Typography>
+      </Typography> */}
       {hasPrizes ? (
         <>
           {props.children && props.children}
@@ -171,7 +171,6 @@ export default AvailablePrizes;
 const PrizesWrapper = styled.ul`
   display: grid;
   grid-gap: 4rem;
-  padding: 4rem;
   justify-content: center;
   grid-template-columns: repeat(auto-fit, 350px);
 `;

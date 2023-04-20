@@ -41,6 +41,8 @@ const ReaderSummary = (props) => {
         <div>
           <ReaderBadge
             readerName={props.reader["reader_name"]}
+            // minutesRead={props.reader["total_reading_duration"]}
+            // coinsEarned={props.reader["reading_coins"]}
             themeColor={props.reader["theme_color"]}
             onEdit={props.updateUser}
           />
