@@ -246,7 +246,7 @@ const Prize = (props) => {
                 {percentage !== 0 && (
                   <TimeBar
                     style={{
-                      backgroundColor: "blue",
+                      backgroundColor: `${readerCtx.currentTheme}`,
                       width: isSelected ? "100%" : `${percentage}%`,
                     }}
                   />
