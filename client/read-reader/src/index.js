@@ -8,18 +8,21 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./store/auth-contex";
 import { ReaderContextProvider } from "./store/reader-contex";
 import { PrizeContextProvider } from "./store/prize-context";
+import { ScrollContextProvider } from "./store/scroll-context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <ReaderContextProvider>
-        <PrizeContextProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </PrizeContextProvider>
-      </ReaderContextProvider>
+      <ScrollContextProvider>
+        <ReaderContextProvider>
+          <PrizeContextProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </PrizeContextProvider>
+        </ReaderContextProvider>
+      </ScrollContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

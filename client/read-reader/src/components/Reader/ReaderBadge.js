@@ -1,8 +1,14 @@
+import { useContext } from "react";
+
 import { Box, Typography } from "@mui/material";
 
 import EditIcon from "@mui/icons-material/Edit";
 
+import ScrollContext from "../../store/scroll-context";
+
 const ReaderBadge = (props) => {
+  const scrollCtx = useContext(ScrollContext);
+
   const themeColor = props.themeColor;
   const initials = [...props.readerName].splice(0, 2).join("");
   const capitalizedInitials =
@@ -10,6 +16,9 @@ const ReaderBadge = (props) => {
 
   const editReader = props.onEdit ? props.onEdit : () => {};
   const customCursor = props.onEdit ? "pointer" : "default";
+
+  const textColor = scrollCtx.offsetY > 140 ? "white" : themeColor;
+
   return (
     <Box
       component="li"
@@ -50,7 +59,7 @@ const ReaderBadge = (props) => {
         align="center"
         component="span"
         variant="h4"
-        color={themeColor}
+        color={textColor}
       >
         {props.onEdit && (
           <EditIcon
@@ -70,7 +79,7 @@ const ReaderBadge = (props) => {
             display: "grid",
             gridTemplateRows: "1fr",
             justifyContent: "space-between",
-            color: themeColor,
+            color: textColor,
             fontSize: "1.4rem",
           }}
         >
