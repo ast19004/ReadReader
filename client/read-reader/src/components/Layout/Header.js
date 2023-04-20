@@ -36,7 +36,7 @@ const Header = () => {
   }, [readerCtx.currentReaderId, readerCtx.currentReaderName]);
 
   return (
-    <header>
+    <header style={{ position: "fixed", top: "0px", width: "100%" }}>
       <nav
         style={
           isMainUser
@@ -51,34 +51,24 @@ const Header = () => {
           <IconsLeftWrapper>
             <IconWrapper>
               <Link to={homeLinkPath}>
-                {isMainUser ? (
-                  <HomeIcon
-                    fontSize="medium"
-                    sx={{
-                      color: "#999",
-                      backgroundColor: "white",
-                      border: "1px solid #999",
-                      borderRadius: "50%",
-                      padding: "10px",
-                    }}
-                  />
-                ) : (
-                  <ReadIcon
-                    fontSize="medium"
-                    sx={{
-                      color: "white",
-                      border: "4px solid white",
-                      borderRadius: "50%",
-                      padding: "4px",
-                    }}
-                  />
-                )}
+                <HomeIcon
+                  fontSize="medium"
+                  sx={{
+                    color: `${isMainUser ? "#999" : "white"}`,
+                    backgroundColor: `${isMainUser ? "white" : "transparent"}`,
+                    border: `${
+                      isMainUser ? "1px solid #999" : "4px solid white"
+                    }`,
+                    borderRadius: "50%",
+                    padding: `${isMainUser ? "10px" : "4px"}`,
+                  }}
+                />
               </Link>
             </IconWrapper>
             {!isMainUser && (
               <IconWrapper>
                 <Link to={prizeLinkPath}>
-                  <PrizesIcon
+                  <ReadIcon
                     fontSize="medium"
                     sx={{
                       color: "white",
