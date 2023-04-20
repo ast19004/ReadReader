@@ -26,10 +26,10 @@ const ReaderLogSession = (props) => {
   const [isRecordingReading, setIsRecordingReading] = useState(false);
   const [readingStart, setReadingStart] = useState(new Date());
 
-  // const [minutesRead, setMinutesRead] = useState(
-  //   props.reader["total_reading_duration"]
-  // );
-  // const [coinsEarned, setCoinsEarned] = useState(props.reader["reading_coins"]);
+  const [minutesRead, setMinutesRead] = useState(
+    props.reader["total_reading_duration"]
+  );
+  const [coinsEarned, setCoinsEarned] = useState(props.reader["reading_coins"]);
   const [secondsCount, setSecondsCount] = useState(0);
   const [timer, setTimer] = useState();
 
@@ -46,6 +46,8 @@ const ReaderLogSession = (props) => {
         props.reader["theme_color"]
       );
     }
+    setMinutesRead(props.reader["total_reading_duration"]);
+    setCoinsEarned(props.reader["reading_coins"]);
   }, [readerCtx, props.reader]);
 
   const startCounter = useCallback(() => {
@@ -147,19 +149,20 @@ const ReaderLogSession = (props) => {
         }}
       >
         <ReaderBadge
-          // minutesRead={minutesRead}
-          // coinsEarned={coinsEarned}
+          badgeData={true}
+          minutesRead={minutesRead}
+          coinsEarned={coinsEarned}
           readerName={props.reader["reader_name"]}
           themeColor={props.reader["theme_color"]}
         />
-        {isRecordingReading && (
+        {/* {isRecordingReading && (
           <Box
             sx={{ gridRow: "2/3", justifySelf: "center", alignSelf: "center" }}
           >
             {currentReadingTime}
           </Box>
-        )}
-        <Button
+        )} */}
+        {/* <Button
           className={styles.readingStatusButton}
           onClick={handleReadingStatus}
           variant="outlined"
@@ -171,8 +174,32 @@ const ReaderLogSession = (props) => {
           }}
         >
           {!isRecordingReading ? <PlayArrowIcon /> : <StopCircleIcon />}
-        </Button>
+        </Button> */}
       </Box>
+      <Button
+        className={styles.readingStatusButton}
+        onClick={handleReadingStatus}
+        variant="outlined"
+        sx={{
+          position: "fixed",
+          bottom: "-5px",
+          left: `calc(50vw - 75px)`,
+          width: "75px",
+          height: "80px",
+          color: "white",
+          backgroundColor: `${readerCtx.currentTheme} `,
+          border: "5px solid white",
+          borderRadius: "35px 35px 0 0",
+          boxShadow: "2px -1px 8px #888888;",
+          "&:hover": {
+            backgroundColor: "white",
+            color: `${readerCtx.currentTheme} `,
+            border: `5px solid ${readerCtx.currentTheme} `,
+          },
+        }}
+      >
+        <PlayArrowIcon fontSize="large" />
+      </Button>
     </>
   );
 };
