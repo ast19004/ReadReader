@@ -40,6 +40,7 @@ const Prize = (props) => {
     padding: "5px",
     border: "1px solid rgba(230, 230, 230)",
     borderRadius: "15px",
+    backgroundColor: "white",
   };
   isMainUser && !isLocked
     ? (listContainerStyle.cursor = "pointer")
@@ -221,11 +222,9 @@ const Prize = (props) => {
       )}
       <ul
         style={{
-          position: "relative",
-          zIndex: 1,
           padding: "10px",
           display: "grid",
-          alignContent: "space-between",
+          alignContent: isMainUser ? "stretch" : "space-between",
         }}
       >
         <li>
