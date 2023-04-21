@@ -5,7 +5,7 @@ import { useEffect, useState, useContext } from "react";
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
 
-import { Typography } from "@mui/material";
+// import { Typography } from "@mui/material";
 
 import AvailablePrizes from "../../pages/Prize/AvailablePrizes";
 
@@ -48,7 +48,7 @@ const ReaderPrizeSelection = (props) => {
       theme={props.theme}
       earnedCoins={earnedCoins}
     >
-      <Typography align="center" variant="h5" component="p">
+      {/* <Typography align="center" variant="h5" component="p">
         Total Coins:{" "}
         <span
           style={{
@@ -59,7 +59,7 @@ const ReaderPrizeSelection = (props) => {
         >
           {earnedCoins}
         </span>
-      </Typography>
+      </Typography> */}
     </AvailablePrizes>
   );
 };
