@@ -12,7 +12,7 @@ import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
 
 import ReaderBadge from "./ReaderBadge";
-import AvailablePrizes from "../../pages/Prize/AvailablePrizes";
+import ReaderPrizeSelection from "../../components/Reader/ReaderPrizeSelection";
 
 import styles from "./ReaderLogSession.module.css";
 
@@ -135,15 +135,16 @@ const ReaderLogSession = (props) => {
     <>
       <Box
         sx={{
+          position: "relative",
+          zIndex: "1",
           display: "grid",
           gridGap: "2rem",
           margin: "0 auto",
-          marginTop: "-85px",
+          top: "75px",
           maxWidth: "80%",
 
           "@media (min-width: 500px)": {
             justifyContent: "center",
-            marginTop: "-155px",
             maxWidth: "300px",
           },
         }}
@@ -155,7 +156,12 @@ const ReaderLogSession = (props) => {
           readerName={props.reader["reader_name"]}
           themeColor={props.reader["theme_color"]}
         />
-        <AvailablePrizes />
+
+        <ReaderPrizeSelection
+          readerId={readerId}
+          readerName={props.reader["reader_name"]}
+          theme={props.reader["theme_color"]}
+        />
         {/* {isRecordingReading && (
           <Box
             sx={{ gridRow: "2/3", justifySelf: "center", alignSelf: "center" }}
