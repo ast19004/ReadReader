@@ -19,11 +19,12 @@ const AvailablePrizes = (props) => {
   const readerCtx = useContext(ReaderContext);
   const prizeCtx = useContext(PrizeContext);
 
-  const isMainUser = useCallback(() => {
-    return !readerCtx.currentReaderId;
-  }, [readerCtx.currentReaderId]);
+  const isMainUser = !readerCtx.currentReaderId;
+  //   useCallback(() => {
+  //   return !readerCtx.currentReaderId;
+  // }, [readerCtx.currentReaderId]);
 
-  const hasNoPrizeText = isMainUser()
+  const hasNoPrizeText = isMainUser
     ? "You have not yet created any prizes."
     : "Ask your parent to create prizes you can earn.";
 
