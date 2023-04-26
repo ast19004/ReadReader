@@ -6,7 +6,7 @@ import ReaderContext from "../../store/reader-contex";
 
 import HomeIcon from "@mui/icons-material/Home";
 import ReadIcon from "@mui/icons-material/AutoStories";
-import PrizesIcon from "@mui/icons-material/EmojiEvents";
+// import PrizesIcon from "@mui/icons-material/EmojiEvents";
 
 import styled from "styled-components";
 import AccountMenu from "./AccountMenu";
@@ -17,7 +17,7 @@ const Header = () => {
   const [showAccountsMenu, setShowAccountsMenu] = useState(false);
 
   const isMainUser = !readerCtx.currentReaderId;
-  const prizeLinkPath = `/reader/${readerCtx.currentReaderId}/prizes`;
+  const prizeLinkPath = `/reader/${readerCtx.currentReaderId}/log`;
 
   const openAccountsMenu = () => {
     setShowAccountsMenu(true);
@@ -31,7 +31,7 @@ const Header = () => {
     if (readerCtx.currentReaderId === "") {
       setHomeLinkPath("/");
     } else {
-      setHomeLinkPath(`/reader/${readerCtx.currentReaderId}/logReading`);
+      setHomeLinkPath(`/reader/${readerCtx.currentReaderId}/home`);
     }
   }, [readerCtx.currentReaderId, readerCtx.currentReaderName]);
 

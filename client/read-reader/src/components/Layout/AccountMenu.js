@@ -216,7 +216,7 @@ const AccountMenu = () => {
               <MenuItem
                 key={reader.id}
                 onClick={() => {
-                  history.push(`/reader/${reader.id}/logReading/`);
+                  history.push(`/reader/${reader.id}/home/`);
                 }}
               >
                 <ListItemIcon>
