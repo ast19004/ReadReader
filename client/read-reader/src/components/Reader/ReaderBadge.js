@@ -17,7 +17,8 @@ const ReaderBadge = (props) => {
   const editReader = props.onEdit ? props.onEdit : () => {};
   const customCursor = props.onEdit ? "pointer" : "default";
 
-  const textColor = scrollCtx.offsetY > 140 ? "white" : themeColor;
+  const readerNameColor = scrollCtx.offsetY > 140 ? "white" : themeColor;
+  const readerDetailsColor = scrollCtx.offsetY > 170 ? "white" : themeColor;
 
   return (
     <Box
@@ -59,7 +60,7 @@ const ReaderBadge = (props) => {
         align="center"
         component="span"
         variant="h4"
-        color={textColor}
+        color={readerNameColor}
       >
         {props.onEdit && (
           <EditIcon
@@ -79,7 +80,7 @@ const ReaderBadge = (props) => {
             display: "grid",
             gridTemplateRows: "1fr",
             justifyContent: "space-between",
-            color: textColor,
+            color: readerDetailsColor,
             fontSize: "1.4rem",
           }}
         >
