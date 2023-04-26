@@ -13,16 +13,15 @@ import { Person, ArrowRightAlt } from "@mui/icons-material";
 import AddPrizeIcon from "../../components/Prize/AddPrizeIcon";
 import EditPrizeModal from "../../components/UI/EditPrizeModal";
 import DeletePrizeModal from "../../components/UI/DeletePrizeModal";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const AvailablePrizes = (props) => {
+  const params = useParams();
   const authCtx = useContext(AuthContext);
   const readerCtx = useContext(ReaderContext);
   const prizeCtx = useContext(PrizeContext);
 
-  const isMainUser = !readerCtx.currentReaderId;
-  //   useCallback(() => {
-  //   return !readerCtx.currentReaderId;
-  // }, [readerCtx.currentReaderId]);
+  const isMainUser = !params.id;
 
   const hasNoPrizeText = isMainUser
     ? "You have not yet created any prizes."
