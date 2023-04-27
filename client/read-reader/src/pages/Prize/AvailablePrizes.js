@@ -173,4 +173,6 @@ const PrizesWrapper = styled.ul`
   grid-gap: 4rem;
   justify-content: center;
   grid-template-columns: repeat(auto-fit, 350px);
+  margin: 0;
+  margin-bottom: 100px;
 `;
