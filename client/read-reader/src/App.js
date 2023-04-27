@@ -16,6 +16,7 @@ import AddPrize from "./pages/Prize/AddPrize";
 import AvailablePrizes from "./pages/Prize/AvailablePrizes";
 
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
+import { Box } from "@mui/system";
 
 function App() {
   const authCtx = useContext(AuthProvider);
@@ -47,7 +48,9 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute path={"/prizes/"} exact redirectPath={"/"}>
-            <AvailablePrizes />
+            <Box sx={{ position: "absolute", top: "75px" }}>
+              <AvailablePrizes />
+            </Box>
           </ProtectedRoute>
 
           <ProtectedRoute path={"/prize/"} exact redirectPath={"/"}>
