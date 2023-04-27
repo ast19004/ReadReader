@@ -80,8 +80,9 @@ const RedeemPrizes = (props) => {
 export default RedeemPrizes;
 
 const PrizesWrapper = styled.ul`
-  display: grid;
-  grid-gap: 4rem;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 4rem;
   padding: 4rem;
   justify-content: center;
 `;
