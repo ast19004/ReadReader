@@ -169,10 +169,10 @@ const AvailablePrizes = (props) => {
 export default AvailablePrizes;
 
 const PrizesWrapper = styled.ul`
-  display: grid;
-  grid-gap: 4rem;
+  display: flex;
+  gap: 4rem;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, 350px);
+  flex-flow: row wrap;
   margin: 0;
   margin-bottom: 100px;
 `;
