@@ -7,6 +7,7 @@ import PrizeContext from "../../store/prize-context";
 
 import styled from "styled-components";
 import Prize from "../../components/Prize/Prize";
+import AddPrize from "../Prize/AddPrize";
 
 import { Typography } from "@mui/material";
 import { Person, ArrowRightAlt } from "@mui/icons-material";
@@ -132,33 +133,17 @@ const AvailablePrizes = (props) => {
         </>
       ) : (
         <>
-          <Typography
-            align="center"
-            variant="h4"
-            component="p"
-            sx={{ color: "gray", marginTop: "2rem" }}
-          >
-            {hasNoPrizeText}
-          </Typography>
-
-          {isMainUser && (
-            <>
-              <Typography
-                variant="h6"
-                component="p"
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  color: "gray",
-                  marginTop: "1rem",
-                }}
-              >
-                <Person fontSize="medium" /> <ArrowRightAlt />
-                &nbsp;
-                <AddPrizeIcon fontSize="medium" />
-                Add Prize
-              </Typography>
-            </>
+          {isMainUser ? (
+            <Typography
+              align="center"
+              variant="h4"
+              component="p"
+              sx={{ color: "gray", marginTop: "2rem" }}
+            >
+              {hasNoPrizeText}
+            </Typography>
+          ) : (
+            <AddPrize />
           )}
         </>
       )}

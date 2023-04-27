@@ -6,6 +6,8 @@ import ReaderContext from "../../store/reader-contex";
 
 import ReaderBadgeLink from "../../components/Reader/ReaderBadgeLink";
 
+import AddReader from "../Reader/AddReader";
+
 import { Typography } from "@mui/material";
 import { Person, PersonAdd, ArrowRightAlt } from "@mui/icons-material";
 
@@ -91,31 +93,7 @@ const AuthWelcome = () => {
           })}
         </ReaderBadgesContainer>
       )}
-      {!error && !userHasReader && (
-        <>
-          <Typography
-            align="center"
-            variant="h4"
-            component="p"
-            sx={{ color: "gray", marginTop: "2rem" }}
-          >
-            Please add reader(s) to begin.
-          </Typography>
-          <Typography
-            variant="h6"
-            component="p"
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              color: "gray",
-              marginTop: "1rem",
-            }}
-          >
-            <Person /> <ArrowRightAlt /> <PersonAdd />
-            &nbsp;Add Reader
-          </Typography>
-        </>
-      )}
+      {!error && !userHasReader && <AddReader />}
       {error && <p>{error}</p>}
     </>
   );
