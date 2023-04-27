@@ -14,7 +14,7 @@ const DataSwitch = styled(Switch)(({ theme }) => ({
       color: "#fff",
       transform: "translateX(70px)",
       "& .MuiSwitch-thumb:before": {
-        content: '"Prizes"',
+        content: '"History"',
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -23,7 +23,7 @@ const DataSwitch = styled(Switch)(({ theme }) => ({
         opacity: 1,
         backgroundColor: "#aab4be",
         "&:before": {
-          content: '"History"',
+          content: '"Prizes"',
           color: "white",
           width: "50%",
           height: "100%",
@@ -41,7 +41,7 @@ const DataSwitch = styled(Switch)(({ theme }) => ({
     height: 33,
     padding: "5px 10px",
     "&:before": {
-      content: '"History"',
+      content: '"Prizes"',
       position: "absolute",
       width: "100%",
       height: "100%",
@@ -58,13 +58,14 @@ const DataSwitch = styled(Switch)(({ theme }) => ({
     // borderRadius: 24 / 2,
     borderRadius: "0",
     "&:before": {
-      content: '"Prizes"',
+      content: '"History"',
       color: "white",
       width: "90%",
       height: "100%",
       display: "flex",
       justifyContent: "end",
       alignItems: "center",
+      paddingLeft: "5px",
     },
   },
 }));

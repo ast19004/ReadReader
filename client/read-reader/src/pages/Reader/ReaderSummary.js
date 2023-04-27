@@ -19,9 +19,9 @@ const ReaderSummary = (props) => {
   //Handle data display based on boolean toggled by Switch component
   useEffect(() => {
     if (dataDisplay) {
-      props.displayHistory();
-    } else {
       props.displayPrizes();
+    } else {
+      props.displayHistory();
     }
   }, [dataDisplay]);
 
