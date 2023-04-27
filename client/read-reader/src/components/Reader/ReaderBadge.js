@@ -49,7 +49,12 @@ const ReaderBadge = (props) => {
         {/* <Typography align="center" sx={{ color: "white" }}>
         {props.minutesRead} Minutes
       </Typography> */}
-        <Typography align="center" component="span" variant="h1">
+        <Typography
+          align="center"
+          component="span"
+          variant="h1"
+          sx={{ fontFamily: '"Ultra", serif' }}
+        >
           {capitalizedInitials}
         </Typography>
         {/* <Typography align="center" sx={{ color: "white" }}>
@@ -84,7 +89,7 @@ const ReaderBadge = (props) => {
             fontSize: "1.4rem",
           }}
         >
-          <span>{props.minutesRead} minutes</span>
+          {/* <span>{props.minutesRead} minutes</span> */}
           <span>{props.coinsEarned} points</span>
         </Box>
       )}
