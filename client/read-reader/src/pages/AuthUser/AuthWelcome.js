@@ -77,23 +77,31 @@ const AuthWelcome = () => {
       >
         Readers
       </Typography> */}
-      {!error && userHasReader && (
+      {!error && (
         <ReaderBadgesContainer>
-          {readers.map((reader) => {
-            return (
-              <ReaderBadgeLink
-                key={reader.id}
-                id={reader.id}
-                readerName={reader.name}
-                minutesRead={reader.minutesRead}
-                coinsEarned={reader.coinsEarned}
-                themeColor={reader.themeColor}
-              />
-            );
-          })}
+          {userHasReader &&
+            readers.map((reader) => {
+              return (
+                <ReaderBadgeLink
+                  key={reader.id}
+                  id={reader.id}
+                  readerName={reader.name}
+                  minutesRead={reader.minutesRead}
+                  coinsEarned={reader.coinsEarned}
+                  themeColor={reader.themeColor}
+                />
+              );
+            })}
+          <ReaderBadgeLink
+            key={"addReader"}
+            id={""}
+            readerName={""}
+            minutesRead={0}
+            coinsEarned={0}
+            themeColor={"#2779A7"}
+          />
         </ReaderBadgesContainer>
       )}
-      {!error && !userHasReader && <AddReader />}
       {error && <p>{error}</p>}
     </>
   );
@@ -103,17 +111,10 @@ export default AuthWelcome;
 
 const ReaderBadgesContainer = styled.ul`
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: repeat(auto-fit, 224px);
   grid-gap: 5rem;
   justify-content: center;
   align-content: center;
   margin-top: 5rem;
   margin-bottom: 1rem;
-
-  @media (min-width: 500px) {
-    grid-template-columns: auto auto;
-  }
-  @media (min-width: 850px) {
-    grid-template-columns: auto auto auto;
-  }
 `;
