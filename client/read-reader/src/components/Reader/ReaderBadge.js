@@ -6,10 +6,12 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import EditIcon from "@mui/icons-material/Edit";
 
+import ReaderContext from "../../store/reader-contex";
 import ScrollContext from "../../store/scroll-context";
 
 const ReaderBadge = (props) => {
   const scrollCtx = useContext(ScrollContext);
+  const readerCtx = useContext(ReaderContext);
 
   const themeColor = props.themeColor;
   const initials = [...props.readerName].splice(0, 2).join("");
@@ -17,7 +19,8 @@ const ReaderBadge = (props) => {
     initials.charAt(0).toUpperCase() + initials.slice(1);
 
   const editReader = props.onEdit ? props.onEdit : () => {};
-  const customCursor = props.onEdit ? "pointer" : "default";
+  const customCursor =
+    props.onEdit || !readerCtx.currentReaderId ? "pointer" : "default";
 
   const readerNameColor = scrollCtx.offsetY > 140 ? "white" : themeColor;
   const readerDetailsColor = scrollCtx.offsetY > 170 ? "white" : themeColor;
