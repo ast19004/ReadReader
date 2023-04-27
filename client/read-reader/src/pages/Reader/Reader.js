@@ -2,13 +2,14 @@ import domainPath from "../../domainPath";
 import { useEffect, useContext, useState, useCallback } from "react";
 import { useHistory, Route, Switch, useParams } from "react-router-dom";
 
-import ReaderHistoryModal from "../../components/UI/ReaderHistoryModal";
-import EarnedPrizesModal from "../../components/UI/EarnedPrizesModal";
+// import ReaderHistoryModal from "../../components/UI/ReaderHistoryModal";
+// import EarnedPrizesModal from "../../components/UI/EarnedPrizesModal";
 import RedeemPrizes from "../Prize/RedeemPrizes";
 import SessionsHistory from "./Sessions/SessionsHistory";
 import EditUserModal from "../../components/UI/EditUserModal";
+import ReaderHome from "../../components/Reader/ReaderHome";
 import ReaderLogSession from "../../components/Reader/ReaderLogSession";
-import ReaderPrizeSelection from "../../components/Reader/ReaderPrizeSelection";
+// import ReaderPrizeSelection from "../../components/Reader/ReaderPrizeSelection";
 
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
@@ -63,11 +64,11 @@ const Reader = () => {
   };
 
   const handleStartLogReading = () => {
-    history.push(`/reader/${readerId}/logReading/`);
+    history.push(`/reader/${readerId}/log/`);
   };
 
   const handleStopLogReading = () => {
-    history.push(`/reader/${readerId}/prizes/`);
+    history.push(`/reader/${readerId}/home/`);
   };
 
   const handleDisplayLogHistory = () => {
@@ -83,22 +84,26 @@ const Reader = () => {
   return (
     <>
       {!error && reader && (
-        <div>
+        <>
           <Switch>
-            <ProtectedRoute path={"/reader/:id/logReading/"} exact>
+            <ProtectedRoute path={"/reader/:id/home/"} exact>
+              <ReaderHome reader={reader} />
+            </ProtectedRoute>
+
+            <ProtectedRoute path={"/reader/:id/log"}>
               <ReaderLogSession
-                onStopLogging={handleStopLogReading}
                 reader={reader}
+                onStopLogging={handleStopLogReading}
               />
             </ProtectedRoute>
 
-            <Route path={"/reader/:id/prizes/"} exact>
+            {/* <Route path={"/reader/:id/prizes/"} exact>
               <ReaderPrizeSelection
                 readerId={readerId}
                 readerName={reader["reader_name"]}
                 theme={reader["theme_color"]}
               />
-            </Route>
+            </Route> */}
 
             <Route path={"/reader/:id/"}>
               <ReaderSummary
@@ -140,7 +145,7 @@ const Reader = () => {
           /> */}
 
           {error && <p>{error}</p>}
-        </div>
+        </>
       )}
     </>
   );
