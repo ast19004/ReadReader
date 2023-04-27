@@ -47,20 +47,7 @@ const ReaderPrizeSelection = (props) => {
       readerName={props.readerName}
       theme={props.theme}
       earnedCoins={earnedCoins}
-    >
-      {/* <Typography align="center" variant="h5" component="p">
-        Total Coins:{" "}
-        <span
-          style={{
-            border: "1px solid rgba(85, 85, 85, .3)",
-            borderRadius: "50%",
-            padding: "5px",
-          }}
-        >
-          {earnedCoins}
-        </span>
-      </Typography> */}
-    </AvailablePrizes>
+    />
   );
 };
 
