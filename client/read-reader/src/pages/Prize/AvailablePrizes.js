@@ -133,7 +133,7 @@ const AvailablePrizes = (props) => {
         </>
       ) : (
         <>
-          {isMainUser ? (
+          {!isMainUser ? (
             <Typography
               align="center"
               variant="h4"
@@ -158,6 +158,5 @@ const PrizesWrapper = styled.ul`
   gap: 4rem;
   justify-content: center;
   flex-flow: row wrap;
-  margin: 0;
-  margin-bottom: 100px;
+  margin: 75px 4% 100px 4%;
 `;

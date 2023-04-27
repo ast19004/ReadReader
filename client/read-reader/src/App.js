@@ -48,9 +48,7 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute path={"/prizes/"} exact redirectPath={"/"}>
-            <Box sx={{ position: "absolute", top: "75px" }}>
-              <AvailablePrizes />
-            </Box>
+            <AvailablePrizes />
           </ProtectedRoute>
 
           <ProtectedRoute path={"/prize/"} exact redirectPath={"/"}>

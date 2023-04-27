@@ -79,7 +79,7 @@ function RegisterUser() {
     } catch (err) {
       setError(err);
     }
-    history.push("/signup");
+    history.push("/login");
     resetForm();
   };
 
