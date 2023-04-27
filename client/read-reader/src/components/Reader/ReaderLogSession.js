@@ -2,7 +2,7 @@ import domainPath from "../../domainPath";
 
 import { useContext, useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Box } from "@mui/material";
+import { Button, Box, Typography } from "@mui/material";
 
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
@@ -11,12 +11,11 @@ import StopCircleIcon from "@mui/icons-material/StopCircle";
 import AuthContext from "../../store/auth-contex";
 import ReaderContext from "../../store/reader-contex";
 
-import ReaderBadge from "./ReaderBadge";
-import ReaderPrizeSelection from "../../components/Reader/ReaderPrizeSelection";
-
 import styles from "./ReaderLogSession.module.css";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const ReaderLogSession = (props) => {
+  const history = useHistory();
   const params = useParams();
   const readerId = params.id;
 
@@ -27,10 +26,10 @@ const ReaderLogSession = (props) => {
   const [isRecordingReading, setIsRecordingReading] = useState(false);
   const [readingStart, setReadingStart] = useState(new Date());
 
-  const [minutesRead, setMinutesRead] = useState(
-    props.reader["total_reading_duration"]
-  );
-  const [coinsEarned, setCoinsEarned] = useState(props.reader["reading_coins"]);
+  // const [minutesRead, setMinutesRead] = useState(
+  //   props.reader["total_reading_duration"]
+  // );
+  // const [coinsEarned, setCoinsEarned] = useState(props.reader["reading_coins"]);
   const [secondsCount, setSecondsCount] = useState(0);
   const [timer, setTimer] = useState();
 
@@ -47,8 +46,8 @@ const ReaderLogSession = (props) => {
         props.reader["theme_color"]
       );
     }
-    setMinutesRead(props.reader["total_reading_duration"]);
-    setCoinsEarned(props.reader["reading_coins"]);
+    // setMinutesRead(props.reader["total_reading_duration"]);
+    // setCoinsEarned(props.reader["reading_coins"]);
   }, [readerCtx, props.reader]);
 
   const startCounter = useCallback(() => {
@@ -58,20 +57,24 @@ const ReaderLogSession = (props) => {
     setTimer(timer);
   }, [secondsCount]);
 
+  const pauseCounter = () => {
+    clearInterval(timer);
+  };
+
   const stopCounter = () => {
     clearInterval(timer);
     setSecondsCount(0);
   };
 
-  const currentReadingTime = `${Math.floor(secondsCount / 60)} m : ${
-    secondsCount < 10 || secondsCount % 60 < 10 ? 0 : ""
-  } ${
+  const currentReadingTime = `${
+    Math.floor(secondsCount / 60) > 0 ? Math.floor(secondsCount / 60) : "0 0"
+  } : ${secondsCount < 10 || secondsCount % 60 < 10 ? 0 : ""} ${
     secondsCount % 60 == 0
       ? "0"
       : secondsCount > 60
       ? secondsCount % 60
       : secondsCount
-  } s`;
+  } `;
 
   // const handleLogReadingCancel = () => {
   //   readerCtx.onChangeReader("", "", "");
@@ -122,7 +125,7 @@ const ReaderLogSession = (props) => {
       if (durationReadMinutes < 1) {
         return;
       }
-      //Allow parent component to react reading end.
+      //Allow parent component to react to reading end.
       props.onStopLogging();
       fetchAddReaderSession(durationReadMinutes).catch((error) =>
         setError(error)
@@ -132,83 +135,87 @@ const ReaderLogSession = (props) => {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        position: "fixed",
+        zIndex: "1",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gridGap: "2rem",
+        margin: "0 auto",
+        top: "75px",
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: props.reader["theme_color"],
+      }}
+    >
+      <Typography
+        variant="h4"
+        component="h2"
+        align="center"
+        sx={{ color: "white" }}
+      >
+        <b>{props.reader["reader_name"]}</b>
+      </Typography>
+
+      {/* {isRecordingReading && ( */}
       <Box
         sx={{
-          position: "relative",
-          zIndex: "1",
-          display: "grid",
-          gridGap: "2rem",
-          margin: "0 auto",
-          top: "75px",
-          maxWidth: "80%",
-
-          "@media (min-width: 500px)": {
-            justifyContent: "center",
-            maxWidth: "300px",
-          },
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "250px",
+          width: "250px",
+          borderRadius: "50%",
+          border: "12px solid white",
         }}
       >
-        <ReaderBadge
-          badgeData={true}
-          minutesRead={minutesRead}
-          coinsEarned={coinsEarned}
-          readerName={props.reader["reader_name"]}
-          themeColor={props.reader["theme_color"]}
-        />
-
-        <ReaderPrizeSelection
-          readerId={readerId}
-          readerName={props.reader["reader_name"]}
-          theme={props.reader["theme_color"]}
-        />
-        {/* {isRecordingReading && (
-          <Box
-            sx={{ gridRow: "2/3", justifySelf: "center", alignSelf: "center" }}
-          >
-            {currentReadingTime}
-          </Box>
-        )} */}
-        {/* <Button
-          className={styles.readingStatusButton}
-          onClick={handleReadingStatus}
-          variant="outlined"
-          sx={{
-            gridRow: "3/4",
-            color: `${readerCtx.currentTheme} `,
-            border: `3px solid ${readerCtx.currentTheme} `,
-            borderRadius: "25px",
-          }}
+        <Typography
+          variant="h3"
+          component="div"
+          align="center"
+          sx={{ color: "white" }}
         >
-          {!isRecordingReading ? <PlayArrowIcon /> : <StopCircleIcon />}
-        </Button> */}
+          <b>
+            {currentReadingTime}
+            <br />
+            <span
+              style={{
+                opacity: "0.7",
+                fontSize: "2.5rem",
+                letterSpacing: "2px",
+              }}
+            >
+              minutes
+            </span>
+          </b>
+        </Typography>
+        <br />
       </Box>
       <Button
         className={styles.readingStatusButton}
         onClick={handleReadingStatus}
         variant="outlined"
         sx={{
-          position: "fixed",
-          zIndex: "10000",
-          bottom: "-5px",
-          left: `calc(50vw - 32.5px)`,
-          width: "80px",
-          height: "80px",
-          color: "white",
-          backgroundColor: `${readerCtx.currentTheme} `,
-          border: "5px solid white",
-          borderRadius: "35px 35px 0 0",
-          boxShadow: "2px -1px 8px #888888;",
+          justifySelf: "center",
+          backgroundColor: "white",
+          color: `${readerCtx.currentTheme} `,
+          borderColor: "white",
+          borderRadius: "50%",
+          height: "75px",
+          width: "75px",
           "&:hover": {
-            backgroundColor: "white",
-            color: `${readerCtx.currentTheme} `,
-            border: `5px solid ${readerCtx.currentTheme} `,
+            backgroundColor: `${readerCtx.currentTheme} `,
+            border: "4px solid white",
+            color: "white",
           },
+          "@media(max-width: 450px)": { position: "fixed", bottom: "25px" },
         }}
       >
-        <PlayArrowIcon fontSize="large" />
+        {!isRecordingReading ? <PlayArrowIcon /> : <StopCircleIcon />}
       </Button>
-    </>
+    </Box>
   );
 };
 
