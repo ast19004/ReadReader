@@ -2,6 +2,8 @@ import { useContext } from "react";
 
 import { Box, Typography } from "@mui/material";
 
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+
 import EditIcon from "@mui/icons-material/Edit";
 
 import ScrollContext from "../../store/scroll-context";
@@ -60,16 +62,7 @@ const ReaderBadge = (props) => {
           </Typography>
         ) : (
           <>
-            <Typography
-              align="center"
-              component="span"
-              variant="h4"
-              sx={{ display: "block", fontFamily: '"Ultra", serif' }}
-            >
-              +
-              <br />
-              Reader
-            </Typography>
+            <PersonAddIcon sx={{ justifySelf: "center", fontSize: "6rem" }} />
           </>
         )}
         {/* <Typography align="center" sx={{ color: "white" }}>
@@ -91,7 +84,9 @@ const ReaderBadge = (props) => {
             }}
           />
         )}
-        <span>{props.readerName.toUpperCase()}</span>
+        <span>
+          {!props.readerName ? "Add Reader" : props.readerName.toUpperCase()}
+        </span>
       </Typography>
       {props.badgeData && (
         <Box
