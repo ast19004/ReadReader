@@ -49,14 +49,29 @@ const ReaderBadge = (props) => {
         {/* <Typography align="center" sx={{ color: "white" }}>
         {props.minutesRead} Minutes
       </Typography> */}
-        <Typography
-          align="center"
-          component="span"
-          variant="h1"
-          sx={{ fontFamily: '"Ultra", serif' }}
-        >
-          {capitalizedInitials}
-        </Typography>
+        {props.readerName ? (
+          <Typography
+            align="center"
+            component="span"
+            variant="h1"
+            sx={{ fontFamily: '"Ultra", serif' }}
+          >
+            {capitalizedInitials}
+          </Typography>
+        ) : (
+          <>
+            <Typography
+              align="center"
+              component="span"
+              variant="h4"
+              sx={{ display: "block", fontFamily: '"Ultra", serif' }}
+            >
+              +
+              <br />
+              Reader
+            </Typography>
+          </>
+        )}
         {/* <Typography align="center" sx={{ color: "white" }}>
         {props.coinsEarned} Coins
       </Typography> */}

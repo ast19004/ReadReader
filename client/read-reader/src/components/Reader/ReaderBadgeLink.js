@@ -8,7 +8,7 @@ const linkStyle = {
 };
 
 const ReaderBadgeLink = (props) => {
-  const linkPath = "/reader/" + props.id;
+  const linkPath = props.id ? "/reader/" + props.id : "/reader/";
 
   return (
     <Link to={linkPath} style={linkStyle}>
