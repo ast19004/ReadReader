@@ -142,12 +142,11 @@ const ReaderHome = (props) => {
           gridGap: "2rem",
           margin: "0 auto",
           top: "75px",
-          maxWidth: "80%",
+          // maxWidth: "80%",
 
-          "@media (min-width: 500px)": {
-            justifyContent: "center",
-            maxWidth: "300px",
-          },
+          // "@media (min-width: 500px)": {
+          //   justifyContent: "center",
+          // },
         }}
       >
         <ReaderBadge
@@ -164,6 +163,17 @@ const ReaderHome = (props) => {
           theme={props.reader["theme_color"]}
         />
       </Box>
+      <Box
+        sx={{
+          position: "fixed",
+          zIndex: "999",
+          bottom: "-5px",
+          background:
+            "linear-gradient(to top, white, rgba(255,255,255,0.8) 95%, rgba(255,255,255,0))",
+          width: "100vw",
+          height: "95px",
+        }}
+      ></Box>
       <Button
         className={styles.readingStatusButton}
         onClick={() => {
