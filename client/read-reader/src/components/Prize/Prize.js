@@ -180,11 +180,12 @@ const Prize = (props) => {
         <UnlockedStyle>
           <li
             style={{
+              width: "100%",
               display: "grid",
               gridTemplateColumns: "auto auto",
               gridGap: "25px",
               gridColumn: 2 / -1,
-              alignSelf: "start",
+              alignSelf: "end",
               marginBottom: "1rem",
             }}
           >

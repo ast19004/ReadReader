@@ -27,7 +27,7 @@ In the reader display a reader can select prizes based on the number of points t
 
 # Technologies
 
-React, Node.js,MongoDB,
+React, Node.js, MongoDB,
 
 # In Progress Features
 
@@ -35,6 +35,7 @@ React, Node.js,MongoDB,
 
 Currently the Redeem Prize functionality is in progress. The way earned prizes are added to readers is being updated in the backend. Once that is changed the funtionality to redeem prizes will be added.
 
-## Countdown Timer
+## Timer
 
-At the time being a stopwatch timer is available for readers to log their reading. In the future there will be options of different countdown timers added to the reading log display and functionality.
+At the time being a stopwatch timer is available for readers to log their reading. In the future there will be options of different countdown timers added to the reading log display and functionality./
+In the future, the ability to pause a timer before officially stopping the reading session will also be added.

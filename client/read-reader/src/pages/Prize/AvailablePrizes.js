@@ -154,6 +154,7 @@ const AvailablePrizes = (props) => {
 export default AvailablePrizes;
 
 const PrizesWrapper = styled.ul`
+  position: relative;
   display: flex;
   gap: 4rem;
   justify-content: center;
