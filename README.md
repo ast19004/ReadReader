@@ -1,5 +1,11 @@
 # ReadReader
 
+## Table of contents
+
+- [Description](#description)
+- [Functionality](#functionality)
+- [Technologies](#technologies)
+
 # Description
 
 This application is meant to help guardians to gauge the reading of the elementary aged children they care for. Children are incentivized to read by the points they get per minute read. The main user/ guardian can add child-specific prizes to encourage the child to read. The guardian has the ability to add a point value on each prize.
@@ -16,7 +22,7 @@ When the current selected user is the main user the navigation includes menu ite
 <br />
 In the display for a specific reader, all prizes a main user has created and has assigned to that reader will appear. A summary for how many point that reader has earned will also be displayed. A reader can earned 1 point for each minute they have read.\
 <br />
-In the reader display a reader can select prizes based on the number of points they have accumulated. There is a button within the reader display that takes the reader to a page to log their current reading.\
+In the reader display a reader can select prizes based on the number of points they have accumulated. There is a button within the reader display that takes the reader to a page to log their current reading.
 
 # Technologies
 
