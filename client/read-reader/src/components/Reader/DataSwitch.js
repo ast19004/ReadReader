@@ -3,6 +3,7 @@ import Switch from "@mui/material/Switch";
 import styled from "styled-components";
 
 const DataSwitch = styled(Switch)(({ theme }) => ({
+  borderRadius: "25px",
   width: 140,
   height: 45,
   padding: 0,
