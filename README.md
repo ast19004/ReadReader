@@ -27,7 +27,7 @@ In the reader display a reader can select prizes based on the number of points t
 
 # Technologies
 
-React, Node.js, MongoDB, Mongoose
+React, Node.js, Express, MongoDB, Mongoose
 
 # In Progress Features
 
