@@ -1,0 +1,12 @@
+.customButton {
+  border-radius: 25px !important;
+  color: white;
+  /* background-color: #49c5b6 !important; */
+  height: 50px;
+  font-family: Inter !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 20px !important;
+  line-height: 19px !important;
+  text-transform: unset !important;
+}

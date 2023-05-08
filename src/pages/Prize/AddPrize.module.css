@@ -1,0 +1,6 @@
+#addPrize-form {
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: center;
+  margin-top: 2rem;
+}
