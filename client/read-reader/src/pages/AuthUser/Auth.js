@@ -1,15 +1,12 @@
-import { Link, Route, useHistory } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { Box } from "@mui/system";
 
 import AuthLogin from "./AuthLogin";
 import AuthRegister from "./AuthRegister";
 
 import stackedBooksImg from "../../assets/Auth/stackedBooks.svg";
-import CustomButton from "../../components/UI/CustomButton";
 
 function Auth() {
-  const history = useHistory();
-
   return (
     <>
       <Box
@@ -32,7 +29,7 @@ function Auth() {
       <Route path={"/signup"} exact>
         <AuthRegister />
       </Route>
-      <Route path={"/login"} exact>
+      <Route path={"/"} exact>
         <AuthLogin />
         <Link
           to="/signup"
@@ -44,32 +41,6 @@ function Auth() {
             color: "#5DB075",
             textDecoration: "none",
             padding: "5px",
-          }}
-        >
-          <b>No Account? Sign Up</b>
-        </Link>
-      </Route>
-      <Route path={"/"} exact>
-        <CustomButton
-          sx={{
-            margin: "0 4%",
-            width: "92% !important",
-            "@media(min-width: 550px)": { width: "350px !important" },
-          }}
-          onClick={() => history.push("/login")}
-        >
-          Login
-        </CustomButton>
-        <Link
-          to="/signup"
-          variant="contained"
-          style={{
-            display: "block",
-            marginTop: "1rem",
-            color: "#49C5B6",
-            textDecoration: "none",
-            padding: "5px",
-            margin: "5px 4%",
           }}
         >
           <b>No Account? Sign Up</b>

@@ -79,7 +79,7 @@ function RegisterUser() {
     } catch (err) {
       setError(err);
     }
-    history.push("/login");
+    history.push("/");
     resetForm();
   };
 
@@ -189,7 +189,7 @@ function RegisterUser() {
         )}
         {error && <p>{error}</p>}
         <Link
-          to="/login"
+          to="/"
           variant="contained"
           style={{
             marginTop: "1rem",
