@@ -1,3 +1,3 @@
-const url = "http://localhost:5000";
+const url = "https://read-reader.herokuapp.com";
 
 export default url;
