@@ -83,6 +83,5 @@ const PrizesWrapper = styled.ul`
   display: flex;
   flex-flow: row wrap;
   gap: 4rem;
-  padding: 4rem;
   justify-content: center;
 `;

@@ -5,23 +5,26 @@ import ReaderContext from "../../store/reader-contex";
 import styled from "styled-components";
 
 import ReaderBadge from "../../components/Reader/ReaderBadge";
-import DataSwitch from "../../components/Reader/DataSwitch";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 const ReaderSummary = (props) => {
   const readerCtx = useContext(ReaderContext);
 
   const [dataDisplay, setDataDisplay] = useState(true);
+  const [toggleValue, setToggleValue] = useState("prizes");
 
   const toggleDisplay = () => {
     setDataDisplay((prevState) => !prevState);
   };
 
-  //Handle data display based on boolean toggled by Switch component
+  //Handle data display based on boolean toggled by Toggle component
   useEffect(() => {
     if (dataDisplay) {
       props.displayPrizes();
+      setToggleValue("prizes");
     } else {
       props.displayHistory();
+      setToggleValue("history");
     }
   }, [dataDisplay]);
 
@@ -49,9 +52,15 @@ const ReaderSummary = (props) => {
         </div>
       </ReaderSummaryInfo>
       <ReaderActionButtons>
-        <DataSwitch onClick={toggleDisplay} />
-        {/* <button onClick={props.displayHistory}>History</button>
-        <button onClick={props.displayPrizes}>Prizes</button> */}
+        <ToggleButtonGroup
+          value={toggleValue}
+          exclusive
+          onChange={toggleDisplay}
+          aria-label="Platform"
+        >
+          <ToggleButton value="prizes">Prizes</ToggleButton>
+          <ToggleButton value="history">History</ToggleButton>
+        </ToggleButtonGroup>
       </ReaderActionButtons>
     </ReaderSummaryContainer>
   );
@@ -64,11 +73,11 @@ const ReaderSummaryContainer = styled.div`
 `;
 
 const ReaderSummaryInfo = styled.div`
-  margin-top: 2rem;
+  margin: 2rem 0;
 `;
 
 const ReaderActionButtons = styled.div`
-  margin-top: 1.5rem;
+  margin-top: 0;
   display: flex;
   justify-content: center;
 `;
