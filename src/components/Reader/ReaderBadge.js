@@ -58,8 +58,10 @@ const ReaderBadge = (props) => {
           <Typography
             align="center"
             component="span"
-            variant="h1"
-            sx={{ fontFamily: '"Ultra", serif' }}
+            sx={{
+              fontFamily: '"Ultra", serif',
+              fontSize: "4.2rem",
+            }}
           >
             {capitalizedInitials}
           </Typography>
