@@ -104,7 +104,9 @@ const Prize = (props) => {
 
   const handleAddPrizeToReader = async (event) => {
     event.preventDefault();
-
+    if (props.earnedCoins < props.prize["reading_requirement"]) {
+      return;
+    }
     const requestOptions = {
       method: "POST",
       headers: {
