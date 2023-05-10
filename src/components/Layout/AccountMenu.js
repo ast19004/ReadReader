@@ -237,19 +237,19 @@ const AccountMenu = () => {
           )}
           {showIfMainUser(<Divider sx={{ bgcolor: "#49C5B6" }} />)}
           {showIfMainUser(
-            <MenuItem onClick={handleViewPrizes}>
-              <ListItemIcon>
-                <PrizesIcon fontSize="medium" />
-              </ListItemIcon>
-              Prizes
-            </MenuItem>
-          )}
-          {showIfMainUser(
             <MenuItem onClick={handleAddPrize}>
               <ListItemIcon sx={{ marginLeft: "-3px" }}>
                 <AddPrizeIcon fontSize="medium" />
               </ListItemIcon>
               Add prize
+            </MenuItem>
+          )}
+          {showIfMainUser(
+            <MenuItem onClick={handleViewPrizes}>
+              <ListItemIcon>
+                <PrizesIcon fontSize="medium" />
+              </ListItemIcon>
+              View prizes
             </MenuItem>
           )}
           <Divider sx={{ bgcolor: "#49C5B6" }} />
