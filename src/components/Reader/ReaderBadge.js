@@ -22,8 +22,14 @@ const ReaderBadge = (props) => {
   const customCursor =
     props.onEdit || !readerCtx.currentReaderId ? "pointer" : "default";
 
-  const readerNameColor = scrollCtx.offsetY > 140 ? "white" : themeColor;
-  const readerDetailsColor = scrollCtx.offsetY > 170 ? "white" : themeColor;
+  const readerNameColor =
+    scrollCtx.offsetY > 140 && readerCtx.currentReaderId !== ""
+      ? "white"
+      : themeColor;
+  const readerDetailsColor =
+    scrollCtx.offsetY > 170 && readerCtx.currentReaderId !== ""
+      ? "white"
+      : themeColor;
 
   return (
     <Box

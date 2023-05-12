@@ -1,0 +1,14 @@
+.scrollAnimation {
+  /* animation: fadeAndRemove 1s forwards; */
+}
+
+@keyframes fadeAndRemove {
+  0% {
+    z-index: 2;
+    opacity: 1;
+  }
+  100% {
+    z-index: -2147483647;
+    opacity: 0;
+  }
+}
