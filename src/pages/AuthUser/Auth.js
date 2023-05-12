@@ -29,7 +29,7 @@ function Auth() {
       <Route path={"/signup"} exact>
         <AuthRegister />
       </Route>
-      <Route path={"/"}>
+      <Route path={"/"} exact>
         <AuthLogin />
         <Link
           to="/signup"
