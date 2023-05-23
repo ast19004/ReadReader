@@ -137,7 +137,6 @@ const ReaderHome = (props) => {
       <Box
         sx={{
           position: "relative",
-          zIndex: "1",
           display: "grid",
           gridGap: "2rem",
           margin: "0 auto",
@@ -150,6 +149,7 @@ const ReaderHome = (props) => {
         }}
       >
         <ReaderBadge
+          className="fadeAway"
           badgeData={true}
           minutesRead={minutesRead}
           coinsEarned={coinsEarned}

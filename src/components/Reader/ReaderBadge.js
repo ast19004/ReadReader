@@ -33,6 +33,7 @@ const ReaderBadge = (props) => {
 
   return (
     <Box
+      className={props.className}
       component="li"
       sx={{
         display: "grid",
