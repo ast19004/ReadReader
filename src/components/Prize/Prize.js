@@ -30,7 +30,7 @@ const Prize = (props) => {
   const prizeImagePath =
     props.prize.prize_image === ""
       ? defaultPrizeImg
-      : `/images/uploads/${props.prize.prize_image}`;
+      : `https://storage.googleapis.com/prize-images/${props.prize.prize_image}`;
 
   const listContainerStyle = {
     display: "grid",
