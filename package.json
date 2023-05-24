@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "homepage": "https://ast19004.github.io/ReadReader",
   "private": true,
-  "proxy": "https://read-reader.herokuapp.com",
   "dependencies": {
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.6",
