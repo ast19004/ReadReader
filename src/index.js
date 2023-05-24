@@ -4,7 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { BrowserRouter } from "react-router-dom";
+// import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
+
 import { AuthContextProvider } from "./store/auth-contex";
 import { ReaderContextProvider } from "./store/reader-contex";
 import { PrizeContextProvider } from "./store/prize-context";
@@ -17,9 +19,9 @@ root.render(
       <ScrollContextProvider>
         <ReaderContextProvider>
           <PrizeContextProvider>
-            <BrowserRouter>
+            <HashRouter>
               <App />
-            </BrowserRouter>
+            </HashRouter>
           </PrizeContextProvider>
         </ReaderContextProvider>
       </ScrollContextProvider>
