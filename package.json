@@ -1,7 +1,7 @@
 {
   "name": "read-reader",
   "version": "0.1.0",
-  "homepage": "https://ast19004.github.io/ReadReader",
+  "homepage": "https://ast19004.github.io/",
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
