@@ -26,10 +26,10 @@ function Auth() {
           margin: "25px auto",
         }}
       />
-      <Route path={"/ReadReader/signup"} exact>
+      <Route path={"/signup"} exact>
         <AuthRegister />
       </Route>
-      <Route path={"/ReadReader"} exact>
+      <Route path={"/"} exact>
         <AuthLogin />
         <Link
           to="/signup"
