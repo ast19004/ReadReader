@@ -1,3 +1,3 @@
-const url = "https://read-reader.herokuapp.com";
+const url = "https://readreader-server.herokuapp.com/";
 
 export default url;
