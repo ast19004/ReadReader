@@ -39,30 +39,30 @@ function App() {
             </Route>
           )} */}
 
-          <ProtectedRoute path={"/#/reader"} exact redirectPath={"/"}>
+          <ProtectedRoute path={"/reader"} exact redirectPath={"/"}>
             <AddReader />
           </ProtectedRoute>
 
-          <ProtectedRoute path={"/#/reader/:id"} redirectPath={"/"}>
+          <ProtectedRoute path={"/reader/:id"} redirectPath={"/"}>
             <Reader />
           </ProtectedRoute>
 
-          <ProtectedRoute path={"/#/prizes/"} exact redirectPath={"/"}>
+          <ProtectedRoute path={"/prizes/"} exact redirectPath={"/"}>
             <Box sx={{ marginTop: "75px" }}>
               <AvailablePrizes />
             </Box>
           </ProtectedRoute>
 
-          <ProtectedRoute path={"/#/prize/"} exact redirectPath={"/"}>
+          <ProtectedRoute path={"/prize/"} exact redirectPath={"/"}>
             <AddPrize />
           </ProtectedRoute>
 
-          <Route path={"/#/"}>
+          <Route path={"/"}>
             {!authCtx.isLoggedIn ? <Auth /> : <AuthWelcome />}
           </Route>
 
-          <Route path={"/#/*"}>
-            <Redirect to="/#/" />
+          <Route path={"*"}>
+            <Redirect to="/" />
           </Route>
         </Switch>
       </main>
