@@ -39,6 +39,7 @@ function AddPrize() {
     useState("");
   const [selectedReaders, setSelectedReaders] = useState([]);
   const [file, setfile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState("");
 
   const [userHasReader, setUserHasReaders] = useState(false);
 
@@ -65,7 +66,16 @@ function AddPrize() {
   };
 
   const fileChangeHandler = (event) => {
-    setfile(event.target.files[0]);
+    const selectedFile = event.target.files[0];
+    setfile(selectedFile);
+
+    if (selectedFile) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        setPreviewUrl(fileReader.result);
+      };
+      fileReader.readAsDataURL(selectedFile);
+    }
   };
 
   //set readerCtx to main user
@@ -157,7 +167,7 @@ function AddPrize() {
       <Typography
         align="center"
         variant="h2"
-        sx={{ color: "gray", marginTop: "2rem" }}
+        sx={{ color: "gray", marginTop: "5rem" }}
       >
         Add a prize
       </Typography>
@@ -191,16 +201,7 @@ function AddPrize() {
                 required
               />
               <br />
-              <Typography
-                sx={{
-                  paddingBottom: ".2rem",
-                  textAlign: "center",
-                  backgroundColor: "rgb(245, 245,245)",
-                  borderRadius: "25px",
-                }}
-              >
-                {JSON.stringify(file)}
-              </Typography>
+
               <TextField
                 id="input_image"
                 name="prize_image"
@@ -210,11 +211,23 @@ function AddPrize() {
                 accept="image/png, image/jpg"
                 variant="outlined"
               />
-              <img
-                src={prizeSvg}
-                alt="Gift wrapped with a bow"
-                style={{ marginBottom: "2rem" }}
-              />
+              {!file ? (
+                <img
+                  src={prizeSvg}
+                  alt="Gift wrapped with a bow"
+                  style={{ marginBottom: "2rem", maxHeight: "125px" }}
+                />
+              ) : (
+                <img
+                  src={previewUrl}
+                  alt="Preview"
+                  style={{
+                    marginBottom: "2rem",
+                    maxWidth: "300px",
+                    maxHeight: "125px",
+                  }}
+                />
+              )}
               <CustomButton
                 type="button"
                 variant="outlined"
