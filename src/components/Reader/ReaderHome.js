@@ -140,7 +140,7 @@ const ReaderHome = (props) => {
           display: "grid",
           gridGap: "2rem",
           margin: "0 auto",
-          top: "75px",
+          top: "90px",
           // maxWidth: "80%",
 
           // "@media (min-width: 500px)": {

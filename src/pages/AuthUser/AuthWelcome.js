@@ -115,6 +115,6 @@ const ReaderBadgesContainer = styled.ul`
   grid-gap: 5rem;
   justify-content: center;
   align-content: center;
-  margin-top: 5rem;
+  margin-top: 9rem;
   margin-bottom: 1rem;
 `;

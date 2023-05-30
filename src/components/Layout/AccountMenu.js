@@ -33,16 +33,19 @@ const AccountMenu = () => {
   // if "" user == mainUser
   const [currentReader, setCurrentReader] = useState("");
   const [currentReaderData, setCurrentReaderData] = useState();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const isMainUser = readerCtx.currentReaderName === "";
 
-  const userMenuOpen = !!anchorEl;
-
   const handleMenuClick = (event) => {
     setAnchorEl(event.target);
+    setUserMenuOpen((prev) => {
+      return !prev;
+    });
   };
   const handleMenuClose = () => {
     setAnchorEl(null);
+    setUserMenuOpen(false);
   };
   const returnToMainUser = () => {
     readerCtx.onChangeReader("", "", "");
@@ -186,6 +189,7 @@ const AccountMenu = () => {
           PaperProps={{
             elevation: 0,
             sx: {
+              top: "80px !important",
               overflow: "visible",
               filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
               mt: 1.5,

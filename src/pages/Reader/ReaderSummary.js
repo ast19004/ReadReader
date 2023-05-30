@@ -70,6 +70,7 @@ export default ReaderSummary;
 const ReaderSummaryContainer = styled.div`
   display: grid;
   justify-content: center;
+  margin-top: 4.5rem;
 `;
 
 const ReaderSummaryInfo = styled.div`

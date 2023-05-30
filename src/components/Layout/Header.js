@@ -10,6 +10,7 @@ import ReadIcon from "@mui/icons-material/AutoStories";
 
 import styled from "styled-components";
 import AccountMenu from "./AccountMenu";
+import { Box } from "@mui/system";
 
 const Header = () => {
   const readerCtx = useContext(ReaderContext);
@@ -36,62 +37,85 @@ const Header = () => {
   }, [readerCtx.currentReaderId, readerCtx.currentReaderName]);
 
   return (
-    <header style={{ position: "fixed", top: "0px", width: "100%" }}>
-      <nav
-        style={
-          isMainUser
-            ? {}
-            : {
-                backgroundColor: readerCtx.currentTheme,
-                height: "225px",
-              }
-        }
+    <>
+      <Box
+        sx={{
+          height: "225px",
+          position: "fixed",
+          top: "0px",
+          width: "100%",
+          backgroundColor: readerCtx.currentTheme,
+        }}
+      />
+      <header
+        style={{
+          position: "fixed",
+          top: "0px",
+          width: "100%",
+          zIndex: "9999",
+        }}
       >
-        <IconsWrapper>
-          <IconsLeftWrapper>
-            <IconWrapper>
-              <Link to={homeLinkPath}>
-                <HomeIcon
-                  fontSize="medium"
-                  sx={{
-                    color: `${isMainUser ? "#999" : "white"}`,
-                    backgroundColor: `${isMainUser ? "white" : "transparent"}`,
-                    border: `${
-                      isMainUser ? "1px solid #999" : "4px solid white"
-                    }`,
-                    borderRadius: "50%",
-                    padding: `${isMainUser ? "10px" : "4px"}`,
-                  }}
-                />
-              </Link>
-            </IconWrapper>
-            {!isMainUser && (
+        <nav
+          style={
+            isMainUser
+              ? {
+                  backgroundColor: "white",
+                  opacity: 0.8,
+                }
+              : {
+                  backgroundColor: readerCtx.currentTheme,
+                  // height: "225px",
+                }
+          }
+        >
+          <IconsWrapper>
+            <IconsLeftWrapper>
               <IconWrapper>
-                <Link to={prizeLinkPath}>
-                  <ReadIcon
+                <Link to={homeLinkPath}>
+                  <HomeIcon
                     fontSize="medium"
                     sx={{
-                      color: "white",
-                      border: "4px solid white",
+                      color: `${isMainUser ? "#999" : "white"}`,
+                      backgroundColor: `${
+                        isMainUser ? "white" : "transparent"
+                      }`,
+                      border: `${
+                        isMainUser ? "1px solid #999" : "4px solid white"
+                      }`,
                       borderRadius: "50%",
-                      padding: "4px",
+                      padding: `${isMainUser ? "10px" : "4px"}`,
                     }}
                   />
                 </Link>
               </IconWrapper>
-            )}
-          </IconsLeftWrapper>
-          <AccountIconsWrapper>
-            <AccountMenu
-              id="accounts-menu"
-              open={openAccountsMenu}
-              onClose={closeAccountsMenu}
-              onClick={closeAccountsMenu}
-            />
-          </AccountIconsWrapper>
-        </IconsWrapper>
-      </nav>
-    </header>
+              {!isMainUser && (
+                <IconWrapper>
+                  <Link to={prizeLinkPath}>
+                    <ReadIcon
+                      fontSize="medium"
+                      sx={{
+                        color: "white",
+                        border: "4px solid white",
+                        borderRadius: "50%",
+                        padding: "4px",
+                      }}
+                    />
+                  </Link>
+                </IconWrapper>
+              )}
+            </IconsLeftWrapper>
+            <AccountIconsWrapper>
+              <AccountMenu
+                id="accounts-menu"
+                open={openAccountsMenu}
+                onClose={closeAccountsMenu}
+                onClick={closeAccountsMenu}
+              />
+            </AccountIconsWrapper>
+          </IconsWrapper>
+        </nav>
+      </header>
+    </>
   );
 };
 
