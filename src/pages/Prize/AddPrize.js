@@ -78,6 +78,15 @@ function AddPrize() {
     }
   };
 
+  const continueFormHandler = () => {
+    if (enteredName || enteredReadingRequirement) {
+      setError("");
+      setContinueForm(true);
+    } else {
+      setError({ message: "Please enter a prize name & reading requirement" });
+    }
+  };
+
   //set readerCtx to main user
   useEffect(() => {
     if (
@@ -171,6 +180,14 @@ function AddPrize() {
       >
         Add a prize
       </Typography>
+      {error && (
+        <Typography
+          align="center"
+          sx={{ color: "red", marginTop: "1rem", marginBottom: "-1.5rem" }}
+        >
+          {error.message}
+        </Typography>
+      )}
       {userHasReader ? (
         <form
           id={styles["addPrize-form"]}
@@ -240,9 +257,7 @@ function AddPrize() {
               </CustomButton>
               <CustomButton
                 type="button"
-                onClick={() => {
-                  setContinueForm(true);
-                }}
+                onClick={continueFormHandler}
                 sx={{ marginTop: "2rem" }}
               >
                 Continue
@@ -297,7 +312,6 @@ function AddPrize() {
               <CustomButton type="submit">Add Prize</CustomButton>
             </>
           )}
-          {error && <p>{error.message}</p>}
         </form>
       ) : (
         <>
