@@ -144,7 +144,7 @@ const ReaderLogSession = (props) => {
         alignItems: "center",
         gridGap: "2rem",
         margin: "0 auto",
-        top: "75px",
+        top: "90px",
         width: "100vw",
         height: "100vh",
         backgroundColor: props.reader["theme_color"],
