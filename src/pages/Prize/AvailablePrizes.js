@@ -15,6 +15,7 @@ import AddPrizeIcon from "../../components/Prize/AddPrizeIcon";
 import EditPrizeModal from "../../components/UI/EditPrizeModal";
 import DeletePrizeModal from "../../components/UI/DeletePrizeModal";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Box } from "@mui/system";
 
 const AvailablePrizes = (props) => {
   const params = useParams();
@@ -96,7 +97,7 @@ const AvailablePrizes = (props) => {
   };
 
   return (
-    <>
+    <Box sx={props.sx}>
       <EditPrizeModal
         open={edit}
         onClose={handleCloseEditPrize}
@@ -147,7 +148,7 @@ const AvailablePrizes = (props) => {
           )}
         </>
       )}
-    </>
+    </Box>
   );
 };
 
@@ -159,5 +160,5 @@ const PrizesWrapper = styled.ul`
   gap: 4rem;
   justify-content: center;
   flex-flow: row wrap;
-  margin: 6rem 4% 100px 4%;
+  margin: 0 4% 100px 4%;
 `;
