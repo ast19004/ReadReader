@@ -22,6 +22,7 @@ import {
 
 import CustomButton from "../../components/UI/CustomButton";
 
+import AddPrizeImage from "../../components/Prize/AddPrizeImage";
 import prizeSvg from "../../assets/Prize/prize.svg";
 
 import styles from "./AddPrize.module.css";
@@ -225,26 +226,14 @@ function AddPrize() {
                 onChange={fileChangeHandler}
                 style={{ display: "none" }}
                 type="file"
-                accept="image/png, image/jpg"
+                accept="image/*"
                 variant="outlined"
               />
-              {!file ? (
-                <img
-                  src={prizeSvg}
-                  alt="Gift wrapped with a bow"
-                  style={{ marginBottom: "2rem", maxHeight: "125px" }}
-                />
-              ) : (
-                <img
-                  src={previewUrl}
-                  alt="Preview"
-                  style={{
-                    marginBottom: "2rem",
-                    maxWidth: "300px",
-                    maxHeight: "125px",
-                  }}
-                />
-              )}
+              <AddPrizeImage
+                file={file}
+                defaultImage={prizeSvg}
+                previewUrl={previewUrl}
+              />
               <CustomButton
                 type="button"
                 variant="outlined"
@@ -267,7 +256,6 @@ function AddPrize() {
           ) : (
             <>
               <>
-                <img src={prizeSvg} alt="Gift wrapped with a bow" />
                 <CustomButton
                   type="button"
                   variant="outlined"
@@ -276,15 +264,19 @@ function AddPrize() {
                     setContinueForm(false);
                   }}
                   sx={{
-                    margin: " 2rem auto 0 auto",
+                    margin: " 0 auto 2rem auto",
                     width: "fit-content",
                   }}
                 >
                   <ArrowBack />
                 </CustomButton>
+                <AddPrizeImage
+                  file={file}
+                  defaultImage={prizeSvg}
+                  previewUrl={previewUrl}
+                />
                 <FormGroup
                   sx={{
-                    marginTop: "1rem",
                     // border: "1px solid rgba(136, 136, 136, 0.5)",
                     padding: "1rem",
                     // borderRadius: "5px",
