@@ -72,7 +72,7 @@ function AddReader() {
       <Typography
         align="center"
         variant="h2"
-        sx={{ color: enteredTheme, marginTop: "2rem" }}
+        sx={{ color: enteredTheme, marginTop: "6rem" }}
       >
         Add Reader
       </Typography>
