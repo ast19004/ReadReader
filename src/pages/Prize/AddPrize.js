@@ -146,6 +146,9 @@ function AddPrize() {
 
     try {
       const res = await fetch(`${domainPath}/upload`, uploadRequestOptions);
+      if (!res.ok) {
+        throw new Error("Error with posting upload");
+      }
       const uploadedFile = await res.json();
       console.log(`uploadedFile : ${uploadedFile.filename}`);
 
@@ -163,11 +166,14 @@ function AddPrize() {
           prize_image: uploadedFile.filename,
         }),
       };
-      await fetch(url, requestOptions);
-
+      const res2 = await fetch(url, requestOptions);
+      if (!res2.ok) {
+        throw new Error("Error posting new prize");
+      }
       prizeCtx.onPrizeIsUpdated();
     } catch (err) {
-      setError(err);
+      console.log(err.msg);
+      setError(err.msg);
     }
     history.push("/prizes");
   };
