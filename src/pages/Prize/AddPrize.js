@@ -27,7 +27,7 @@ import prizeSvg from "../../assets/Prize/prize.svg";
 
 import styles from "./AddPrize.module.css";
 
-function AddPrize() {
+function AddPrize(props) {
   const authCtx = useContext(AuthContext);
   const prizeCtx = useContext(PrizeContext);
   const readerCtx = useContext(ReaderContext);
@@ -39,6 +39,7 @@ function AddPrize() {
   const [enteredReadingRequirement, setEnteredReadingRequirement] =
     useState("");
   const [selectedReaders, setSelectedReaders] = useState([]);
+  const [originalFile, setOriginalFile] = useState("");
   const [file, setfile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
 
@@ -66,16 +67,20 @@ function AddPrize() {
     }
   };
 
+  const createPreviewUrl = (file) => {
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
+  };
+
   const fileChangeHandler = (event) => {
     const selectedFile = event.target.files[0];
     setfile(selectedFile);
 
     if (selectedFile) {
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        setPreviewUrl(fileReader.result);
-      };
-      fileReader.readAsDataURL(selectedFile);
+      createPreviewUrl(selectedFile);
     }
   };
 
@@ -109,6 +114,7 @@ function AddPrize() {
       },
     };
 
+    //Fetch all reader names & ids associated with current user.
     const fetchReaderData = async () => {
       const res = await fetch(url, requestOptions);
 
@@ -132,6 +138,32 @@ function AddPrize() {
     });
   }, [authCtx.token]);
 
+  //If in edit mode set saved prizeData values
+  useEffect(() => {
+    if (props.edit) {
+      setEnteredName(props.enteredName);
+      setEnteredReadingRequirement(props.enteredReadingRequirement);
+      setSelectedReaders(props.selectedReaders);
+      setfile(props.file);
+      setOriginalFile(props.file);
+      setPreviewUrl(
+        `https://storage.googleapis.com/prize-images/${props.file}`
+      );
+    }
+  }, [
+    props.edit,
+    props.enteredName,
+    props.enteredReadingRequirement,
+    props.selectedReaders,
+    props.file,
+  ]);
+
+  //Set any errors from parent component
+  useEffect(() => {
+    setError(props.error);
+  }, [props.error]);
+
+  //add or edit prize based on props edit attribute
   const addPrize = async (event) => {
     event.preventDefault();
 
@@ -142,18 +174,22 @@ function AddPrize() {
       body: uploadData,
     };
 
-    const url = `${domainPath}/prize`;
-
+    //upload file to google cloud if it is not already existing
+    let uploadedFile = "";
     try {
-      const res = await fetch(`${domainPath}/upload`, uploadRequestOptions);
-      if (!res.ok) {
-        throw new Error("Error with posting upload");
+      if (!props.edit || (props.edit && file !== originalFile)) {
+        const res = await fetch(`${domainPath}/upload`, uploadRequestOptions);
+        if (!res.ok) {
+          throw new Error("Error with posting upload");
+        }
+        uploadedFile = await res.json();
       }
-      const uploadedFile = await res.json();
-      console.log(`uploadedFile : ${uploadedFile.filename}`);
-
+      const url = !props.edit
+        ? `${domainPath}/prize`
+        : `${domainPath}/prize/${props.prizeId}`;
+      //Add new Prize or Edit Prize in database
       const requestOptions = {
-        method: "POST",
+        method: !props.edit ? "POST" : "PUT",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -163,7 +199,7 @@ function AddPrize() {
           prize_name: enteredName,
           reading_requirement: +enteredReadingRequirement,
           readers: selectedReaders,
-          prize_image: uploadedFile.filename,
+          prize_image: !uploadedFile ? originalFile : uploadedFile.filename,
         }),
       };
       const res2 = await fetch(url, requestOptions);
@@ -171,8 +207,9 @@ function AddPrize() {
         throw new Error("Error posting new prize");
       }
       prizeCtx.onPrizeIsUpdated();
+      props.onClose();
     } catch (err) {
-      console.log(err.msg);
+      console.log(`Error: ${err.msg}`);
       setError(err.msg);
     }
     history.push("/prizes");
@@ -185,7 +222,7 @@ function AddPrize() {
         variant="h2"
         sx={{ color: "gray", marginTop: "5rem" }}
       >
-        Add a prize
+        {!props.edit ? "Add a prize" : props.title}
       </Typography>
       {error && (
         <Typography
@@ -206,7 +243,7 @@ function AddPrize() {
               <TextField
                 multiline
                 onChange={nameChangeHandler}
-                value={enteredName}
+                value={props.edit ? props.enteredName : enteredName}
                 style={{ width: "300px", margin: "5px" }}
                 type="text"
                 label="Prize Name/ Description"
@@ -298,6 +335,7 @@ function AddPrize() {
                         <Checkbox
                           id={reader.id}
                           onChange={handleReaderSelection}
+                          checked={selectedReaders.includes(reader.id)}
                         />
                       }
                       label={reader.name}
@@ -307,7 +345,9 @@ function AddPrize() {
 
                 <br />
               </>
-              <CustomButton type="submit">Add Prize</CustomButton>
+              <CustomButton type="submit">
+                {!props.edit ? "Add Prize" : props.title}
+              </CustomButton>
             </>
           )}
         </form>
