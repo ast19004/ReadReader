@@ -52,7 +52,7 @@ const Header = () => {
           position: "fixed",
           top: "0px",
           width: "100%",
-          zIndex: "9999",
+          zIndex: "1300", // zIndex large enough to layer all but modal items
         }}
       >
         <nav
