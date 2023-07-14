@@ -16,7 +16,7 @@ img {
 }
 .authImage {
   max-height: 80vh;
-  margin: 100px auto 25px auto;
+  margin: 100px auto 0px auto;
 }
 input,
 .css-dpjnhs-MuiInputBase-root-MuiOutlinedInput-root {

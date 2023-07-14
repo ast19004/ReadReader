@@ -75,7 +75,7 @@ function AuthLogin() {
         component={"h2"}
         sx={{
           color: "#49C5B6",
-          marginTop: "2rem",
+          marginTop: "1rem",
 
           fontFamily: "Ultra",
           fontStyle: "normal",
@@ -117,5 +117,5 @@ const LoginForm = styled.form`
   display: grid;
   grid-template-column: auto;
   justify-content: center;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 `;
