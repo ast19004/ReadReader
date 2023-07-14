@@ -1,31 +1,66 @@
 import { Link, Route } from "react-router-dom";
+
 import { Box } from "@mui/system";
+import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
 
 import AuthLogin from "./AuthLogin";
 import AuthRegister from "./AuthRegister";
 
 import stackedBooksImg from "../../assets/Auth/stackedBooks.svg";
+import { Button } from "@mui/material";
+import { useState } from "react";
+import AuthInfoModal from "../../components/Auth/AuthInfoModal";
 
 function Auth() {
+  const [open, setOpen] = useState(false);
+
+  const handleInfoModal = () => {
+    setOpen((prevState) => !prevState);
+  };
+
   return (
-    <>
+    <Box>
       <Box
         sx={{
-          margin: "0 auto",
-          width: "50vw",
-          height: "25px",
-          backgroundColor: "black",
-          borderRadius: "0 0 25px 25px",
+          position: "fixed",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "end",
+          gap: "calc(50% - 140.78px)",
+          top: "2%",
+          left: "0%",
+          "@media(min-width: 500px)": {
+            left: "1.5%",
+            justifyContent: "space-between",
+          },
         }}
-      />
-      <img
-        src={stackedBooksImg}
-        alt="Stacked Books"
-        style={{
-          maxHeight: "80vh",
-          margin: "25px auto",
-        }}
-      />
+      >
+        <Box
+          sx={{
+            justifySelf: "center",
+            fontFamily: "Ultra",
+            fontStyle: "normal",
+            letterSpacing: "2px",
+            color: "#49C5B6",
+          }}
+        >
+          read reader
+        </Box>
+        <Button
+          onClick={handleInfoModal}
+          sx={{
+            fontFamily: "Ultra",
+            fontStyle: "normal",
+            letterSpacing: "2px",
+            color: "#49C5B6",
+          }}
+        >
+          <InfoTwoToneIcon fontSize="medium" />
+        </Button>
+      </Box>
+      <AuthInfoModal open={open} onClose={() => setOpen(false)} />
+      <img className="authImage" src={stackedBooksImg} alt="Stacked Books" />
       <Route path={"/signup"} exact>
         <AuthRegister />
       </Route>
@@ -46,7 +81,7 @@ function Auth() {
           <b>No Account? Sign Up</b>
         </Link>
       </Route>
-    </>
+    </Box>
   );
 }
 

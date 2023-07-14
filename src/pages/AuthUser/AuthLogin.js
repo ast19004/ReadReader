@@ -12,8 +12,8 @@ import styled from "styled-components";
 function AuthLogin() {
   const authCtx = useContext(AuthContext);
 
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredPassword, setEnteredPassword] = useState("");
+  const [enteredEmail, setEnteredEmail] = useState("test@test.com");
+  const [enteredPassword, setEnteredPassword] = useState("ABCDEFG");
   const [error, setError] = useState("");
 
   const resetForm = () => {
@@ -89,7 +89,7 @@ function AuthLogin() {
         <TextField
           onChange={emailChangeHandler}
           value={enteredEmail}
-          style={{ width: "200px", margin: "5px" }}
+          style={{ width: "200px" }}
           type="email"
           label="Email"
           variant="outlined"
@@ -98,7 +98,7 @@ function AuthLogin() {
         <TextField
           onChange={passwordChangeHandler}
           value={enteredPassword}
-          style={{ width: "200px", margin: "5px" }}
+          style={{ width: "200px" }}
           type="password"
           label="Password"
           variant="outlined"
@@ -117,5 +117,5 @@ const LoginForm = styled.form`
   display: grid;
   grid-template-column: auto;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
 `;

@@ -193,6 +193,7 @@ function RegisterUser() {
           variant="contained"
           style={{
             marginTop: "1rem",
+            marginBottom: "1.5rem",
             textAlign: "center",
             color: "#49C5B6",
             textDecoration: "none",
@@ -211,5 +212,5 @@ const RegisterForm = styled.form`
   display: grid;
   grid-template-column: auto;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
 `;
