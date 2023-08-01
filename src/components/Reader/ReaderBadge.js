@@ -25,6 +25,7 @@ const ReaderBadge = (props) => {
   const customCursor =
     props.onEdit || !readerCtx.currentReaderId ? "pointer" : "default";
 
+  const customHoverOpacity = !readerCtx.currentReaderId ? "0.8" : "1";
   const readerNameColor =
     scrollCtx.offsetY > 140 && readerCtx.currentReaderId !== ""
       ? "white"
@@ -58,6 +59,7 @@ const ReaderBadge = (props) => {
           boxShadow: "0px 11px 20px -1px rgba(0, 0, 0, 0.25)",
           color: "white",
           backgroundColor: `${themeColor}`,
+          "&:hover": { opacity: customHoverOpacity },
         }}
         onClick={goToReaderHome}
       >

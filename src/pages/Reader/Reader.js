@@ -67,7 +67,7 @@ const Reader = () => {
   };
 
   const handleGoToReaderHome = () => {
-    history.push(`/home/`);
+    history.push(`/reader/${readerId}/home/`);
   };
 
   const handleDisplayLogHistory = () => {
