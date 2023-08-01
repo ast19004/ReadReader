@@ -66,6 +66,10 @@ const Reader = () => {
     history.push(`/reader/${readerId}/home/`);
   };
 
+  const handleGoToReaderHome = () => {
+    history.push(`/home/`);
+  };
+
   const handleDisplayLogHistory = () => {
     setEarnedPrizesIsOpen(false);
     setSessionHistoryIsOpen(true);
@@ -98,7 +102,7 @@ const Reader = () => {
                 updateUser={handleUpdateUser}
                 displayHistory={handleDisplayLogHistory}
                 displayPrizes={handleDisplayEarnedPrizes}
-                startReading={handleStartLogReading}
+                onGoToReaderHome={handleGoToReaderHome}
               />
               {sessionHistoryIsOpen && (
                 <SessionsHistory

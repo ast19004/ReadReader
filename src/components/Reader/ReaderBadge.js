@@ -19,6 +19,9 @@ const ReaderBadge = (props) => {
     initials.charAt(0).toUpperCase() + initials.slice(1);
 
   const editReader = props.onEdit ? props.onEdit : () => {};
+  const goToReaderHome = !readerCtx.currentReaderId
+    ? props.onGoToReaderHome
+    : () => {};
   const customCursor =
     props.onEdit || !readerCtx.currentReaderId ? "pointer" : "default";
 
@@ -34,12 +37,12 @@ const ReaderBadge = (props) => {
   return (
     <Box
       className={props.className}
-      component="li"
+      component="div"
       sx={{
         display: "grid",
         alignItems: "center",
         justifySelf: "center",
-        gap: "25px",
+        gap: "1rem",
         cursor: customCursor,
       }}
     >
@@ -56,7 +59,7 @@ const ReaderBadge = (props) => {
           color: "white",
           backgroundColor: `${themeColor}`,
         }}
-        onClick={editReader}
+        onClick={goToReaderHome}
       >
         {/* <Typography align="center" sx={{ color: "white" }}>
         {props.minutesRead} Minutes
@@ -86,6 +89,7 @@ const ReaderBadge = (props) => {
         component="span"
         variant="h4"
         color={readerNameColor}
+        onClick={editReader}
       >
         {props.onEdit && (
           <EditIcon

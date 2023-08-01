@@ -40,13 +40,14 @@ const ReaderSummary = (props) => {
 
   return (
     <ReaderSummaryContainer>
-      <ReaderSummaryInfo onClick={props.updateUser}>
+      <ReaderSummaryInfo>
         <div>
           <ReaderBadge
             readerName={props.reader["reader_name"]}
             // minutesRead={props.reader["total_reading_duration"]}
             // coinsEarned={props.reader["reading_coins"]}
             themeColor={props.reader["theme_color"]}
+            onGoToReaderHome={props.onGoToReaderHome}
             onEdit={props.updateUser}
           />
         </div>
