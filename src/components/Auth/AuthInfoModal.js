@@ -7,7 +7,14 @@ const AuthInfoModal = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={{ display: "flex", margin: "10% 2%", justifyContent: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          margin: "10% 2%",
+          justifyContent: "center",
+          outline: "none",
+        }}
+      >
         <Box
           component="section"
           sx={{

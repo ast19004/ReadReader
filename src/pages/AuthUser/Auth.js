@@ -12,7 +12,7 @@ import { useState } from "react";
 import AuthInfoModal from "../../components/Auth/AuthInfoModal";
 
 function Auth() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const handleInfoModal = () => {
     setOpen((prevState) => !prevState);
