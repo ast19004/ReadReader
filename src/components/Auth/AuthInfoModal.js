@@ -1,4 +1,6 @@
-import { Modal, Box } from "@mui/material";
+import { Modal, Box, Typography, Button } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
 const AuthInfoModal = (props) => {
   return (
     <Modal
@@ -25,14 +27,31 @@ const AuthInfoModal = (props) => {
           }}
         >
           <Box
-            component="h1"
+            component="section"
+            sx={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <Typography
+              component="h1"
+              sx={{
+                color: "#1976d2",
+                fontSize: "36px",
+              }}
+            >
+              READ READER
+            </Typography>
+            <Button onClick={props.onClose}>
+              <CloseIcon sx={{ opacity: "0.7" }} />
+            </Button>
+          </Box>
+          <Box
+            component="p"
             sx={{
-              color: "#1976d2",
+              color: "#666",
+              maxWidth: "500px",
+              lineHeight: "24px",
+              marginTop: "0.4rem",
             }}
           >
-            READ READER
-          </Box>
-          <Box component="p" sx={{ color: "#666", maxWidth: "500px" }}>
             Created with elementary school children and their guardians in mind,
             this application provides guardians with the ability to track the
             children's daily reading. Each child has their own personal account

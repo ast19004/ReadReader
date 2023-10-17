@@ -56,7 +56,7 @@ function Auth() {
             color: "#49C5B6",
           }}
         >
-          <InfoTwoToneIcon fontSize="medium" />
+          <InfoTwoToneIcon fontSize="large" />
         </Button>
       </Box>
       <AuthInfoModal open={open} onClose={() => setOpen(false)} />
