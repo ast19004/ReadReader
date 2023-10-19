@@ -23,6 +23,7 @@ function Auth() {
       <Box
         sx={{
           position: "fixed",
+          backgroundColor: "rgba(255,255,255,0.85)",
           width: "100%",
           display: "flex",
           alignItems: "center",
@@ -31,7 +32,8 @@ function Auth() {
           top: "2%",
           left: "0%",
           "@media(min-width: 500px)": {
-            left: "1.5%",
+            left: "2%",
+            maxWidth: "98%",
             justifyContent: "space-between",
           },
         }}
