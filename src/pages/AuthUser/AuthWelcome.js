@@ -12,6 +12,7 @@ import { Typography } from "@mui/material";
 import { Person, PersonAdd, ArrowRightAlt } from "@mui/icons-material";
 
 import styled from "styled-components";
+import { Box } from "@mui/system";
 
 const AuthWelcome = () => {
   const authCtx = useContext(AuthContext);
@@ -70,37 +71,44 @@ const AuthWelcome = () => {
 
   return (
     <>
-      {/* <Typography
-        align="center"
-        variant="h2"
-        sx={{ color: "#49C5B6", marginTop: "2rem" }}
-      >
-        Readers
-      </Typography> */}
       {!error && (
-        <ReaderBadgesContainer>
-          {userHasReader &&
-            readers.map((reader) => {
-              return (
-                <ReaderBadgeLink
-                  key={reader.id}
-                  id={reader.id}
-                  readerName={reader.name}
-                  minutesRead={reader.minutesRead}
-                  coinsEarned={reader.coinsEarned}
-                  themeColor={reader.themeColor}
-                />
-              );
-            })}
-          <ReaderBadgeLink
-            key={"addReader"}
-            id={""}
-            readerName={""}
-            minutesRead={0}
-            coinsEarned={0}
-            themeColor={"#2779A7"}
-          />
-        </ReaderBadgesContainer>
+        <>
+          <Typography
+            align="center"
+            component="h1"
+            sx={{
+              fontSize: "40px",
+              color: "rgba(0,0,0, 0.38)",
+              marginTop: "5.5rem",
+              marginBottom: "2.2rem",
+            }}
+          >
+            Reader Progress
+          </Typography>
+          <ReaderBadgesContainer>
+            {userHasReader &&
+              readers.map((reader) => {
+                return (
+                  <ReaderBadgeLink
+                    key={reader.id}
+                    id={reader.id}
+                    readerName={reader.name}
+                    minutesRead={reader.minutesRead}
+                    coinsEarned={reader.coinsEarned}
+                    themeColor={reader.themeColor}
+                  />
+                );
+              })}
+            <ReaderBadgeLink
+              key={"addReader"}
+              id={""}
+              readerName={""}
+              minutesRead={0}
+              coinsEarned={0}
+              themeColor={"#2779A7"}
+            />
+          </ReaderBadgesContainer>
+        </>
       )}
       {error && <p>{error}</p>}
     </>
@@ -115,6 +123,5 @@ const ReaderBadgesContainer = styled.ul`
   grid-gap: 5rem;
   justify-content: center;
   align-content: center;
-  margin-top: 9rem;
   margin-bottom: 1rem;
 `;
