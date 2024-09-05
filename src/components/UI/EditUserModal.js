@@ -11,6 +11,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   bgcolor: "white",
   boxShadow: 24,
+  borderRadius: "15px",
   p: 4,
   "@media(min-width: 450px)": {
     width: "400px",
