@@ -23,6 +23,7 @@ const AuthInfoModal = (props) => {
             backgroundColor: "rgba(245, 245, 245, 0.9)",
             border: "1px solid #0000001a",
             borderRadius: "15px",
+            boxShadow: "6px 6px 8px rgba(0,0,0, 0.3)",
             padding: "2% 5%",
           }}
         >
